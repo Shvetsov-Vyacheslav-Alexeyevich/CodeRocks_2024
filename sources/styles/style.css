@@ -1,0 +1,449 @@
+/* reset */
+/* *,
+*::before,
+*::after {
+  padding: 0px;
+  margin: 0px;
+  border: none;
+  outline: none;
+  background: none;
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+} */
+
+
+
+/* @font-face { */
+  /* font-family: "Rubik";
+  font-weight: 500;
+  src: url("../fonts/Rubik/Rubik-Medium.ttf");
+} */
+
+
+
+/* Глобальные стили */
+/* body {
+  color: var(--text_color);
+} */
+
+/* Вёрстка */
+/* Формы */
+/* form.modal_form {
+  display: none;
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+  width: 392px;
+  padding: 20px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  transition: top 0.5s ease-in-out;
+}
+
+form.modal_form.active {
+  display: block;
+  top: 50%;
+}
+
+.content_line {
+  width: 100%;
+  height: 80px;
+  margin: 30px 0px;
+  background-color: red;
+}
+.modal_form.overlay {
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 98;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal_form.overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+.modal_form .inner {
+  position: relative;
+}
+
+.modal_form .close_button {
+  display: block;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+.modal_form .modal_heading {
+  font: 500 32px/1.2 "Rubik", sans-serif;
+  text-align: center;
+}
+
+.modal_form .radio_block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0px;
+  margin: 14px 0px 20px;
+  border-top: 1px solid #EFEFEF;
+  border-bottom: 1px solid #EFEFEF;
+  color: var(--light_text_color);
+  font: 400 16px/1.2 "Rubik", sans-serif;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal_form .switch {
+  position: relative;
+  display: inline-block;
+  width: 57px;
+  height: 24px;
+  border-radius: 12px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.modal_form .switch .switch_input {
+  height: 0px;
+  width: 0px;
+  opacity: 0;
+}
+
+.modal_form .switch .switch_slider {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 12px;
+  background: #EFEFEF;
+  cursor: pointer;
+}
+
+.modal_form .switch .switch_slider::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--accent_color);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal_form .switch .switch_input:hover + .switch_slider::before {
+  box-shadow: 0px 0px 8px rgba(243, 103, 103, 0.75);
+}
+
+.modal_form .switch .switch_input:checked + .switch_slider::before {
+  transform: translateX(33px);
+}
+
+.modal_form .inputs input {
+  display: block;
+  width: 100%;
+  height: 38px;
+  padding: 10px 5px;
+  margin-bottom: 14px;
+  text-align: center;
+  border-radius: 4px;
+  font: 400 16px/1.2 "Rubik", sans-serif;
+  background: #EFEFEF;
+}
+
+.modal_form .inputs input:focus {
+  outline: 1px solid var(--text_color);
+}
+
+.modal_form .inputs .double {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.modal_form .inputs .double input {
+  width: 169px;
+  margin-bottom: 0px;
+}
+
+.modal_form .inputs input::placeholder {
+  color: var(--light_text_color);
+}
+
+#reg_form.modal_form button.submit {
+  margin-top: 24px;
+}
+
+.modal_form button.submit {
+  display: block;
+  width: 100%;
+  height: 38px;
+  border-radius: 6px;
+  background: var(--accent_color);
+  color: white;
+  font: 400 16px/1.2 "Rubik", sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal_form button.submit:hover {
+  box-shadow: 0px 0px 8px rgba(243, 103, 103, 0.75);
+}
+
+.modal_form .link_open_login_form {
+  display: inline-block;
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+  color: var(--light_text_color);
+  font: 400 16px/1.2 "Rubik", sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal_form .link_open_login_form:hover {
+  color: var(--text_color);
+  text-decoration: underline;
+} */
+
+/* ### */
+
+/* Нормализация */
+/* reset */
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Стандартные стили */
+body {
+  position: relative;
+  color: #333333;
+  font: var(--font-standart);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ol.list,
+ul.list,
+.list li {
+  list-style: none;
+}
+
+/* Подключение шрифтов */
+/* Rubik 400, 500 */
+@font-face {
+  font-family: "Rubik";
+  font-weight: 400;
+  src: url("../fonts/Rubik/Rubik-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Rubik";
+  font-weight: 500;
+  src: url("../fonts/Rubik/Rubik-Medium.ttf");
+}
+
+/* Переменные */
+:root {
+  --text_color: #333333;
+  --light_text_color: #A5A5A5;
+  --accent_color: #F36767;
+  --additional_color: #EFEFEF;
+  
+  --standart_shadow: 0px 0px 4px rgba(0, 0, 0, 0.25); 
+  --focus_shadow: 0px 0px 8px rgba(243, 103, 103, 0.75);
+
+  --font-standart: 400 16px/1.2 "Rubik", sans-serif;
+}
+
+/* Общие стили */
+/* Формы */
+form.form_window {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 16px;
+  box-shadow: var(--standart_shadow);
+  color: var(--light_text_color);
+}
+
+form.form_window .inner_container {
+  width: 392px;
+  padding: 20px;
+}
+
+button.form_close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: block;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+button.form_close svg path {
+  transition: all 0.1s ease-out;
+}
+
+button.form_close:hover svg path {
+  fill: var(--accent_color);
+}
+
+#reg_form.form_window .form_heading {
+  margin-bottom: 14px;
+  text-align: center;
+  color: var(--text_color);
+  font: 500 32px/1.2 "Rubik", sans-serif;
+}
+
+.form_window .radio_block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 46px;
+  border-top: 1px solid var(--additional_color);
+  border-bottom: 1px solid var(--additional_color);
+  transition: color 0.3s ease-out;
+}
+
+.form_window .var.active {
+  color: var(--accent_color);
+}
+
+.form_window .switch {
+  position: relative;
+  width: 57px;
+  height: 24px;
+  border-radius: 12px;
+}
+
+.form_window .switch_input {
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+}
+
+.form_window .switch_slider {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 12px;
+  background: var(--additional_color);
+  cursor: pointer;
+  transition: box-shadow 0.3s linear;
+}
+
+.form_window .switch_slider:hover::after {
+  box-shadow: var(--focus_shadow);
+}
+
+.form_window .switch_slider::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--accent_color);
+  transition: all 0.3s ease-out;
+}
+
+.form_window .switch_input:checked + .switch_slider::after {
+  transform: translateX(33px);
+}
+
+.form_window .inputs {
+  margin-bottom: 24px;
+}
+
+.form_window .inputs input {
+  display: block;
+  width: 100%;
+  height: 38px;
+  margin-bottom: 14px;
+  border-radius: 4px;
+  background: var(--additional_color);
+  text-align: center;
+  outline: none;
+  border: none;
+  color: var(--text_color);
+  font: var(--font-standart);
+}
+
+#reg_form .form_window .inputs {
+  margin-bottom: 10px;
+}
+
+.form_window .inputs {
+  margin-top: 20px;
+}
+
+.form_window .inputs .double {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.form_window .inputs .double input {
+  width: 169px;
+  margin: 0px;
+}
+
+.form_window .inputs input::placeholder {
+  color: var(--light_text_color);
+}
+
+.form_window button.submit {
+  display: block;
+  width: 100%;
+  height: 38px;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  background: var(--accent_color);
+  transition: box-shadow 0.3s linear;
+  color: white;
+  font: var(--font-standart);
+}
+
+.form_window button.submit:hover {
+  box-shadow: var(--focus_shadow);
+}
+
+.form_window .additional_link {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+}
+
+
+
+
