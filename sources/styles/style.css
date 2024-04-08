@@ -1,0 +1,77 @@
+/* контейнер для карточек товаров */
+.cards {
+    display: flex;
+    max-width: 1172px;
+    min-height: 712px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* сам товар */
+.card {
+    max-width: 215px;
+    min-height: 330px;
+}
+
+/* фотография товара */
+.photo {
+    max-width: 215px;
+    min-height: 215px;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+}
+
+/* наименование товара */
+.name {
+    max-width: 215px;
+    height: 38px;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font: 16px "Rubik";
+}
+
+/* контейнер для цены и рейтинга */
+.info {
+    display: flex;
+	justify-content: space-between;
+    max-width: 215px;
+    min-height: 38px;
+}
+
+/* цена */
+.count {
+    color: #F36767;
+    font: 600 20px "Rubik";
+}
+
+/* кнопка"Заказать" */
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 215px;
+    min-height: 38px;
+    background-color: #F36767;
+    border-radius: 6px;
+    color: white;
+    font: 16px "Rubik";
+}
+
+/* центрирование рейтинга и цены */
+.rating, .count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* для картинок звёздочек и т.п. */
+.left {
+    margin-left: 6px;
+}
+
+.right {
+    margin-right: 4px;
+}
