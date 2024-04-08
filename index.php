@@ -1,7 +1,9 @@
-
 <!DOCTYPE html>
 <head>
-    <?php require ("sources/blocks/header.php") ?>
+    <?php 
+    require ("sources/blocks/header.php"); 
+    require("sources/blocks/reg_form.php");
+    ?>
 </head>
 <body>
     <!-- карточки товаров -->
@@ -118,12 +120,6 @@
     </div>
 </body>
 <footer>
-<?php require ("sources/blocks/footer.php") ?>
+<?php require ("sources/blocks/footer.php"); ?>
 </footer>
 </html>
-
-<?php
-  require("sources/blocks/header.php");
-  require("sources/blocks/reg_form.php");
-  require("sources/blocks/footer.php");
-?>
