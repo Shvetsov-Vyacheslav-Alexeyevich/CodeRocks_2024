@@ -17,14 +17,14 @@ if (document.getElementById("form_registration") != null) {
 
         document.querySelector("#form_registration.form_wrapper .inputs").innerHTML = (`      
           <div class="double">
-            <input id="second_name" type="text" name="second_name" placeholder="Фамилия" required>
-            <input id="first_name" type="text" name="first_name" placeholder="Имя" required>
+            <input id="second_name" type="text" name="firstname" placeholder="Фамилия" required>
+            <input id="first_name" type="text" name="name" placeholder="Имя" required>
           </div>
-          <input id="third_name" type="text" name="third_name" placeholder="Отчество" required>
-          <input id="email" type="text" name="email" placeholder="E-mail" required>
+          <input id="third_name" type="text" name="surname" placeholder="Отчество" required>
+          <input id="email" type="email" name="email" placeholder="E-mail" required>
           <div class="double">
             <input id="password" type="password" name="password" placeholder="Пароль" required>
-            <input id="next_password" type="password" name="next_password" placeholder="Повтор пароля" required>
+            <input id="next_password" type="password" name="repeat_password" placeholder="Повтор пароля" required>
           </div>
         `);
       } else {
@@ -37,10 +37,10 @@ if (document.getElementById("form_registration") != null) {
         });
         document.querySelector("#form_registration.form_wrapper .inputs").innerHTML = (`      
           <input id="company_name" type="text" name="company_name" placeholder="Название организации" required>
-          <input id="email" type="text" name="email" placeholder="E-mail" required>
+          <input id="email" type="email" name="email" placeholder="E-mail" required>
           <div class="double">
             <input id="password" type="password" name="password" placeholder="Пароль" required>
-            <input id="next_password" type="password" name="next_password" placeholder="Повтор пароля" required>
+            <input id="next_password" type="password" name="repeat_password" placeholder="Повтор пароля" required>
           </div>
         `);
       }
@@ -52,9 +52,9 @@ if (document.getElementById("form_registration") != null) {
     event.preventDefault();
     let formData = new FormData(document.getElementById("form_registration"));
     if (flag_switch) {
-      formData.set("user_type", "maker")
+      formData.set("is_vendor", "1")
     } else {
-      formData.set("user_type", "buyer");
+      formData.set("is_vendor", "0");
     }
     formData.set("form_type", "registration");
 
