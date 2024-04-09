@@ -1,3 +1,18 @@
+
+    <!-- сортровка -->
+    <!-- <div class="info">
+        <div class="rating">2.0 <img src="sources/images/ПолнаяЗвезда.svg" width="15px" height="15px" alt="такой карины нету" class="left"> <img src="sources/images/ПолнаяЗвезда.svg" width="15px" height="15px" alt="такой карины нету"> <img src="sources/images/ЗвездаПустая.svg" width="15px" height="15px" alt="такой карины нету"> <img src="sources/images/ЗвездаПустая.svg" width="15px" height="15px" alt="такой карины нету"> <img src="sources/images/ЗвездаПустая.svg" width="15px" height="15px" alt="такой карины нету"></div>
+    </div> -->
+
+<!-- <div>
+    <form id=”id” style=”display: flex”>
+        <select>
+            <option>Категория</option>
+        </select>
+    </form>
+    <input type=”submit” form=”id” style=”display: block”>
+<div> -->
+    
     <!-- карточки товаров -->
     <div class="cards">
 
