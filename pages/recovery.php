@@ -1,12 +1,4 @@
 <?
-  session_start();
-
-  if (!empty($_SESSION))
-  {
-    header("Location: /");
-    exit;
-  }
-
   require($_SERVER["DOCUMENT_ROOT"] . "/sources/blocks/header.php");
 
   if (!empty($_GET) and !empty($_GET["user_id"]) and !empty($_GET["user_password"]))

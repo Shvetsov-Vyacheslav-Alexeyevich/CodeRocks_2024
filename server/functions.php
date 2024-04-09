@@ -112,6 +112,7 @@
             {
                 $userdata = $db->goResultOnce("
                     SELECT
+                        id AS 'vendor_id',
                         company_name
                     FROM
                         USER_VENDORS
@@ -123,6 +124,7 @@
             {
                 $userdata = $db->goResultOnce("
                     SELECT
+                        id AS 'client_id',
                         firstname,
                         name,
                         surname
@@ -153,5 +155,71 @@
         }
         else
             return false;
+    }
+
+    function add_photos($files, $product_id)
+    {
+        if (!empty($files['tmp_name']))
+        {
+            $photos = [];
+            $db = new MysqlModel();
+            $photos = $db->goResult("
+                SELECT
+                    *
+                FROM
+                    PRODUCT_PHOTOS
+                WHERE
+                    product_id = $product_id
+            ");
+
+            if (count($photos) + count($files['name']) > 10)
+                return "limit_exceeded";
+
+            for ($i = 0; $i < count($files['name']); $i++)
+            {
+                if ($files['type'][$i] == 'image/png' || $files['type'][$i] == 'image/jpeg')
+                {
+                    $server_path = $_SERVER['DOCUMENT_ROOT'];
+                    
+                    $path = "$server_path/data/$product_id/";
+                    $name = basename($files['name'][$i]);
+
+                    if (!is_dir($path))
+                        mkdir($path);
+
+                    $j = 1;
+                    while (true)
+                    {
+                        if (file_exists($path . $name))
+                            $name = $j . "_" . $name;
+                        else
+                            break;
+
+                        $j++;
+                    }
+
+                    move_uploaded_file($files['tmp_name'][$i], $path . $name);
+
+                    $add = $db->query("
+                        INSERT INTO PRODUCT_PHOTOS(
+                            product_id,
+                            photo_path
+                        )
+                        VALUES(
+                            $product_id,
+                            '$name'
+                        )
+                    ");
+                }
+                else
+                {
+                    return "wrong_extension";
+                }
+            }
+        }
+        else
+        {
+            return null;
+        }
     }
 ?>
