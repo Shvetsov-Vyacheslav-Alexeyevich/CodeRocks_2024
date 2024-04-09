@@ -13,20 +13,7 @@
     <div class="container">
         <div class="inner">
           <!-- Хедер -->
-          <?php
-            if (basename($_SERVER['PHP_SELF']) == "authorization.php" or basename($_SERVER['PHP_SELF']) == "recovery.php") {
-          ?>
-          <!-- Для authorization.php -->
-              <a class="logo" href="/index.php">
-                <img src="/sources/images/logo.svg" alt="BLITZ">
-              </a>
-          <?php
-            }
-          ?>
-        </div>
-      </div>
-
-            <div class="">
+          <div class="">
                 <a href="index.php" class="logo"><img src="sources/images/logo.svg" width="112px" height="25px" alt="такой карины нету"></a>
             </div>
 
@@ -59,6 +46,11 @@
                     <a href="#"><img src="sources/images/профиль2.jpg" width="50px" height="50px" alt="такой карины нету" class="imgProfile"></a>
                 </div>
             </div> -->
+          
+        </div>
+      </div>
+
+            
 
     </header>
 
