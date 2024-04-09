@@ -24,18 +24,38 @@ a {
 @font-face {
   font-family: "Rubik";
   font-weight: 400;
-  src: url("../fonts/Rubik/Rubik-Regular.ttf");
+  src: url("/sources/fonts/Rubik/Rubik-Regular.ttf");
 }
 
 @font-face {
   font-family: "Rubik";
   font-weight: 500;
-  src: url("../fonts/Rubik/Rubik-Medium.ttf");
+  src: url("/sources/fonts/");
 }
 
 /* Общие стили */
+html {
+  height: 100%;
+}
+
 body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
   color: var(--text_color);
+}
+
+header {
+  flex: 0 0 auto;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex: 0 0 auto;
 }
 
 body * {
@@ -54,6 +74,10 @@ ol.list,
 ul.list li,
 ol.list li {
   list-style: none;
+}
+
+.block {
+  display: block;
 }
 
 /* Переменные */
@@ -271,20 +295,52 @@ ol.list li {
 /* header */
 #header a.logo {
   display: inline-block;
-  padding: 23px 0px 0px 45px;
+  padding: 25px 0px 0px 45px;
 }
 
-#header .left a.logo img {
+#header .wrapper .left a.logo img {
   display: block;
 }
 
 #header .wrapper {
   display: flex;
+  justify-content: space-between;
   padding: 25px 45px;
+  border-radius: 0px 0px 12px 12px;
+  align-items: center;
+  box-shadow: var(--standart_light_shadow);
 }
 
-#header .wrapper a.logo {
+#header .wrapper .left a.logo {
   padding: 0px;
 }
+
+#header .wrapper .right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font: var(--font_standart_big);
+}
+
+#header .wrapper .right a {
+  transition: color 0.3s linear;
+}
+
+#header .wrapper .right a:hover {
+  color: var(--accent_color_1);
+  text-decoration: underline;
+}
+
+#header .wrapper .right .line {
+  width: 1px;
+  height: 20px;
+  background: var(--accent_color_1);
+}
+
+#header .wrapper .right .icon {
+  height: 20px;
+}
+
 
 
