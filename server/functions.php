@@ -108,7 +108,7 @@
         {
             $userdata = [];
 
-            if ($arr['is_vendor'])
+            if ((int) $arr['is_vendor'])
             {
                 $userdata = $db->goResultOnce("
                     SELECT
@@ -133,7 +133,8 @@
                 ");
             }
 
-            $arr = array_merge($arr, $userdata);
+            if (!empty($userdata))
+                $arr = array_merge($arr, $userdata);
         }
 
         return $arr;

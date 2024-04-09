@@ -1,10 +1,48 @@
-<?php
+<?
+  session_start();
+  require_once("functions.php");
+
   if (!empty($_POST))
   {
     if ($_POST["form_type"] == "registration")
-      echo json_encode(["status" => true]);
+    {
+      $email = $_POST['email'];
+      $password = $_POST['password'];
+      $repeat_password = $_POST['repeat_password'];
+      $is_vendor = $_POST['is_vendor'];
+
+      if (!$is_vendor)
+        $array = [$_POST['firstname'], $_POST['name'], $_POST['surname']];
+      else
+        $array = [$_POST['company_name']];
+
+      $result = registration($email, $password, $repeat_password, $is_vendor, $array);
+
+      if (is_string($result))
+        echo json_encode(["status" => false]);
+      else
+        echo json_encode(["status" => true]);
+
+      exit;
+    }
     else if ($_POST["form_type"] == "login")
-      echo json_encode(["status" => true, "user_id" => "901", "user_password" => "qwerty12Q!"]);
+    {
+      if (!empty($_POST['email']) and !empty($_POST['password']))
+      {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+    
+        $result = authorization($email, $password);
+        if (!empty($result))
+        {
+          $_SESSION['user'] = found_user($email);
+          echo json_encode(["status" => true]);
+          exit;
+        }
+        else
+          echo json_encode(["status" => false]);
+      }
+    }
     else if ($_POST["form_type"] == "recovery_get")
       echo json_encode(["status" => true]);
     else if ($_POST["form_type"] == "recovery_change")

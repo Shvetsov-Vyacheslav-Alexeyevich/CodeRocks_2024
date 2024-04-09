@@ -9,7 +9,7 @@
     <a href="/pages/authorization.php?form=reg" class="text_link">нет аккаунта?</a>
     <div class="line"></div>
     <div class="inputs">
-      <input id="login" type="email" name="login" placeholder="Логин" required>
+      <input id="login" type="email" name="email" placeholder="Логин" required>
       <input id="password" type="password" name="password" placeholder="Пароль" required>
     </div>
     <button class="submit" type="submit">Войти</button>
