@@ -1,7 +1,11 @@
+        </div>
+      </div>
     </main>
     <footer id="footer">
-      <!-- footer -->
-      <div class="">
+      <div class="container">
+        <div class="inner">
+          <!-- Футер -->
+          <div class="">
           <div class="connection">
             Для связи с нами:
           </div>
@@ -31,8 +35,9 @@
             <a href="#"><img src="sources/images/twiter.svg" width="31px" height="25px" alt="такой карины нету" class="left"></a>
           </div>
       </div>
-      <!-- Подключение JS -->
-      <script defer src="<?php $_SERVER["DOCUMENT_ROOT"]?>sources/scripts/script.js"></script>
+        </div>
+      </div>
     </footer>
+    <script defer src="/sources/scripts/script.js"></script>
   </body>
 </html>
