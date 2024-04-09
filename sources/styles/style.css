@@ -1,79 +1,168 @@
 /* контейнер для карточек товаров */
 .cards {
-    display: flex;
-    max-width: 1172px;
-    min-height: 712px;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  margin: 0px auto 40px auto;
+  display: flex;
+  max-width: 1172px;
+  min-height: 712px;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 /* сам товар */
 .card {
-    max-width: 215px;
-    min-height: 330px;
+  max-width: 215px;
+  min-height: 330px;
+  margin-bottom: 20px;
 }
 
 /* фотография товара */
 .photo {
-    max-width: 215px;
-    min-height: 215px;
-    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.25);
-    border-radius: 12px;
+  max-width: 215px;
+  min-height: 215px;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  margin-bottom: 10px;
 }
 
 /* наименование товара */
 .name {
-    max-width: 215px;
-    height: 38px;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    font: 16px "Rubik";
+  max-width: 215px;
+  height: 38px;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font: 16px "Rubik";
 }
 
 /* контейнер для цены и рейтинга */
 .info {
-    display: flex;
+  display: flex;
 	justify-content: space-between;
-    max-width: 215px;
-    min-height: 38px;
+  max-width: 215px;
+  min-height: 38px;
 }
 
 /* цена */
 .count {
-    color: #F36767;
-    font: 600 20px "Rubik";
+  color: #F36767;
+  font: 600 20px "Rubik";
 }
 
 /* кнопка"Заказать" */
 .button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-width: 215px;
-    min-height: 38px;
-    background-color: #F36767;
-    border-radius: 6px;
-    color: white;
-    font: 16px "Rubik";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 215px;
+  min-height: 38px;
+  background-color: #F36767;
+  border-radius: 6px;
+  color: white;
+  font: 16px "Rubik";
 }
 
 /* центрирование рейтинга и цены */
 .rating, .count {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* для картинок звёздочек и т.п. */
 .left {
-    margin-left: 6px;
+  margin-left: 6px;
 }
 
 .right {
-    margin-right: 4px;
+  margin-right: 4px;
+}
+
+.right2 {
+  margin-right: 2px;
+}
+
+/* шапка */
+#header {
+  margin: 0px auto 40px auto;
+  max-width: 1172px;
+  min-height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 45px;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.25);
+  border-radius: 0 0 12px 12px;
+}
+
+.logo {
+  width: 112px;
+  height: 25px;
+}
+
+/* для авторизации */
+.auth {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  color: #F36767;
+  font: 18px "Rubik";
+}
+
+.login {
+  align-items: center;
+  display: flex;
+}
+
+.out {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  font: 16px "Rubik";
+}
+
+.exit {
+  align-items: center;
+  display: flex; 
+  justify-content: center;
+  width: 89px;
+  min-height: 38px;
+  background-color: #669EF2;
+  border-radius: 6px;
+}
+
+.imgProfile {
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* футер */
+#footer {
+  margin: 40px auto 0px auto;
+  max-width: 1172px;
+  min-height: 115px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 45px;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.25);
+  border-radius: 12px 12px 0 0;
+}
+
+.connection {
+  font: 600 18px "Rubik";
+}
+
+.mail, .address {
+  font: 400 16px "Rubik";
+}
+
+.network {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 }
 
 /* reset */
