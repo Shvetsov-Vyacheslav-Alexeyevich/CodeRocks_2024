@@ -274,8 +274,17 @@ ol.list li {
   padding: 23px 0px 0px 45px;
 }
 
-#header a.logo img {
+#header .left a.logo img {
   display: block;
+}
+
+#header .wrapper {
+  display: flex;
+  padding: 25px 45px;
+}
+
+#header .wrapper a.logo {
+  padding: 0px;
 }
 
 

@@ -103,7 +103,7 @@ if (document.getElementById("form_login") != null) {
           <h1 class="form_heading">Успешно!</h1>
           <div class="line"></div>
           <p class="text">Вы успешно авторизировались :)</p>
-          <a href="/index.php?user_id=${data["user_id"]}&user_password=${data["user_password"]}" class="button_link">На главную</a>
+          <a href="/index.php" class="button_link">На главную</a>
         `);
       }
     }
