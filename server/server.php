@@ -58,5 +58,8 @@
     else if ($_POST["form_type"] == "check_paths") {
       echo json_encode(["status" => true, "response" => ["stock" => "Кемеровский склад, ул. Звёздная, 39", "path" => ["г. Кемерово, Кемеровский склад, ул. Звёздная, 39", "г. Белого", "п. Берёзовский", "г. Жопосранский, ул.Самарская, 21"], "cost_delivery" => "241", "cost_product" => "681", "total" => "3241"]]);
     }
+    else if ($_POST["form_type"] == "new_order") {
+      echo json_encode(["status" => true]);
+    }
   }
 ?>

@@ -109,9 +109,9 @@
 </section>
 
 <!-- Форма заказа товара -->
-<form id="product_order_form" class="form_wrapper" action="/server/server.php">
+<form id="product_order_form" class="form_wrapper modal" action="/server/server.php">
   <div class="inner">
-    <a class="link_undo">
+    <a class="link_undo" onclick="hideModalWrapper()">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path class="change" d="M12 1.21286L10.7871 0L6 4.78714L1.21286 0L0 1.21286L4.78714 6L0 10.7871L1.21286 12L6 7.21286L10.7871 12L12 10.7871L7.21286 6L12 1.21286Z" fill="#A5A5A5"/>
       </svg>
@@ -149,53 +149,9 @@
         </div>
       </div>
       <div class="line"></div>
-      <div class="text">Склад: Московский склад, ул. Звёздная, 93</div>
+      <div class="text stock"></div>
       <div class="paths">
         <div class="inner">
-          <div class="path">
-            <div class="icon">
-              <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 0C1.79143 0 0 1.881 0 4.2C0 7.35 4 12 4 12C4 12 8 7.35 8 4.2C8 1.881 6.20857 0 4 0ZM4 5.7C3.21143 5.7 2.57143 5.028 2.57143 4.2C2.57143 3.372 3.21143 2.7 4 2.7C4.78857 2.7 5.42857 3.372 5.42857 4.2C5.42857 5.028 4.78857 5.7 4 5.7Z" fill="#A5A5A5"/>
-              </svg>
-            </div>
-            <div class="text">Отправка, г.Москва, Московский склад, п. Тушино</div>
-          </div>
-          <div class="line"></div>
-          <div class="path">
-            <div class="icon">
-              <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 0C1.79143 0 0 1.881 0 4.2C0 7.35 4 12 4 12C4 12 8 7.35 8 4.2C8 1.881 6.20857 0 4 0ZM4 5.7C3.21143 5.7 2.57143 5.028 2.57143 4.2C2.57143 3.372 3.21143 2.7 4 2.7C4.78857 2.7 5.42857 3.372 5.42857 4.2C5.42857 5.028 4.78857 5.7 4 5.7Z" fill="#A5A5A5"/>
-              </svg>
-            </div>
-            <div class="text">Отправка, г.Москва, Московский склад, п. Тушино</div>
-          </div>
-          <div class="line"></div>
-          <div class="path">
-            <div class="icon">
-              <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 0C1.79143 0 0 1.881 0 4.2C0 7.35 4 12 4 12C4 12 8 7.35 8 4.2C8 1.881 6.20857 0 4 0ZM4 5.7C3.21143 5.7 2.57143 5.028 2.57143 4.2C2.57143 3.372 3.21143 2.7 4 2.7C4.78857 2.7 5.42857 3.372 5.42857 4.2C5.42857 5.028 4.78857 5.7 4 5.7Z" fill="#A5A5A5"/>
-              </svg>
-            </div>
-            <div class="text">Отправка, г.Москва, Московский склад, п. Тушино</div>
-          </div>
-          <div class="line"></div>
-          <div class="path">
-            <div class="icon">
-              <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 0C1.79143 0 0 1.881 0 4.2C0 7.35 4 12 4 12C4 12 8 7.35 8 4.2C8 1.881 6.20857 0 4 0ZM4 5.7C3.21143 5.7 2.57143 5.028 2.57143 4.2C2.57143 3.372 3.21143 2.7 4 2.7C4.78857 2.7 5.42857 3.372 5.42857 4.2C5.42857 5.028 4.78857 5.7 4 5.7Z" fill="#A5A5A5"/>
-              </svg>
-            </div>
-            <div class="text">Отправка, г.Москва, Московский склад, п. Тушино</div>
-          </div>
-          <div class="line"></div>
-          <div class="path">
-            <div class="icon">
-              <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 0C1.79143 0 0 1.881 0 4.2C0 7.35 4 12 4 12C4 12 8 7.35 8 4.2C8 1.881 6.20857 0 4 0ZM4 5.7C3.21143 5.7 2.57143 5.028 2.57143 4.2C2.57143 3.372 3.21143 2.7 4 2.7C4.78857 2.7 5.42857 3.372 5.42857 4.2C5.42857 5.028 4.78857 5.7 4 5.7Z" fill="#A5A5A5"/>
-              </svg>
-            </div>
-            <div class="text">Отправка, г.Москва, Московский склад, п. Тушино</div>
-          </div>
         </div>
       </div>
       <div class="line"></div>
@@ -208,23 +164,23 @@
                 <path d="M13.6461 1.73056L12.5689 0.423889C12.3511 0.167222 12.0283 0 11.6667 0H2.33333C1.97167 0 1.64889 0.167222 1.435 0.423889L0.357778 1.73056C0.132222 2.00278 0 2.345 0 2.72222V12.4444C0 13.3039 0.696111 14 1.55556 14H12.4444C13.3039 14 14 13.3039 14 12.4444V2.72222C14 2.345 13.8678 2.00278 13.6461 1.73056ZM7 11.2778L2.72222 7H5.44444V5.44444H8.55556V7H11.2778L7 11.2778ZM1.65278 1.55556L2.28667 0.777778H11.62L12.3472 1.55556H1.65278Z" fill="#669EF2"/>
               </svg>
             </div>
-            <div class="price">388 ₽</div>
+            <div class="price delivery_cost"></div>
           </div>
         </div>
         <div class="double">
-          <div class="left">Стоиомсть товара(шт):</div>
+          <div class="left">Стоимость товара (шт):</div>
           <div class="right">
             <div class="icon">
               <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.4425 7.185L7.18875 0.43875C7.45875 0.16875 7.83375 0 8.25 0H13.5C14.3288 0 15 0.67125 15 1.5V6.75C15 7.16625 14.8313 7.54125 14.5575 7.81125L7.8075 14.5613C7.5375 14.8313 7.1625 15 6.75 15C6.33375 15 5.95875 14.8313 5.68875 14.5613L0.438749 9.31125C0.168749 9.0375 0 8.6625 0 8.25C0 7.83375 0.16875 7.45875 0.4425 7.185ZM12.375 3.75C12.9975 3.75 13.5 3.2475 13.5 2.625C13.5 2.0025 12.9975 1.5 12.375 1.5C11.7525 1.5 11.25 2.0025 11.25 2.625C11.25 3.2475 11.7525 3.75 12.375 3.75ZM3.5475 9.9525L6.75 13.155L9.9525 9.9525C10.29 9.61125 10.5 9.1425 10.5 8.625C10.5 7.59 9.66 6.75 8.625 6.75C8.1075 6.75 7.635 6.96 7.2975 7.30125L6.75 7.84875L6.2025 7.30125C5.86125 6.96 5.3925 6.75 4.875 6.75C3.84 6.75 3 7.59 3 8.625C3 9.1425 3.21 9.61125 3.5475 9.9525Z" fill="#669EF2"/>
               </svg>
             </div>
-            <div class="price">603 ₽</div>
+            <div class="price cost_product"></div>
           </div>
         </div>
         <div class="double">
           <div class="left">Количество товара:</div>
-          <div class="right">4 шт.</div>
+          <div class="right count_products"></div>
         </div>
         <div class="line"></div>
         <div class="double">
@@ -235,7 +191,7 @@
                 <path d="M11.3095 11.25H2.2619V9.75H11.3095V11.25ZM11.3095 8.25H2.2619V6.75H11.3095V8.25ZM11.3095 5.25H2.2619V3.75H11.3095V5.25ZM0 15L1.13095 13.875L2.2619 15L3.39286 13.875L4.52381 15L5.65476 13.875L6.78571 15L7.91667 13.875L9.04762 15L10.1786 13.875L11.3095 15L12.4405 13.875L13.5714 15V0L12.4405 1.125L11.3095 0L10.1786 1.125L9.04762 0L7.91667 1.125L6.78571 0L5.65476 1.125L4.52381 0L3.39286 1.125L2.2619 0L1.13095 1.125L0 0V15Z" fill="#669EF2"/>
               </svg>
             </div>
-            <div class="price">2800 ₽</div>
+            <div class="price total"></div>
           </div>
         </div>
         <div class="line"></div>

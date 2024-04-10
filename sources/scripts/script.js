@@ -6,10 +6,12 @@ if (document.getElementById("products") != null) {
   });
 }
 
+// Ремонт фильтра вроде тут)
 let card_click_id_main;
 document.querySelectorAll("#all_cards .card").forEach(element => {
-  // console.log(element);
   element.querySelector(".button_link").addEventListener("click", (event) => {
+    showModalWrapper()
+    document.getElementById("product_order_form").style.display = "block";
     card_click_id_main = element.getAttribute("card_id");
   });
 });
@@ -22,6 +24,9 @@ function showModalWrapper() {
 
 function hideModalWrapper() {
   document.body.style.overflow = "auto";
+  document.querySelectorAll(".modal").forEach(element => {
+    element.style.display = "none";
+  });
   document.querySelector(".modal_wrapper").style.display = "none";
 }
 
@@ -235,9 +240,9 @@ if (document.getElementById("product_order_form") != null) {
       if (document.getElementById("count_products").value >= 1 && document.getElementById("pick_point").value != 0 && document.getElementById("delivery_method").value != 0) {
         let formData = new FormData(document.getElementById("product_order_form"));
         formData.set("form_type", "check_paths");
+        count_products = document.getElementById("count_products").value;
         formData.set("card_id", card_click_id_main);
         // Запрос на отправку
-        console.log("Пошло");
         fetch("/server/server.php", {
           method: "POST",
           body: formData
@@ -251,8 +256,15 @@ if (document.getElementById("product_order_form") != null) {
     // Вставка данных в форму
     function succesfull_status(data) {
       if (data["status"] == true) {
+        console.log(data);
         document.querySelector(".next_fetch").style.display = "block";
         document.querySelector("#product_order_form .submit").classList.remove("disable")
+        document.querySelector("#product_order_form .stock").innerHTML = data["response"]["stock"];
+        document.querySelector("#product_order_form .delivery_cost").innerHTML = data["response"]["cost_delivery"];
+        document.querySelector("#product_order_form .cost_product").innerHTML = data["response"]["cost_product"];
+        document.querySelector("#product_order_form .count_products").innerHTML = count_products + " ₽";
+        document.querySelector("#product_order_form .total").innerHTML = data["response"]["total"];
+        
         for (let i = 0; i < data["response"]["path"].length; i++) {
           console.log(i);
           if (i == 0) {
@@ -297,6 +309,36 @@ if (document.getElementById("product_order_form") != null) {
         } 
       }
     }
+}
+
+if (document.getElementById("product_order_form") != null) {
+  // Отправка данных на сервер
+  document.getElementById("product_order_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (document.getElementById("count_products").value >= 1 && document.getElementById("pick_point").value != 0 && document.getElementById("delivery_method").value != 0) {
+      let formData = new FormData(document.getElementById("product_order_form"));
+      formData.set("form_type", "new_order");
+      formData.set("card_id", card_click_id_main);
+      // Запрос на отправку
+      fetch("/server/server.php", {
+        method: "POST",
+        body: formData
+      })
+      .then((response) => response.json())
+      .then((data) => succesfull_status(data));
+    } else {
+      alert("Заполните данные полей!")
+    }
+
+    // Вывод сообщения об успехе
+    function succesfull_status(data) {
+      if (data["status"] == true) {
+        hideModalWrapper();
+        alert("Ваш заказ успешно сделан!")
+        location.reload()
+      }
+    }
+  });
 }
 
 
