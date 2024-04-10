@@ -657,6 +657,25 @@ a.button_link {
   box-shadow: none;
 }
 
+#header .wrapper .link_profile img {
+  border-radius: 4px;
+  box-shadow: var(--standart_light_shadow);
+}
 
+#header .wrapper .exit_submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 89px;
+  height: 38px;
+  background: var(--accent_color_2);
+  color: var(--additional_color);
+  border-radius: 6px;
+}
 
-
+#header .wrapper .exit_submit .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4px;
+}
