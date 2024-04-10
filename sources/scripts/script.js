@@ -6,6 +6,14 @@ if (document.getElementById("products") != null) {
   });
 }
 
+let card_click_id_main;
+document.querySelectorAll("#all_cards .card").forEach(element => {
+  // console.log(element);
+  element.querySelector(".button_link").addEventListener("click", (event) => {
+    card_click_id_main = element.getAttribute("card_id");
+  });
+});
+
 // Функции
 function showModalWrapper() {
   document.body.style.overflow = "hidden";
@@ -172,7 +180,7 @@ if (document.getElementById("filter_main") != null) {
     .then((response) => response.json())
     .then((data) => succesfull_status(data));
 
-    // Вывод сообщения об успехе
+    // Вывод карточек из ответа сервера
     function succesfull_status(data) {
       console.log(data);
       if (data["status"] == true) {
@@ -186,6 +194,7 @@ if (document.getElementById("filter_main") != null) {
   });
 }
 
+// Изменение пароля
 if (document.getElementById("form_recovery_change") != null) {
   // Отправка данных на сервер
   document.getElementById("form_recovery_change").addEventListener("submit", (event) => {
@@ -216,4 +225,76 @@ if (document.getElementById("form_recovery_change") != null) {
     }
   });
 }
+
+// Заказ товара
+if (document.getElementById("product_order_form") != null) {
+  // Отправка данных на сервер
+  document.querySelectorAll("#product_order_form .inputs_product_order").forEach(element => {
+    element.addEventListener("change", (event) => {
+      if (document.getElementById("count_products").value >= 1 && document.getElementById("pick_point").value != 0 && document.getElementById("delivery_method").value != 0) {
+        let formData = new FormData(document.getElementById("product_order_form"));
+        formData.set("form_type", "check_paths");
+        formData.set("card_id", card_click_id_main);
+        // Запрос на отправку
+        console.log("Пошло");
+        fetch("/server/server.php", {
+          method: "POST",
+          body: formData
+        })
+        .then((response) => response.json())
+        .then((data) => succesfull_status(data));
+      }
+    });
+  });
+
+    // Вставка данных в форму
+    function succesfull_status(data) {
+      if (data["status"] == true) {
+        document.querySelector(".next_fetch").style.display = "block";
+        document.querySelector("#product_order_form .submit").classList.remove("disable")
+        for (let i = 0; i < data["response"]["path"].length; i++) {
+          console.log(i);
+          if (i == 0) {
+            document.querySelector(".next_fetch .paths .inner").innerHTML = (`
+              <div class="path">
+                <div class="icon">
+                  <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 0C1.79143 0 0 1.881 0 4.2C0 7.35 4 12 4 12C4 12 8 7.35 8 4.2C8 1.881 6.20857 0 4 0ZM4 5.7C3.21143 5.7 2.57143 5.028 2.57143 4.2C2.57143 3.372 3.21143 2.7 4 2.7C4.78857 2.7 5.42857 3.372 5.42857 4.2C5.42857 5.028 4.78857 5.7 4 5.7Z" fill="#A5A5A5"/>
+                  </svg>
+                </div>
+                <div class="text">Склад, ${data["response"]["path"][i]}</div>
+              </div>
+              <div class="line"></div>
+            `);
+          } 
+          else if (i == data["response"]["path"].length - 1) {
+            document.querySelector(".next_fetch .paths .inner").innerHTML = (`
+              <div class="path">
+                <div class="icon">
+                  <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 0C1.79143 0 0 1.881 0 4.2C0 7.35 4 12 4 12C4 12 8 7.35 8 4.2C8 1.881 6.20857 0 4 0ZM4 5.7C3.21143 5.7 2.57143 5.028 2.57143 4.2C2.57143 3.372 3.21143 2.7 4 2.7C4.78857 2.7 5.42857 3.372 5.42857 4.2C5.42857 5.028 4.78857 5.7 4 5.7Z" fill="#A5A5A5"/>
+                  </svg>
+                </div>
+                <div class="text">Пункт выдачи, ${data["response"]["path"][i]}</div>
+              </div>
+            `);
+          } 
+          else {
+            document.querySelector(".next_fetch .paths .inner").innerHTML = (`
+              <div class="path">
+                <div class="icon">
+                  <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 0C1.79143 0 0 1.881 0 4.2C0 7.35 4 12 4 12C4 12 8 7.35 8 4.2C8 1.881 6.20857 0 4 0ZM4 5.7C3.21143 5.7 2.57143 5.028 2.57143 4.2C2.57143 3.372 3.21143 2.7 4 2.7C4.78857 2.7 5.42857 3.372 5.42857 4.2C5.42857 5.028 4.78857 5.7 4 5.7Z" fill="#A5A5A5"/>
+                  </svg>
+                </div>
+                <div class="text">${data["response"]["path"][i]}</div>
+              </div>
+              <div class="line"></div>
+            `);
+          }
+        } 
+      }
+    }
+}
+
 
