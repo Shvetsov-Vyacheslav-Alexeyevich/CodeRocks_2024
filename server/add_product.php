@@ -1,12 +1,15 @@
 <?
+    session_start();
     require_once("db_model.php");
+    require_once("functions.php");
 
     if (!empty($_POST))
     {
         $errors = [];
-        $product_photo = $_POST['product_photo'];
+        $product_photo = $_FILES['picture'];
         $product_name = $_POST['product_name'];
         $product_price = $_POST['product_price'];
+        $product_vendor = $_SESSION['user']['vendor_id'];
 
         $product_weight = $_POST['product_weight'];
         $product_length = $_POST['product_length'];
@@ -20,7 +23,7 @@
         if (!empty($product_name) && !empty($product_price) && !empty($product_weight) && !empty($product_length) && !empty($product_width) && !empty($product_height) && !empty($product_category) && !empty($product_description))
         {
             // ----> Проверки
-            if (empty($product_photo)) { $errors[] = 'Вы не добавили ни одной фотографии товара.'; }
+            if (empty($_FILES)) { $errors[] = 'Вы не добавили ни одной фотографии товара.'; }
 
             if (mb_strlen($product_name) > 100) { $errors[] = 'Название должно быть менше или равно 100 символам.'; }
 
@@ -57,7 +60,6 @@
                         name,
                         description,
                         price,
-                        photo_path,
                         category_id,
                         vendor_id,
                         is_hidden
@@ -66,9 +68,8 @@
                         '$product_name',
                         '$product_description',
                          $product_price,
-                        '$product_photo',
                          $product_category,
-                         1,
+                         $product_vendor,
                          $product_access
                     )
                 ");
@@ -82,9 +83,8 @@
                         name = '$product_name' AND
                         description = '$product_description' AND
                         price = $product_price AND
-                        photo_path = '$product_photo' AND
                         category_id = $product_category AND
-                        vendor_id = 1 AND
+                        vendor_id = $product_vendor AND
                         is_hidden = $product_access
                 ");
 
@@ -107,7 +107,21 @@
                     )
                 ");
 
-                echo 'Ваш товар был успешно добавлен в каталог товаров.';
+                $result = add_photos($_FILES['picture'], $product_id);
+
+                if ($result !== true)
+                {
+                    $arr = $db->query("
+                        DELETE
+                        FROM
+                            PRODUCTS
+                        WHERE
+                            id = $product_id
+                    ");
+                }
+                
+                header("Refresh: 0");
+                exit;
             }
         } else { $errors[] = 'Не все поля заполнены.'; }
     }
@@ -129,16 +143,16 @@
                 ?>
             </div>
         <? endif ?>
-        <form method="POST" action="" style="display: flex; flex-direction: column; width: 300px">
-
-            <input type="file" name="product_photo" accept=".png, .jpeg" multiple>
+        <form enctype="multipart/form-data" method="POST" action="" style="display: flex; flex-direction: column; width: 300px">
+            <input name="MAX_FILE_SIZE" type="hidden" value="10485760">
+            <input type="file" name="picture[]" accept="image/png, image/jpeg" multiple>
 
             <input type="text" name="product_name" placeholder="Название">
             <input type="number" min="0" max="99999" name="product_price" placeholder="Стоимость">
 
             <input type="number" min="0" step="0.001" max="1000" name="product_weight" placeholder="Масса (кг)">
 
-            <input type="number" min="0" name="product_length" placeholder="Длин (мм)">
+            <input type="number" min="0" name="product_length" placeholder="Длина (мм)">
             <input type="number" min="0" name="product_width" placeholder="Ширина (мм)">
             <input type="number" min="0" name="product_height" placeholder="Высота (мм)">
 

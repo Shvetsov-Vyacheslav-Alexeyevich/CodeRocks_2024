@@ -216,6 +216,8 @@
                     return "wrong_extension";
                 }
             }
+
+            return true;
         }
         else
         {
