@@ -18,14 +18,14 @@
     <div class="line"></div>
     <div class="inputs">
       <div class="double">
-        <input id="second_name" type="text" name="second_name" placeholder="Фамилия" required>
-        <input id="first_name" type="text" name="first_name" placeholder="Имя" required>
+        <input id="second_name" type="text" name="firstname" placeholder="Фамилия" required>
+        <input id="first_name" type="text" name="name" placeholder="Имя" required>
       </div>
-      <input id="third_name" type="text" name="third_name" placeholder="Отчество" required>
+      <input id="third_name" type="text" name="surname" placeholder="Отчество" required>
       <input id="email" type="email" name="email" placeholder="E-mail" required>
       <div class="double">
         <input id="password" type="password" name="password" placeholder="Пароль" required>
-        <input id="next_password" type="password" name="next_password" placeholder="Повтор пароля" required>
+        <input id="next_password" type="password" name="repeat_password" placeholder="Повтор пароля" required>
       </div>
     </div>
     <button class="submit" type="submit">Зарегистрироваться</button>
