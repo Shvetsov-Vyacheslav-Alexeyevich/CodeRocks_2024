@@ -227,6 +227,7 @@ if (document.getElementById("form_recovery_change") != null) {
 }
 
 // Заказ товара
+let count_products = 0;
 if (document.getElementById("product_order_form") != null) {
   // Отправка данных на сервер
   document.querySelectorAll("#product_order_form .inputs_product_order").forEach(element => {
@@ -266,9 +267,10 @@ if (document.getElementById("product_order_form") != null) {
               </div>
               <div class="line"></div>
             `);
+            console.log("first")
           } 
           else if (i == data["response"]["path"].length - 1) {
-            document.querySelector(".next_fetch .paths .inner").innerHTML = (`
+            document.querySelector(".next_fetch .paths .inner").innerHTML += (`
               <div class="path">
                 <div class="icon">
                   <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -280,7 +282,7 @@ if (document.getElementById("product_order_form") != null) {
             `);
           } 
           else {
-            document.querySelector(".next_fetch .paths .inner").innerHTML = (`
+            document.querySelector(".next_fetch .paths .inner").innerHTML += (`
               <div class="path">
                 <div class="icon">
                   <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">

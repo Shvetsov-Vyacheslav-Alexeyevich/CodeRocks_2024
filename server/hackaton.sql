@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 10 2024 г., 21:40
+-- Время создания: Апр 10 2024 г., 18:40
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -79,9 +79,8 @@ INSERT INTO `LOCATIONS` (`id`, `name`) VALUES
 
 CREATE TABLE `LOCATION_ROADS` (
   `id` int NOT NULL COMMENT 'Айди.',
-  `cost` decimal(7,2) NOT NULL COMMENT 'Стоимость маршрута.',
   `time` int NOT NULL COMMENT 'Время маршрута в секундах.',
-  `vendor_id` int NOT NULL COMMENT 'Кому принадлежит маршрут.'
+  `distance` int NOT NULL COMMENT 'Километраж маршрута.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Маршруты.';
 
 -- --------------------------------------------------------
@@ -137,6 +136,15 @@ CREATE TABLE `PICKUP_POINTS` (
   `vendor_id` int NOT NULL COMMENT 'Кому принадлежит.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='ПВЗ.';
 
+--
+-- Дамп данных таблицы `PICKUP_POINTS`
+--
+
+INSERT INTO `PICKUP_POINTS` (`id`, `name`, `location_id`, `vendor_id`) VALUES
+(1, 'Кемеровская база', 1, 1),
+(2, 'Новосибирская база', 10, 1),
+(3, 'Кузнецкая база', 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -148,7 +156,6 @@ CREATE TABLE `PRODUCTS` (
   `name` varchar(100) NOT NULL COMMENT 'Название.',
   `description` varchar(1024) NOT NULL COMMENT 'Описание.',
   `price` decimal(9,2) NOT NULL COMMENT 'Цена.',
-  `photo_path` varchar(100) NOT NULL COMMENT 'Путь до фото товара.',
   `category_id` int NOT NULL COMMENT 'Категория.',
   `vendor_id` int NOT NULL COMMENT 'Кто продавец.',
   `is_hidden` tinyint(1) NOT NULL COMMENT 'Скрыто (1) или нет (0).'
@@ -158,10 +165,11 @@ CREATE TABLE `PRODUCTS` (
 -- Дамп данных таблицы `PRODUCTS`
 --
 
-INSERT INTO `PRODUCTS` (`id`, `name`, `description`, `price`, `photo_path`, `category_id`, `vendor_id`, `is_hidden`) VALUES
-(22, 'Жопаz', 'sususu', '3.00', '', 1, 1, 0),
-(23, 'Марихуанна', 'Шикарная', '5.00', 'Screenshot_5.png', 12, 1, 1),
-(24, 'Помидоры', 'Шикарная', '5.00', '', 1, 1, 0);
+INSERT INTO `PRODUCTS` (`id`, `name`, `description`, `price`, `category_id`, `vendor_id`, `is_hidden`) VALUES
+(22, 'Жопаz', 'sususu', '3.00', 1, 1, 0),
+(30, 'Сухарики', '100', '100.00', 1, 1, 0),
+(32, 'Вафли Яшкино', '100', '150.00', 1, 1, 0),
+(34, 'Лапша', 'Лапша. Вкусный, сочный', '25.00', 12, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -175,13 +183,6 @@ CREATE TABLE `PRODUCTS_COUNT` (
   `product_id` int NOT NULL COMMENT 'Какого товара.',
   `store_id` int NOT NULL COMMENT 'На каком складе.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Количество товара на складе.';
-
---
--- Дамп данных таблицы `PRODUCTS_COUNT`
---
-
-INSERT INTO `PRODUCTS_COUNT` (`id`, `count`, `product_id`, `store_id`) VALUES
-(1, 160, 24, 1);
 
 -- --------------------------------------------------------
 
@@ -249,8 +250,33 @@ CREATE TABLE `PRODUCT_CHARACTERISTICS` (
 
 INSERT INTO `PRODUCT_CHARACTERISTICS` (`id`, `product_id`, `weight`, `length`, `width`, `height`) VALUES
 (2, 22, '0.001', 3, 1, 1),
-(3, 23, '0.001', 1, 1, 1),
-(4, 24, '0.001', 1, 1, 1);
+(10, 30, '100.000', 100, 100, 100),
+(12, 32, '1.000', 100, 100, 100),
+(14, 34, '0.400', 300, 50, 25);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `PRODUCT_PHOTOS`
+--
+
+CREATE TABLE `PRODUCT_PHOTOS` (
+  `id` int NOT NULL COMMENT 'Айди.',
+  `product_id` int NOT NULL COMMENT 'Чья картинка.',
+  `photo_path` varchar(100) NOT NULL COMMENT 'Ссылка на картинку.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Картинки товаров.';
+
+--
+-- Дамп данных таблицы `PRODUCT_PHOTOS`
+--
+
+INSERT INTO `PRODUCT_PHOTOS` (`id`, `product_id`, `photo_path`) VALUES
+(1, 30, 'cursor_preview.png'),
+(2, 30, 'um_3COLka4M.jpg'),
+(3, 32, 'cursor_preview.png'),
+(4, 32, 'um_3COLka4M.jpg'),
+(5, 32, 'bliss_internet.png'),
+(6, 34, 'um_3COLka4M.jpg');
 
 -- --------------------------------------------------------
 
@@ -308,9 +334,8 @@ CREATE TABLE `STORES` (
 --
 
 INSERT INTO `STORES` (`id`, `name`, `location_id`, `vendor_id`) VALUES
-(1, 'Кемеровский склад, ул. Ленина 45', 1, 2),
-(2, 'Южный склад, ул. Звёздная 99', 8, 2),
-(3, 'Пердаплюево склад, ул Какашкина 11', 1, 2);
+(1, 'Новосибирский склад', 10, 1),
+(2, 'Беловский склад', 6, 1);
 
 -- --------------------------------------------------------
 
@@ -354,7 +379,7 @@ CREATE TABLE `USER_CLIENTS` (
 --
 
 INSERT INTO `USER_CLIENTS` (`id`, `user_id`, `firstname`, `name`, `surname`) VALUES
-(1, 1, 'Черных', 'Игорь', 'Олегович');
+(1, 1, 'Жмышенко', 'Михаил', 'Альбертович');
 
 -- --------------------------------------------------------
 
@@ -375,6 +400,19 @@ CREATE TABLE `USER_VENDORS` (
 INSERT INTO `USER_VENDORS` (`id`, `user_id`, `company_name`) VALUES
 (1, 2, 'ООО Попчанский'),
 (2, 3, 'Сочная рыба с пивом');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `VENDOR_ROUTES`
+--
+
+CREATE TABLE `VENDOR_ROUTES` (
+  `id` int NOT NULL COMMENT 'Айди.',
+  `road_id` int NOT NULL COMMENT 'Какой из предопределённых маршрутов.',
+  `cost` int NOT NULL COMMENT 'Цена.',
+  `vendor_id` int NOT NULL COMMENT 'Кому принадлежит.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Стоимость маршрутов у разных компаний.';
 
 --
 -- Индексы сохранённых таблиц
@@ -404,8 +442,7 @@ ALTER TABLE `LOCATIONS`
 -- Индексы таблицы `LOCATION_ROADS`
 --
 ALTER TABLE `LOCATION_ROADS`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `vendor_id` (`vendor_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `ORDERS`
@@ -470,6 +507,12 @@ ALTER TABLE `PRODUCT_CHARACTERISTICS`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Индексы таблицы `PRODUCT_PHOTOS`
+--
+ALTER TABLE `PRODUCT_PHOTOS`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `PRODUCT_ROUTES`
 --
 ALTER TABLE `PRODUCT_ROUTES`
@@ -522,6 +565,14 @@ ALTER TABLE `USER_VENDORS`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Индексы таблицы `VENDOR_ROUTES`
+--
+ALTER TABLE `VENDOR_ROUTES`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `road_id` (`road_id`),
+  ADD KEY `vendor_id` (`vendor_id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -571,19 +622,19 @@ ALTER TABLE `ORDER_STATUSES`
 -- AUTO_INCREMENT для таблицы `PICKUP_POINTS`
 --
 ALTER TABLE `PICKUP_POINTS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `PRODUCTS`
 --
 ALTER TABLE `PRODUCTS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=25;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT для таблицы `PRODUCTS_COUNT`
 --
 ALTER TABLE `PRODUCTS_COUNT`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
 
 --
 -- AUTO_INCREMENT для таблицы `PRODUCT_CATEGORIES`
@@ -595,7 +646,13 @@ ALTER TABLE `PRODUCT_CATEGORIES`
 -- AUTO_INCREMENT для таблицы `PRODUCT_CHARACTERISTICS`
 --
 ALTER TABLE `PRODUCT_CHARACTERISTICS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT для таблицы `PRODUCT_PHOTOS`
+--
+ALTER TABLE `PRODUCT_PHOTOS`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `PRODUCT_ROUTES`
@@ -619,7 +676,7 @@ ALTER TABLE `SECOND_POINT_ROADS`
 -- AUTO_INCREMENT для таблицы `STORES`
 --
 ALTER TABLE `STORES`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `USERS`
@@ -640,6 +697,12 @@ ALTER TABLE `USER_VENDORS`
   MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT для таблицы `VENDOR_ROUTES`
+--
+ALTER TABLE `VENDOR_ROUTES`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
+
+--
 -- Ограничения внешнего ключа сохраненных таблиц
 --
 
@@ -649,12 +712,6 @@ ALTER TABLE `USER_VENDORS`
 ALTER TABLE `FIRST_POINT_ROADS`
   ADD CONSTRAINT `first_point_roads_ibfk_1` FOREIGN KEY (`location_id`) REFERENCES `LOCATIONS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `first_point_roads_ibfk_2` FOREIGN KEY (`road_id`) REFERENCES `LOCATION_ROADS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `LOCATION_ROADS`
---
-ALTER TABLE `LOCATION_ROADS`
-  ADD CONSTRAINT `location_roads_ibfk_1` FOREIGN KEY (`vendor_id`) REFERENCES `USER_VENDORS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `ORDERS`
@@ -734,6 +791,13 @@ ALTER TABLE `USER_CLIENTS`
 --
 ALTER TABLE `USER_VENDORS`
   ADD CONSTRAINT `user_vendors_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `VENDOR_ROUTES`
+--
+ALTER TABLE `VENDOR_ROUTES`
+  ADD CONSTRAINT `vendor_routes_ibfk_1` FOREIGN KEY (`road_id`) REFERENCES `LOCATION_ROADS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `vendor_routes_ibfk_2` FOREIGN KEY (`vendor_id`) REFERENCES `USER_VENDORS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
