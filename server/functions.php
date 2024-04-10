@@ -224,4 +224,9 @@
             return null;
         }
     }
+
+    function road_calculation($store, $pup)
+    {
+
+    }
 ?>
