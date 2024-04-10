@@ -3,10 +3,10 @@
     <div class="left">
       <select id="category_input" name="category">
         <option value="0" hidden>Категория</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
+        <option value="1">2</option>
+        <option value="2">3</option>
       </select>
-      <select id="rating_input" name="category">
+      <select id="rating_input" name="rating">
         <option value="0">По рейтингу</option>
         <option value="1">По возрастанию цены</option>
         <option value="2">По убыванию цены</option>
@@ -26,7 +26,7 @@
   <div id="all_cards">
     <div class="inner">
       <!-- Карточка -->
-      <div class="card">
+      <div class="card" card_id="1">
         <a class="block" href="#">
           <div class="image" style="background: url(/sources/images/photo.png) no-repeat center;"></div>
           <p class="description">
@@ -72,7 +72,7 @@
           <div>Заказать</div>
         </a>
       </div>
-      <div class="card">
+      <div class="card" card_id="2">
         <a class="block" href="#">
           <div class="image" style="background: url(/sources/images/photo.png) no-repeat center;"></div>
           <p class="description">
@@ -118,7 +118,7 @@
           <div>Заказать</div>
         </a>
       </div>
-      <div class="card">
+      <div class="card" card_id="3">
         <a class="block" href="#">
           <div class="image" style="background: url(/sources/images/photo.png) no-repeat center;"></div>
           <p class="description">
@@ -164,7 +164,7 @@
           <div>Заказать</div>
         </a>
       </div>
-      <div class="card">
+      <div class="card" card_id="4">
         <a class="block" href="#">
           <div class="image" style="background: url(/sources/images/photo.png) no-repeat center;"></div>
           <p class="description">
@@ -210,7 +210,7 @@
           <div>Заказать</div>
         </a>
       </div>
-      <div class="card">
+      <div class="card" card_id="5">
         <a class="block" href="#">
           <div class="image" style="background: url(/sources/images/photo.png) no-repeat center;"></div>
           <p class="description">
@@ -256,7 +256,7 @@
           <div>Заказать</div>
         </a>
       </div>
-      <div class="card">
+      <div class="card" card_id="6">
         <a class="block" href="#">
           <div class="image" style="background: url(/sources/images/photo.png) no-repeat center;"></div>
           <p class="description">
@@ -302,7 +302,7 @@
           <div>Заказать</div>
         </a>
       </div>
-      <div class="card">
+      <div class="card" card_id="7">
         <a class="block" href="#">
           <div class="image" style="background: url(/sources/images/photo.png) no-repeat center;"></div>
           <p class="description">
@@ -350,5 +350,5 @@
       </div>
     </div>
   </div>
-
+  
 </section>

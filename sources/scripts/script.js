@@ -1,4 +1,22 @@
 "use strict"
+let arr_card_html = [];
+if (document.getElementById("products") != null) {
+  document.querySelectorAll("#all_cards .card").forEach(element => {
+    arr_card_html.push(element); 
+  });
+}
+
+// Функции
+function showModalWrapper() {
+  document.body.style.overflow = "hidden";
+  document.querySelector(".modal_wrapper").style.display = "block";
+}
+
+function hideModalWrapper() {
+  document.body.style.overflow = "auto";
+  document.querySelector(".modal_wrapper").style.display = "none";
+}
+
 // Форма регистрации
 if (document.getElementById("form_registration") != null) {
   // Флаг значения свича
@@ -139,7 +157,35 @@ if (document.getElementById("form_recovery") != null) {
   });
 }
 
-// Форма восстановления пароля
+// Форма фильтра
+if (document.getElementById("filter_main") != null) {
+  // Отправка данных на сервер
+  document.getElementById("filter_main").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let formData = new FormData(document.getElementById("filter_main"));
+    formData.set("form_type", "filter_request");
+    // Запрос на отправку
+    fetch("/server/server.php", {
+      method: "POST",
+      body: formData
+    })
+    .then((response) => response.json())
+    .then((data) => succesfull_status(data));
+
+    // Вывод сообщения об успехе
+    function succesfull_status(data) {
+      console.log(data);
+      if (data["status"] == true) {
+        let response_server = data["response"]
+        document.querySelector("#products .inner").innerHTML = ""
+        for (let i of response_server ) {
+          document.querySelector("#products .inner").innerHTML += arr_card_html[Number(i) - 1].outerHTML;
+        }
+      }
+    }
+  });
+}
+
 if (document.getElementById("form_recovery_change") != null) {
   // Отправка данных на сервер
   document.getElementById("form_recovery_change").addEventListener("submit", (event) => {
@@ -170,3 +216,4 @@ if (document.getElementById("form_recovery_change") != null) {
     }
   });
 }
+

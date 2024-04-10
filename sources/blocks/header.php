@@ -47,3 +47,4 @@
       <div class="container">
         <div class="inner">
           <!-- Контент -->
+          <div class="modal_wrapper"></div>

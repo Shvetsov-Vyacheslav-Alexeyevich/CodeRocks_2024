@@ -4,7 +4,6 @@
 
   if (!empty($_POST))
   {
->>>>>>> b9d74db7a4d526cbaba4a42e1b41bd5675cb7518
     if ($_POST["form_type"] == "registration")
     {
       $email = $_POST['email'];
@@ -48,5 +47,13 @@
       echo json_encode(["status" => true]);
     else if ($_POST["form_type"] == "recovery_change")
       echo json_encode(["status" => true, "body" => $_POST]);
+    else if ($_POST["form_type"] == "filter_request") {
+      // echo json_encode(["status" => true, "response" => $_POST]);
+      if ($_POST["category"] == "1") {
+        echo json_encode(["status" => true, "response" => ["2", "1", "4"]]);
+      } else {
+        echo json_encode(["status" => true, "response" => ["3", "2", "1", "7"]]);
+      }
+    }
   }
 ?>
