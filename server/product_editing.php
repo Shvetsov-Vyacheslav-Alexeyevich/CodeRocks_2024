@@ -37,6 +37,24 @@
                 product_id = $_GET[id]
         ");
 
+        if (isset($_GET['delete_id']) && isset($_GET['id']))
+        {
+            $arr = [];
+            $db = new MysqlModel;
+
+            $arr = $db->query("
+                DELETE
+                FROM
+                    PRODUCTS_COUNT
+                WHERE
+                    id = $_GET[delete_id]
+            ");
+        }
+
+    }
+
+    if (!empty($_POST))
+    {
         $errors = [];
         $product_id = $product['id'];
         $product_photo = $product['photo_path'];
@@ -53,13 +71,10 @@
         $product_height = $product_characteristics['height'];
         ///----------------------------------------------
 
-        var_dump( $product );
-        var_dump( $product_characteristics );
+        ///----------------------------------------------
+        $product_storage_warehouse = $_POST['storage_warehouse'];
+        $product_quantity = $_POST['product_quantity'];
 
-    }
-
-    if (!empty($_POST))
-    {
         if (!empty($product_name) && !empty($product_price) && !empty($product_weight) && !empty($product_length) && !empty($product_width) && !empty($product_height) && !empty($product_category) && !empty($product_description))
         {
             // ----> Проверки
@@ -137,8 +152,52 @@
                 ");
 
                 echo 'Ваш товар был успешно изменён.';
-                header("Refresh: 0");
-                exit;
+                
+                // ----> Проверки склада
+                if ($product_storage_warehouse != 'none' && $product_quantity > 0)
+                {
+                    $arr = $db->goResultOnce("
+                        SELECT
+                            id,
+                            count,
+                            store_id
+                        FROM
+                            PRODUCTS_COUNT
+                        WHERE
+                            product_id = $_GET[id] AND
+                            store_id = $product_storage_warehouse
+                    ");
+
+                    if (!empty($arr))
+                    {
+                        $product_quantity += $arr['count'];
+                        $arr = $db->query("
+                            UPDATE
+                                PRODUCTS_COUNT
+                            SET
+                                count = $product_quantity
+                            WHERE
+                                id = $arr[id]
+                        ");
+                    }
+                    else
+                    {
+                        $arr = $db->query("
+                            INSERT INTO PRODUCTS_COUNT(
+                                count,
+                                product_id,
+                                store_id
+                            )
+                            VALUES(
+                                $product_quantity,
+                                $product_id,
+                                $product_storage_warehouse
+                            )
+                        ");
+                    }
+                    echo 'Вы изменили товар на складе.';
+                }
+                // ---------------------------------
             }
         } else { $errors[] = 'Не все поля заполнены.'; }
     }
@@ -200,11 +259,59 @@
                     <input type="radio" name="open_access" value="0" checked> Открыть доступ
                     <input type="radio" name="open_access" value="1"> Скрыть доступ
                 </div>
+
+
+
+                <div>
+                    <select name="storage_warehouse">
+                        <option value="none" selected>Склад хранения</option>
+                        <?
+                        $warehouses = [];
+                        $db = new MysqlModel;
+
+                        $warehouses = $db->goResult("
+                            SELECT
+                                *
+                            FROM
+                                STORES
+                        ");
+                        
+                        foreach ($warehouses as $stock):
+                        ?>
+                        <option value="<?= $stock['id'] ?>"><?= $stock['name'] ?></option>
+                        <? endforeach ?>
+                    </select>
+                    <input type="number" min="1" name="product_quantity" placeholder="Количество">
+
+                </div>
             </form>
         <? endif ?>
         <hr>
         <pre>
-            <? var_dump($_POST)?>
+            <?
+            $warehouses = [];
+            $db = new MysqlModel;
+
+            $skladbl = $db->goResult("
+            SELECT
+                p.*,
+                s.name
+            FROM
+                PRODUCTS_COUNT p, STORES s
+            WHERE
+                s.id = p.store_id
+            ");
+            
+            foreach ($skladbl as $sklad):
+            ?>
+            <p>
+                Товар, в количестве: <?= $sklad['count'] ?> шт., хранится на складе: <?= $sklad['name'] ?>.
+                <a href="?id=<?=$_GET['id']?>&delete_id=<?=$sklad['id']?>">Удалить</a>
+            </p>
+            <? endforeach ?>
+            <?
+            var_dump($_POST);
+            ?>
         </pre>
     </body>
 </html>

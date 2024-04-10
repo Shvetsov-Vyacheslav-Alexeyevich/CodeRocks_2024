@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 09 2024 г., 12:09
+-- Время создания: Апр 10 2024 г., 21:40
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -54,6 +54,22 @@ CREATE TABLE `LOCATIONS` (
   `id` int NOT NULL COMMENT 'Айди.',
   `name` varchar(50) NOT NULL COMMENT 'Название.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Города.';
+
+--
+-- Дамп данных таблицы `LOCATIONS`
+--
+
+INSERT INTO `LOCATIONS` (`id`, `name`) VALUES
+(1, 'Кемерово'),
+(2, 'Ленинск-Кузнецкий'),
+(3, 'Новокузнецк'),
+(4, 'Прокопьевск'),
+(5, 'Междуреченск'),
+(6, 'Белово'),
+(7, 'Киселёвск'),
+(8, 'Полысаево'),
+(9, 'Мариинск'),
+(10, 'Новосибирск');
 
 -- --------------------------------------------------------
 
@@ -138,6 +154,15 @@ CREATE TABLE `PRODUCTS` (
   `is_hidden` tinyint(1) NOT NULL COMMENT 'Скрыто (1) или нет (0).'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Товары.';
 
+--
+-- Дамп данных таблицы `PRODUCTS`
+--
+
+INSERT INTO `PRODUCTS` (`id`, `name`, `description`, `price`, `photo_path`, `category_id`, `vendor_id`, `is_hidden`) VALUES
+(22, 'Жопаz', 'sususu', '3.00', '', 1, 1, 0),
+(23, 'Марихуанна', 'Шикарная', '5.00', 'Screenshot_5.png', 12, 1, 1),
+(24, 'Помидоры', 'Шикарная', '5.00', '', 1, 1, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -151,6 +176,13 @@ CREATE TABLE `PRODUCTS_COUNT` (
   `store_id` int NOT NULL COMMENT 'На каком складе.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Количество товара на складе.';
 
+--
+-- Дамп данных таблицы `PRODUCTS_COUNT`
+--
+
+INSERT INTO `PRODUCTS_COUNT` (`id`, `count`, `product_id`, `store_id`) VALUES
+(1, 160, 24, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -162,6 +194,40 @@ CREATE TABLE `PRODUCT_CATEGORIES` (
   `name` varchar(100) NOT NULL COMMENT 'Название.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Категории товаров.';
 
+--
+-- Дамп данных таблицы `PRODUCT_CATEGORIES`
+--
+
+INSERT INTO `PRODUCT_CATEGORIES` (`id`, `name`) VALUES
+(1, 'Верхняя одежда'),
+(2, 'Одежда'),
+(3, 'Обувь'),
+(4, 'Аксессуары для одежды'),
+(5, 'Сумки и рюкзаки'),
+(6, 'Досуг и творчество'),
+(7, 'Канцелярия'),
+(8, 'Игрушки'),
+(9, 'Книги'),
+(10, 'Спорт'),
+(11, 'Зоотовары'),
+(12, 'Продукты'),
+(13, 'Косметика'),
+(14, 'Парфюмерия'),
+(15, 'Уход за кожей'),
+(16, 'Аксессуары'),
+(17, 'Ювелирные изделия'),
+(18, 'Электроника'),
+(19, 'Бытовая техника'),
+(20, 'Ремонт'),
+(21, 'Мебель'),
+(22, 'Освещение'),
+(23, 'Аксессуары для дома'),
+(24, 'Ванная'),
+(25, 'Кухня'),
+(26, 'Спальня'),
+(27, 'Гостиная'),
+(28, 'Детская');
+
 -- --------------------------------------------------------
 
 --
@@ -171,9 +237,20 @@ CREATE TABLE `PRODUCT_CATEGORIES` (
 CREATE TABLE `PRODUCT_CHARACTERISTICS` (
   `id` int NOT NULL COMMENT 'Айди.',
   `product_id` int NOT NULL COMMENT 'Какому товару принадлежит характеристика.',
-  `name` varchar(50) NOT NULL COMMENT 'Поле.',
-  `value` varchar(50) NOT NULL COMMENT 'Значение.'
+  `weight` decimal(7,3) NOT NULL COMMENT 'Вес (кг)',
+  `length` int NOT NULL COMMENT 'Длина (мм)',
+  `width` int NOT NULL COMMENT 'Ширина (мм)',
+  `height` int NOT NULL COMMENT 'Высота (мм)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Характеристики товара.';
+
+--
+-- Дамп данных таблицы `PRODUCT_CHARACTERISTICS`
+--
+
+INSERT INTO `PRODUCT_CHARACTERISTICS` (`id`, `product_id`, `weight`, `length`, `width`, `height`) VALUES
+(2, 22, '0.001', 3, 1, 1),
+(3, 23, '0.001', 1, 1, 1),
+(4, 24, '0.001', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -226,6 +303,15 @@ CREATE TABLE `STORES` (
   `vendor_id` int NOT NULL COMMENT 'Кому принадлежит.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Склады.';
 
+--
+-- Дамп данных таблицы `STORES`
+--
+
+INSERT INTO `STORES` (`id`, `name`, `location_id`, `vendor_id`) VALUES
+(1, 'Кемеровский склад, ул. Ленина 45', 1, 2),
+(2, 'Южный склад, ул. Звёздная 99', 8, 2),
+(3, 'Пердаплюево склад, ул Какашкина 11', 1, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -245,7 +331,9 @@ CREATE TABLE `USERS` (
 --
 
 INSERT INTO `USERS` (`id`, `email`, `password_hash`, `photo_path`, `is_vendor`) VALUES
-(1, 'chernykhin45@gmail.com', '$2y$10$VYpQVT8.LxA1LoZlO8eXEun1DSAbpJTkfQAgp50WZixFSLWTVwBj2', NULL, 0);
+(1, 'chernykhin45@gmail.com', '$2y$10$VYpQVT8.LxA1LoZlO8eXEun1DSAbpJTkfQAgp50WZixFSLWTVwBj2', NULL, 0),
+(2, 'molow@inbox.ru', '$2y$10$/bswI5F04zH3RFWaho7e0.d/kBAbTCNVzaFI9hYxC6CMYEgV3802.', NULL, 1),
+(3, 'omg@mail.ru', '$2y$10$stT6sJxqaFCNKklLtuEKU.Iug9RazSOduXn6QYp6YFEjSIwBNs.l2', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -266,7 +354,7 @@ CREATE TABLE `USER_CLIENTS` (
 --
 
 INSERT INTO `USER_CLIENTS` (`id`, `user_id`, `firstname`, `name`, `surname`) VALUES
-(1, 1, 'Жмышенко', 'Михаил', 'Альбертович');
+(1, 1, 'Черных', 'Игорь', 'Олегович');
 
 -- --------------------------------------------------------
 
@@ -277,8 +365,16 @@ INSERT INTO `USER_CLIENTS` (`id`, `user_id`, `firstname`, `name`, `surname`) VAL
 CREATE TABLE `USER_VENDORS` (
   `id` int NOT NULL COMMENT 'Айди.',
   `user_id` int NOT NULL COMMENT 'К какому юзеру привязан.',
-  `company_name` varchar(50) NOT NULL COMMENT 'Название компании.'
+  `company_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Название компании.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Продавцы.';
+
+--
+-- Дамп данных таблицы `USER_VENDORS`
+--
+
+INSERT INTO `USER_VENDORS` (`id`, `user_id`, `company_name`) VALUES
+(1, 2, 'ООО Попчанский'),
+(2, 3, 'Сочная рыба с пивом');
 
 --
 -- Индексы сохранённых таблиц
@@ -445,7 +541,7 @@ ALTER TABLE `FIRST_POINT_ROADS`
 -- AUTO_INCREMENT для таблицы `LOCATIONS`
 --
 ALTER TABLE `LOCATIONS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `LOCATION_ROADS`
@@ -481,25 +577,25 @@ ALTER TABLE `PICKUP_POINTS`
 -- AUTO_INCREMENT для таблицы `PRODUCTS`
 --
 ALTER TABLE `PRODUCTS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT для таблицы `PRODUCTS_COUNT`
 --
 ALTER TABLE `PRODUCTS_COUNT`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `PRODUCT_CATEGORIES`
 --
 ALTER TABLE `PRODUCT_CATEGORIES`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT для таблицы `PRODUCT_CHARACTERISTICS`
 --
 ALTER TABLE `PRODUCT_CHARACTERISTICS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `PRODUCT_ROUTES`
@@ -523,13 +619,13 @@ ALTER TABLE `SECOND_POINT_ROADS`
 -- AUTO_INCREMENT для таблицы `STORES`
 --
 ALTER TABLE `STORES`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `USERS`
 --
 ALTER TABLE `USERS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `USER_CLIENTS`
@@ -541,7 +637,7 @@ ALTER TABLE `USER_CLIENTS`
 -- AUTO_INCREMENT для таблицы `USER_VENDORS`
 --
 ALTER TABLE `USER_VENDORS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=3;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
