@@ -338,10 +338,14 @@ a.button_link {
 #footer .wrapper {
   display: flex;
   justify-content: space-between;
-  padding: 25px 45px;
+  padding: 15px 45px;
   border-radius: 0px 0px 12px 12px;
   align-items: center;
   box-shadow: var(--standart_light_shadow);
+}
+
+#header .wrapper {
+  max-height: 70px;
 }
 
 #header .wrapper .left a.logo {
