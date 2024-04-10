@@ -1,3 +1,14 @@
+<?
+  if (!empty($_POST))
+  {
+    if (!empty($_POST['exit']))
+    {
+      $_SESSION = [];
+      header("Refresh: 0");
+      exit;
+    }
+  }
+?>
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -34,9 +45,16 @@
                   <path d="M10 10C12.7625 10 15 7.75625 15 5C15 2.2375 12.7625 0 10 0C7.2375 0 5 2.2375 5 5C5 7.75625 7.2375 10 10 10ZM10 12.5C6.66875 12.5 0 14.1687 0 17.5V20H20V17.5C20 14.1687 13.3313 12.5 10 12.5Z" fill="#F36767"/>
                 </svg>
               </div>
-              <a class="block" href="/pages/authorization.php?form=log">Войти</a>
-              <div class="line"></div>
-              <a class="block" href="/pages/authorization.php?form=reg">Зарегистрироваться</a>
+              <? if (empty($_SESSION)): ?>
+                <a class="block" href="/pages/authorization.php?form=log">Войти</a>
+                <div class="line"></div>
+                <a class="block" href="/pages/authorization.php?form=reg">Зарегистрироваться</a>
+              <? else: ?>
+                <form method="POST" action="">
+                  <input type="hidden" name="exit" value="true">
+                  <input type="submit" value="Выйти из аккаунта">
+                </form>
+              <? endif ?>
             </div>
           </div>
           <?php } ?>
