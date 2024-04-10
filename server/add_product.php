@@ -19,11 +19,6 @@
         $product_category = $_POST['product_category'];
         $product_description = $_POST['product_description'];
         $product_access = $_POST['open_access'];
-
-        $product_storage_warehouse = $_POST['storage_warehouse'];
-        $product_quantity = $_POST['product_quantity'];
-
-        var_dump($product_storage_warehouse);
         
         if (!empty($product_name) && !empty($product_price) && !empty($product_weight) && !empty($product_length) && !empty($product_width) && !empty($product_height) && !empty($product_category) && !empty($product_description))
         {
@@ -112,7 +107,6 @@
                     )
                 ");
 
-<<<<<<< Updated upstream
                 $result = add_photos($_FILES['picture'], $product_id);
 
                 if ($result !== true)
@@ -128,27 +122,6 @@
                 
                 header("Refresh: 0");
                 exit;
-=======
-                echo 'Ваш товар был успешно добавлен в каталог товаров.';
-
-                // ----> Проверки склада
-                if ($product_storage_warehouse != 'none' && $product_quantity > 0)
-                {
-                    $arr = $db->query("
-                        INSERT INTO PRODUCTS_COUNT(
-                            count,
-                            product_id,
-                            store_id
-                        )
-                        VALUES(
-                            $product_quantity,
-                            $product_id,
-                            $product_storage_warehouse
-                        )
-                    ");
-                }
-                // ---------------------------------
->>>>>>> Stashed changes
             }
         } else { $errors[] = 'Не все поля заполнены.'; }
     }
@@ -208,30 +181,6 @@
             <div>
                 <input type="radio" name="open_access" value="0" checked> Открыть доступ
                 <input type="radio" name="open_access" value="1"> Скрыть доступ
-            </div>
-
-
-
-            <div>
-                <select name="storage_warehouse">
-                    <option value="none" selected>Склад хранения</option>
-                    <?
-                    $warehouses = [];
-                    $db = new MysqlModel;
-
-                    $warehouses = $db->goResult("
-                        SELECT
-                            *
-                        FROM
-                            STORES
-                    ");
-                    
-                    foreach ($warehouses as $stock):
-                    ?>
-                    <option value="<?= $stock['id'] ?>"><?= $stock['name'] ?></option>
-                    <? endforeach ?>
-                </select>
-                <input type="number" min="1" name="product_quantity" placeholder="Количество">
             </div>
         </form>
         <hr>
