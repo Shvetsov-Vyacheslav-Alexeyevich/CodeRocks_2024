@@ -22,6 +22,6 @@
       <input id="count_products" class="inputs_product_order text_left" type="number" min="1" name="count_products" placeholder="Стоимость доставки (₽)" style="margin-top: 14px" required>
       <button class="submit" type="submit">Добавить</button>
       <div class="line"></div>
-      
+      .
     </div>
 </form>
