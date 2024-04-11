@@ -28,6 +28,7 @@ function hideModalWrapper() {
     element.style.display = "none";
   });
   document.querySelector(".modal_wrapper").style.display = "none";
+  location.reload()
 }
 
 // Форма регистрации
@@ -340,5 +341,73 @@ if (document.getElementById("product_order_form") != null) {
     }
   });
 }
+
+function open_add_product(clicked) {
+  showModalWrapper();
+  document.getElementById("form_add_product").style.display = "block";
+
+}
+
+function remove_on_stock(clicked, param_1, arra) {
+  console.log(param_1.getAttribute("index"));
+  return param_2.splice(param_1);
+}
+
+var arr_stocks = {};
+function remove_stock(el) {
+  console.log("Да");
+  console.log(arr_stocks);
+  let index = ((el.parentNode).parentNode).getAttribute("index");
+  delete arr_stocks[index];
+  document.querySelector(".stocks").innerHTML = "";
+  for(let i in arr_stocks) {
+    document.querySelector(".stocks").innerHTML += (`
+      <div class="row" index="${i}" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
+        <div class="left">${i}</div>
+        <div class="right" style="display: flex; align-items: center; gap: 10px;">
+          <div class="count_on_stocks">${arr_stocks[i]} шт.</div>
+          <div class="remove" onclick="remove_stock(this)" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer; margin-bottom: 6px;"></div>
+        </div>
+      </div>
+    `);
+  }
+}
+
+document.querySelectorAll(".add").forEach(element => {
+  element.addEventListener("click", () => {
+    const value_1 = document.querySelector("#stock_input").value;
+    const value_2 = document.querySelector("#count_pr").value;
+    arr_stocks[String(value_1)] = String(value_2);
+    document.querySelector(".stocks").innerHTML = "";
+    for(let i in arr_stocks) {
+      document.querySelector(".stocks").innerHTML += (`
+        <div class="row" index="${i}" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
+          <div class="left">${i}</div>
+          <div class="right" style="display: flex; align-items: center; gap: 10px;">
+            <div class="count_on_stocks">${arr_stocks[i]} шт.</div>
+            <div class="remove" onclick="remove_stock(this)" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer; margin-bottom: 6px;"></div>
+          </div>
+        </div>
+      `);
+    }
+    document.querySelector("#stock_input").value = "0";
+    document.querySelector("#count_pr").value = "";
+  });
+});
+
+if (document.getElementById("form_add_product") != null) {
+  
+}
+
+
+
+
+// function append_stocks(clicked) {
+//   const value_1 = document.querySelector("#category_inputt").value;
+//   const value_2 = document.querySelector("#count_pr").value;
+//   console.log(value_1);
+//   arr_stocks[String(value_1)] = String(value_2);
+//   console.log(arr_stocks);
+// }
 
 
