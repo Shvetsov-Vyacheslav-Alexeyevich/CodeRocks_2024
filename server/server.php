@@ -43,10 +43,12 @@
           echo json_encode(["status" => false]);
       }
     }
+
     else if ($_POST["form_type"] == "recovery_get")
       echo json_encode(["status" => true]);
     else if ($_POST["form_type"] == "recovery_change")
       echo json_encode(["status" => true, "body" => $_POST]);
+
     else if ($_POST["form_type"] == "filter_request") {
       // echo json_encode(["status" => true, "response" => $_POST]);
       if ($_POST["category"] == "1") {

@@ -1,0 +1,6 @@
+.white_tiles {
+    height: 50px;
+    width: 100%;
+    box-shadow: var(--standart_light_shadow);
+    border-radius: 12px;
+}
