@@ -274,6 +274,7 @@ button.submit {
   transition: box-shadow 0.3s linear;
   color: white;
   font: var(--font_standart);
+  cursor: pointer;
 }
 
 .form_wrapper a.button_link,
@@ -955,4 +956,59 @@ input.text_left {
 
 #add_path .double {
   margin: 0px;
+}
+
+#form_del_product {
+  display: none;
+}
+
+#form_del_product .double {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+#form_del_product .text_del {
+  text-align: center;
+  font: 20px/1.2 "Rubik", sans-serif;;
+}
+
+#form_del_product .double .left .del_yes,
+#form_del_product .double .right .del_no {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F36767;
+  width: 169px;
+  height: 38px;
+  cursor: pointer;
+  border-radius: 6px;
+  color: var(--additional_color);
+}
+
+#form_del_product .double .right a.del_no {
+  background-color: #669EF2;
+}
+
+#form_add_punct {
+  display: none;
+}
+
+#form_edit_name_company {
+  display: none;
+}
+
+#form_edit_fio {
+  display: none;
+}
+
+#form_edit_fio .text_description,
+#form_edit_name_company .text_description {
+  text-align: center;
+}
+
+#form_edit_fio .inputs,
+#form_edit_name_company {
+  margin-top: 0px;
 }

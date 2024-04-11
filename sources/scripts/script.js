@@ -563,3 +563,80 @@ function open_add_path(element) {
   console.log(getScore);
 })();
 console.log(getScore);
+
+
+function open_del_product(clicked) {
+  showModalWrapper();
+  document.getElementById("form_del_product").style.display = "block";
+
+}
+
+if (document.getElementById("form_del_product") != null) {
+  document.getElementById("form_del_product").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let formData = new FormData(document.getElementById("form_del_product"));
+    formData.set("form_type", "add_product");
+    formData.set("stocks", arr_stocks);
+    // Запрос на отправку
+    fetch("/server/server.php", {
+      method: "POST",
+      body: formData
+    })
+    .then((response) => response.json())
+    .then((data) => succesfull_status(data));
+
+    // Вывод сообщения об успехе
+    function succesfull_status(data) {
+      if (data["status"] == true) {
+        hideModalWrapper();
+        alert(data["response"]);
+        console.log(data["response"]);
+        // location.reload()
+      }
+    }
+  });
+}
+
+function open_add_punct(clicked) {
+  showModalWrapper();
+  document.getElementById("form_add_punct").style.display = "block";
+
+}
+
+if (document.getElementById("form_add_punct") != null) {
+  document.getElementById("form_add_punct").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let formData = new FormData(document.getElementById("form_add_punct"));
+    formData.set("form_type", "add_product");
+    formData.set("stocks", arr_stocks);
+    // Запрос на отправку
+    fetch("/server/server.php", {
+      method: "POST",
+      body: formData
+    })
+    .then((response) => response.json())
+    .then((data) => succesfull_status(data));
+
+    // Вывод сообщения об успехе
+    function succesfull_status(data) {
+      if (data["status"] == true) {
+        hideModalWrapper();
+        alert(data["response"]);
+        console.log(data["response"]);
+        // location.reload()
+      }
+    }
+  });
+}
+
+function open_edit_name_company(clicked) {
+  showModalWrapper();
+  document.getElementById("form_edit_name_company").style.display = "block";
+
+}
+
+function open_edit_fio(clicked) {
+  showModalWrapper();
+  document.getElementById("form_edit_fio").style.display = "block";
+
+}
