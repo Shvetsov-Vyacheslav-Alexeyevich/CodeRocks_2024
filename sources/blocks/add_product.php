@@ -28,11 +28,11 @@
         <input id="lenght" class="text_left" type="number" min="1" name="lenght" placeholder="Длина" required>
         <input id="height" class="text_left" type="number" min="1" name="height" placeholder="Высота" required>
       </div>
-      <select id="category_input" class="select_input_style text_left" name="category">
+      <select id="category_input" class="select_input_style text_left" name="category" required>
         <option value="0" hidden>Категория</option>
         <option value="1">1</option>
       </select>
-      <textarea id="description" class="textarea" name="description" placeholder="Описание"></textarea>
+      <textarea id="description" class="textarea" name="description" placeholder="Описание" required></textarea>
       <button class="submit" type="submit">Создать</button>
       <div class="line"></div>
       <div class="radio_zone">
@@ -51,7 +51,7 @@
             <option value="Город 22  23 21">2</option>
             <option value="Кемерово лол">3</option>
           </select>
-          <input id="count_pr" class="text_left" type="number" min="1" name="stocks" placeholder="Колличество" style="width: 130px;" required>
+          <input id="count_pr" class="text_left" type="number" min="1" name="stocks" placeholder="Колличество" style="width: 130px;">
         </div>
         <a class="button_link add">Добавить</a>
         <div class="line"></div>

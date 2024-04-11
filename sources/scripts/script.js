@@ -396,7 +396,29 @@ document.querySelectorAll(".add").forEach(element => {
 });
 
 if (document.getElementById("form_add_product") != null) {
-  
+  document.getElementById("form_add_product").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let formData = new FormData(document.getElementById("form_add_product"));
+    formData.set("form_type", "add_product");
+    formData.set("stocks", arr_stocks);
+    // Запрос на отправку
+    fetch("/server/server.php", {
+      method: "POST",
+      body: formData
+    })
+    .then((response) => response.json())
+    .then((data) => succesfull_status(data));
+
+    // Вывод сообщения об успехе
+    function succesfull_status(data) {
+      if (data["status"] == true) {
+        hideModalWrapper();
+        alert(data["response"]);
+        console.log(data["response"]);
+        // location.reload()
+      }
+    }
+  });
 }
 
 
