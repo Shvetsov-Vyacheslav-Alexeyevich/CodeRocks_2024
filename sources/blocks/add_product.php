@@ -67,7 +67,7 @@
                     
               foreach ($warehouses as $stock):
             ?>
-              <option value="<?= $stock['name'] ?>"><?= $stock['name'] ?></option>
+              <option value="<?= $stock['id'] ?>"><?= $stock['name'] ?></option>
             <? endforeach ?>
           </select>
           <input id="count_pr" class="text_left" type="number" min="1" name="product_quantity" placeholder="Колличество" style="width: 130px;">
