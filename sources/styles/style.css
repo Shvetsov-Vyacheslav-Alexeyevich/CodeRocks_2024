@@ -772,3 +772,176 @@ input.text_left {
   border-radius: 1.5px;
 }
 
+#form_edit_product {
+  display: none;
+}
+
+#form_edit_product .file_inputs {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+#form_edit_product .style_file {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px
+}
+
+#form_edit_product .style_file .icon {
+  display: block;
+  position: relative;
+  bottom: 10px;
+}
+
+#form_edit_product .textarea {
+  margin-top: 14px;
+  margin-bottom: 14px;
+  width: 100%;
+  min-height: 114px;
+  max-height: 114px;
+  overflow-y: auto;
+  padding-top: 10px;
+  padding-left: 10px;
+  background: var(--additional_color);
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  color: var(--text_color);
+  resize: none;
+}
+
+#form_edit_product .textarea::placeholder {
+  color: var(--text_light_color);
+}
+
+#form_edit_product .textarea::-webkit-scrollbar {
+  width: 3px;
+}
+
+#form_edit_product .textarea::-webkit-scrollbar-track {
+  border-radius: 1.5px;
+  background: #D9D9D9;
+}
+
+#form_edit_product .textarea::-webkit-scrollbar-thumb {
+  background-color: var(--accent_color_1);
+  border-radius: 1.5px;
+}
+
+#form_add_stock {
+  display: none;
+}
+
+#form_add_stock .file_inputs {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+#form_add_stock .style_file {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px
+}
+
+#form_add_stock .style_file .icon {
+  display: block;
+  position: relative;
+  bottom: 10px;
+}
+
+#form_add_stock .textarea {
+  margin-top: 14px;
+  margin-bottom: 14px;
+  width: 100%;
+  min-height: 114px;
+  max-height: 114px;
+  overflow-y: auto;
+  padding-top: 10px;
+  padding-left: 10px;
+  background: var(--additional_color);
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  color: var(--text_color);
+  resize: none;
+}
+
+#form_add_stock .textarea::placeholder {
+  color: var(--text_light_color);
+}
+
+#form_add_stock .textarea::-webkit-scrollbar {
+  width: 3px;
+}
+
+#form_add_stock .textarea::-webkit-scrollbar-track {
+  border-radius: 1.5px;
+  background: #D9D9D9;
+}
+
+#form_add_stock .textarea::-webkit-scrollbar-thumb {
+  background-color: var(--accent_color_1);
+  border-radius: 1.5px;
+}
+
+#form_add_pick_point {
+  display: none;
+}
+
+#form_add_pick_point .file_inputs {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+#form_add_pick_point .style_file {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px
+}
+
+#form_add_pick_point .style_file .icon {
+  display: block;
+  position: relative;
+  bottom: 10px;
+}
+
+#form_add_pick_point .textarea {
+  margin-top: 14px;
+  margin-bottom: 14px;
+  width: 100%;
+  min-height: 114px;
+  max-height: 114px;
+  overflow-y: auto;
+  padding-top: 10px;
+  padding-left: 10px;
+  background: var(--additional_color);
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  color: var(--text_color);
+  resize: none;
+}
+
+#form_add_pick_point .textarea::placeholder {
+  color: var(--text_light_color);
+}
+
+#form_add_pick_point .textarea::-webkit-scrollbar {
+  width: 3px;
+}
+
+#form_add_pick_point .textarea::-webkit-scrollbar-track {
+  border-radius: 1.5px;
+  background: #D9D9D9;
+}
+
+#form_add_pick_point .textarea::-webkit-scrollbar-thumb {
+  background-color: var(--accent_color_1);
+  border-radius: 1.5px;
+}

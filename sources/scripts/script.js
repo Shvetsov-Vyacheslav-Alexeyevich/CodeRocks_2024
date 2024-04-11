@@ -342,12 +342,6 @@ if (document.getElementById("product_order_form") != null) {
   });
 }
 
-function open_add_product(clicked) {
-  showModalWrapper();
-  document.getElementById("form_add_product").style.display = "block";
-
-}
-
 function remove_on_stock(clicked, param_1, arra) {
   console.log(param_1.getAttribute("index"));
   return param_2.splice(param_1);
@@ -395,12 +389,17 @@ document.querySelectorAll(".add").forEach(element => {
   });
 });
 
+function open_add_product(clicked) {
+  showModalWrapper();
+  document.getElementById("form_add_product").style.display = "block";
+
+}
 if (document.getElementById("form_add_product") != null) {
   document.getElementById("form_add_product").addEventListener("submit", (event) => {
     event.preventDefault();
     let formData = new FormData(document.getElementById("form_add_product"));
     formData.set("form_type", "add_product");
-    formData.set("stocks", arr_stocks);
+    formData.set("stocks", JSON.stringify(arr_stocks));
     // Запрос на отправку
     fetch("/server/server.php", {
       method: "POST",
@@ -432,4 +431,95 @@ if (document.getElementById("form_add_product") != null) {
 //   console.log(arr_stocks);
 // }
 
+function open_edit_product(clicked) {
+  showModalWrapper();
+  document.getElementById("form_edit_product").style.display = "block";
 
+}
+if (document.getElementById("form_edit_product") != null) {
+  document.getElementById("form_edit_product").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let formData = new FormData(document.getElementById("form_edit_product"));
+    formData.set("form_type", "add_product");
+    formData.set("stocks", arr_stocks);
+    // Запрос на отправку
+    fetch("/server/server.php", {
+      method: "POST",
+      body: formData
+    })
+    .then((response) => response.json())
+    .then((data) => succesfull_status(data));
+
+    // Вывод сообщения об успехе
+    function succesfull_status(data) {
+      if (data["status"] == true) {
+        hideModalWrapper();
+        alert(data["response"]);
+        console.log(data["response"]);
+        // location.reload()
+      }
+    }
+  });
+}
+
+function open_add_stock(clicked) {
+  showModalWrapper();
+  document.getElementById("form_add_stock").style.display = "block";
+
+}
+if (document.getElementById("form_add_stock") != null) {
+  document.getElementById("form_add_stock").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let formData = new FormData(document.getElementById("form_add_stock"));
+    formData.set("form_type", "add_product");
+    formData.set("stocks", arr_stocks);
+    // Запрос на отправку
+    fetch("/server/server.php", {
+      method: "POST",
+      body: formData
+    })
+    .then((response) => response.json())
+    .then((data) => succesfull_status(data));
+
+    // Вывод сообщения об успехе
+    function succesfull_status(data) {
+      if (data["status"] == true) {
+        hideModalWrapper();
+        alert(data["response"]);
+        console.log(data["response"]);
+        // location.reload()
+      }
+    }
+  });
+}
+
+function open_add_pick_point(clicked) {
+  showModalWrapper();
+  document.getElementById("form_add_pick_point").style.display = "block";
+
+}
+if (document.getElementById("form_add_pick_point") != null) {
+  document.getElementById("form_add_pick_point").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let formData = new FormData(document.getElementById("form_add_pick_point"));
+    formData.set("form_type", "add_product");
+    formData.set("stocks", arr_stocks);
+    // Запрос на отправку
+    fetch("/server/server.php", {
+      method: "POST",
+      body: formData
+    })
+    .then((response) => response.json())
+    .then((data) => succesfull_status(data));
+
+    // Вывод сообщения об успехе
+    function succesfull_status(data) {
+      if (data["status"] == true) {
+        hideModalWrapper();
+        alert(data["response"]);
+        console.log(data["response"]);
+        // location.reload()
+      }
+    }
+  });
+}
