@@ -892,56 +892,52 @@ input.text_left {
   display: none;
 }
 
-#form_add_pick_point .file_inputs {
-  opacity: 0;
-  visibility: hidden;
-  position: absolute;
-}
-
-#form_add_pick_point .style_file {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px
-}
-
-#form_add_pick_point .style_file .icon {
-  display: block;
-  position: relative;
-  bottom: 10px;
-}
-
-#form_add_pick_point .textarea {
-  margin-top: 14px;
-  margin-bottom: 14px;
-  width: 100%;
-  min-height: 114px;
-  max-height: 114px;
+#form_add_pick_point .pick-up_point {
   overflow-y: auto;
-  padding-top: 10px;
-  padding-left: 10px;
+  padding: 8px;
   background: var(--additional_color);
   border-radius: 4px;
-  border: none;
-  outline: none;
-  color: var(--text_color);
   resize: none;
+  margin-top: 14px;
+  width: 100%;
+  min-height: 136px;
+  max-height: 136px;
+  position: relative;
 }
 
-#form_add_pick_point .textarea::placeholder {
-  color: var(--text_light_color);
-}
-
-#form_add_pick_point .textarea::-webkit-scrollbar {
+#form_add_pick_point .pick-up_point::-webkit-scrollbar {
   width: 3px;
 }
 
-#form_add_pick_point .textarea::-webkit-scrollbar-track {
+#form_add_pick_point .pick-up_point::-webkit-scrollbar-track {
   border-radius: 1.5px;
   background: #D9D9D9;
 }
 
-#form_add_pick_point .textarea::-webkit-scrollbar-thumb {
+#form_add_pick_point .pick-up_point::-webkit-scrollbar-thumb {
   background-color: var(--accent_color_1);
   border-radius: 1.5px;
+}
+
+#form_add_pick_point .pick-up_point_contaner .pick-up_point .pick_point {
+  text-align: center;
+  border-radius: 4px;
+  max-width: 336px;
+  /* height: 50px; */
+  box-shadow: var(--standart_light_shadow);
+  padding: 6px;
+}
+
+#form_add_pick_point .double .line {
+  width: 16px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent_color_2);
+  position: absolute;
+}
+
+#form_add_pick_point .inputs .description_text {
+  color: var(--text_light_color);
+  font: var(--font_standart);
+  margin-bottom: 6px;
 }

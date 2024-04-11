@@ -15,13 +15,59 @@
         <option value="1">1</option>
       </select>
       <div class="line"></div>
+
+      <div class="description_text">
+        Склад (город) - Пункт выдачи (город)
+      </div>
+
       <select id="category_input" class="select_input_style text_left" name="category" required>
         <option value="0" hidden>Маршрут</option>
         <option value="1">1</option>
       </select>
-      <input id="count_products" class="inputs_product_order text_left" type="number" min="1" name="count_products" placeholder="Стоимость доставки (₽)" style="margin-top: 14px" required>
       <button class="submit" type="submit">Добавить</button>
       <div class="line"></div>
-      .
+      <div class="pick-up_point_contaner">
+        <div class="pick-up_point">
+
+          <div class="pick_point">
+            <div class="double" style="color: var(--text_color);">
+              <div class="left">
+                Пункт выдачи №1
+              </div>
+              <div class="right">
+                <div class="line"></div>
+                Хабаровск
+              </div>
+            </div>
+            <div class="double" style="">
+              <div class="left">
+                Город №1 - Город №2
+              </div>
+              <div class="right">
+                240км., 6ч. 3000₽
+              </div>
+            </div>
+          </div>
+
+          <div class="pick_point">
+            <div class="double" style="color: var(--text_color);">
+              <div class="left">
+                Пункт выдачи №1
+              </div>
+              <div class="right">
+                Хабаровск
+              </div>
+            </div>
+            <div class="double" style="">
+              <div class="left">
+                Город №1 - Город №2
+              </div>
+              <div class="right">
+                240км., 6ч. 3000₽
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 </form>
