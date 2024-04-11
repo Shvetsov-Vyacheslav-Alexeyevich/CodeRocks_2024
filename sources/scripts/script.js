@@ -342,15 +342,8 @@ if (document.getElementById("product_order_form") != null) {
   });
 }
 
-function remove_on_stock(clicked, param_1, arra) {
-  console.log(param_1.getAttribute("index"));
-  return param_2.splice(param_1);
-}
-
 var arr_stocks = {};
 function remove_stock(el) {
-  console.log("Да");
-  console.log(arr_stocks);
   let index = ((el.parentNode).parentNode).getAttribute("index");
   delete arr_stocks[index];
   document.querySelector(".stocks").innerHTML = "";
@@ -412,36 +405,58 @@ if (document.getElementById("form_add_product") != null) {
     function succesfull_status(data) {
       if (data["status"] == true) {
         hideModalWrapper();
-        alert(data["response"]);
+        alert("Вы успешно создали карточку!");
         console.log(data["response"]);
-        // location.reload()
+        location.reload()
       }
     }
   });
 }
 
-
-
-
-// function append_stocks(clicked) {
-//   const value_1 = document.querySelector("#category_inputt").value;
-//   const value_2 = document.querySelector("#count_pr").value;
-//   console.log(value_1);
-//   arr_stocks[String(value_1)] = String(value_2);
-//   console.log(arr_stocks);
-// }
-
+var click_elem;
 function open_edit_product(clicked) {
   showModalWrapper();
   document.getElementById("form_edit_product").style.display = "block";
-
+  click_elem = clicked;
 }
+
+arr_stocks = get_arr_stocks()
+document.querySelectorAll("stocks .remove").forEach(element => {
+  element.addEventListener("click", () => {
+    console.log("Hello")
+    let index = ((this.parentNode).parentNode).getAttribute("index");
+    delete arr_stocks[index];
+  });
+  document.querySelector(".stocks").innerHTML = "";
+  for(let i in arr_stocks) {
+    document.querySelector(".stocks").innerHTML += (`
+      <div class="row" index="${i}" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
+        <div class="left">${i}</div>
+        <div class="right" style="display: flex; align-items: center; gap: 10px;">
+          <div class="count_on_stocks"><span class="c">${arr_stocks[i]}</span> шт.</div>
+          <div class="remove" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer; margin-bottom: 6px;"></div>
+        </div>
+      </div>
+    `);
+  }
+});
+
+function get_arr_stocks() {
+  let arr_stocks = {};
+  document.querySelectorAll(".stocks .row").forEach(element => {
+    arr_stocks[element.getAttribute("index")] = element.querySelector(".c").innerHTML; 
+  });
+  console.log(arr_stocks);
+  return arr_stocks;
+}
+
 if (document.getElementById("form_edit_product") != null) {
   document.getElementById("form_edit_product").addEventListener("submit", (event) => {
     event.preventDefault();
     let formData = new FormData(document.getElementById("form_edit_product"));
-    formData.set("form_type", "add_product");
-    formData.set("stocks", arr_stocks);
+    formData.set("card_id", click_elem.getAttribute("card_id"));
+    formData.set("form_type", "edit_product");
+    formData.set("stocks", JSON.stringify(arr_stocks));
     // Запрос на отправку
     fetch("/server/server.php", {
       method: "POST",
@@ -454,9 +469,8 @@ if (document.getElementById("form_edit_product") != null) {
     function succesfull_status(data) {
       if (data["status"] == true) {
         hideModalWrapper();
-        alert(data["response"]);
-        console.log(data["response"]);
-        // location.reload()
+        alert("Вы успешно изменили карточку!");
+        location.reload()
       }
     }
   });
@@ -498,6 +512,7 @@ function open_add_pick_point(clicked) {
   document.getElementById("form_add_pick_point").style.display = "block";
 
 }
+
 if (document.getElementById("form_add_pick_point") != null) {
   document.getElementById("form_add_pick_point").addEventListener("submit", (event) => {
     event.preventDefault();

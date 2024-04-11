@@ -25,34 +25,11 @@
             <input type="submit">
         </form>
         <pre>
+            Сессия:
+            <? var_dump($_SESSION) ?>
+            <hr>
             <?
-            var_dump($_SESSION);
-            $db = new MysqlModel();
-            $products = $db->goResult("
-              SELECT
-                *
-              FROM
-                PRODUCTS
-            ");
-          
-            $product_photos = $db->goResult("
-              SELECT
-                *
-              FROM
-                PRODUCT_PHOTOS
-            ");
-          
-            for ($i = 0; $i < count($products); $i++)
-            {
-              for ($j = 0; $j < count($product_photos); $j++)
-              {
-                if ($product_photos[$j]['product_id'] == $products[$i]['id'])
-                {
-                  $products[$i]['photos'][] = $product_photos[$j]['photo_path'];
-                }
-              }
-            }
-            var_dump($products);
+            var_dump(road_calculation("Кемерово", "Новокузнецк"));
             ?>
         </pre>
     </body>
