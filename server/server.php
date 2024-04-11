@@ -64,6 +64,9 @@
     else if ($_POST["form_type"] == "new_order") {
       echo json_encode(["status" => true]);
     }
+    else if ($_POST["form_type"] == "edit_product") {
+      echo json_encode(["status" => true]);
+    }
     else if ($_POST["form_type"] == "add_product") {
       $errors = [];
       
