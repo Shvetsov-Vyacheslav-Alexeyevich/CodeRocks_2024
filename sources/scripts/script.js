@@ -1,4 +1,16 @@
 "use strict"
+// Функция get-запроса на сервер
+async function get_request(url) {
+  try {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+  }
+  catch(error) {
+      console.log(error);
+  }
+};
+
 let arr_card_html = [];
 if (document.getElementById("products") != null) {
   document.querySelectorAll("#all_cards .card").forEach(element => {
@@ -538,3 +550,16 @@ if (document.getElementById("form_add_pick_point") != null) {
     }
   });
 }
+
+// ADD PATH
+// Открытие формы
+function open_add_path(element) {
+  showModalWrapper();
+  document.getElementById("add_path").style.display = "block";
+}
+
+(async function() {
+  const getScore = await get_request("/server/please_me.php?add_path=give"); 
+  console.log(getScore);
+})();
+console.log(getScore);
