@@ -225,8 +225,45 @@
         }
     }
 
-    function road_calculation($store, $pup)
+    function road_calculation($first_point, $second_point)
     {
+        $db = new MysqlModel();
+        $result = $db->goResult("
+            SELECT
+                lr.*,
+                l1.name as first_point,
+                l2.name as second_point
+            FROM
+                LOCATION_ROADS lr,
+                FIRST_POINT_ROADS fpr,
+                SECOND_POINT_ROADS spr,
+                LOCATIONS l1,
+                LOCATIONS l2
+            WHERE
+                l1.id = fpr.location_id
+                AND l2.id = spr.location_id
+                AND lr.id = fpr.road_id
+                AND lr.id = spr.road_id
+        ");
 
+        $temp = [];
+        $temp_fpr = $first_point;
+        $temp_spr = $second_point;
+        $tmp = "";
+
+        $j = 0;
+        
+        for ($i = 0; $i < count($result); $i++)
+        {
+            $route = $result[$j];
+
+            while (true)
+            {
+                $temp[$i][] = 0;
+                break;
+            }
+        }
+
+        return $temp;
     }
 ?>

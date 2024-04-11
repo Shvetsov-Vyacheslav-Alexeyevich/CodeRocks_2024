@@ -86,11 +86,7 @@
       $product_width = $_POST['product_width'];
       $product_height = $_POST['product_height'];
 
-      var_dump(json_decode($_POST['stocks']));
-
-      //----------------------
-      $product_storage_warehouse = $_POST['storage_warehouse'];
-      $product_quantity = $_POST['product_quantity'];
+      $product_stocks = json_decode($_POST['stocks']);
         
       if (!empty($product_name) && !empty($product_price) && !empty($product_weight) && !empty($product_length) && !empty($product_width) && !empty($product_height) && !empty($product_category) && !empty($product_description))
       {
@@ -205,22 +201,30 @@
 
           echo 'Ваш товар был успешно добавлен в каталог товаров.';
 
-          // Проверки добавления на склад в определённом кол-ве
-          if ($product_storage_warehouse != 0 && $product_quantity > 0)
+          if (!empty($product_stocks))
           {
-            $arr = $db->query("
-              INSERT INTO PRODUCTS_COUNT (
-                count,
-                product_id,
-                store_id
-              )
-              VALUES (
-                $product_quantity,
-                $product_id,
-                $product_storage_warehouse
-              )
-            ");
+            foreach ($product_stocks as $store_id => $count)
+            {
+              if ($store_id != 0 && $count > 0)
+              {
+                $arr = $db->query("
+                  INSERT INTO PRODUCTS_COUNT (
+                    count,
+                    product_id,
+                    store_id
+                  )
+                  VALUES (
+                    $count,
+                    $product_id,
+                    $store_id
+                  )
+                ");
+              }
+            }
           }
+
+
+          // Проверки добавления на склад в определённом кол-ве
         }
       } else { $errors[] = 'Не все поля заполнены.'; }
 
