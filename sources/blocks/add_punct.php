@@ -1,4 +1,4 @@
-<form id="form_add_pick_point" class="form_wrapper modal" action="/server/server/php></form" POST="POST" enctype="multipart/form-data">
+<form id="form_add_punct" class="form_wrapper modal" action="/server/server/php></form" POST="POST" enctype="multipart/form-data">
   <div class="inner">
     <a class="link_undo" onclick="hideModalWrapper()">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -6,22 +6,21 @@
       </svg>
     </a>
     <h1 class="form_heading">Добавить пункт</h1>
-
-    
     <div class="inputs">
-      <input id="product_name" class="text_left" type="text" name="product_name" placeholder="Пункт выдачи" required>
+      <input id="pick_pointer" class="text_left" type="text" name="pick_pointer" placeholder="Пункт выдачи" required>
       <select id="category_input" class="select_input_style text_left" name="category" required>
         <option value="0" hidden>Город</option>
         <option value="1">1</option>
       </select>
-      <div class="line"></div>
-      <select id="category_input" class="select_input_style text_left" name="category" required>
-        <option value="0" hidden>Маршрут</option>
-        <option value="1">1</option>
-      </select>
-      <input id="count_products" class="inputs_product_order text_left" type="number" min="1" name="count_products" placeholder="Стоимость доставки (₽)" style="margin-top: 14px" required>
       <button class="submit" type="submit">Добавить</button>
       <div class="line"></div>
-      .
+
+      <div class="row" index="0" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
+          <div class="left">Название склада №1</div>
+          <div class="right" style="display: flex; align-items: center; gap: 10px;">
+            <div class="count_on_stocks">Хабаровск</div>
+            <div class="remove" onclick="remove_stock(this)" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
+          </div>
+      </div>
     </div>
 </form>

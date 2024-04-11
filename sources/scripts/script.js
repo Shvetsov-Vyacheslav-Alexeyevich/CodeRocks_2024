@@ -1,4 +1,16 @@
 "use strict"
+// Функция get-запроса на сервер
+async function get_request(url) {
+  try {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+  }
+  catch(error) {
+      console.log(error);
+  }
+};
+
 let arr_card_html = [];
 if (document.getElementById("products") != null) {
   document.querySelectorAll("#all_cards .card").forEach(element => {
@@ -537,4 +549,94 @@ if (document.getElementById("form_add_pick_point") != null) {
       }
     }
   });
+}
+
+// ADD PATH
+// Открытие формы
+function open_add_path(element) {
+  showModalWrapper();
+  document.getElementById("add_path").style.display = "block";
+}
+
+(async function() {
+  const getScore = await get_request("/server/please_me.php?add_path=give"); 
+  console.log(getScore);
+})();
+console.log(getScore);
+
+
+function open_del_product(clicked) {
+  showModalWrapper();
+  document.getElementById("form_del_product").style.display = "block";
+
+}
+
+if (document.getElementById("form_del_product") != null) {
+  document.getElementById("form_del_product").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let formData = new FormData(document.getElementById("form_del_product"));
+    formData.set("form_type", "add_product");
+    formData.set("stocks", arr_stocks);
+    // Запрос на отправку
+    fetch("/server/server.php", {
+      method: "POST",
+      body: formData
+    })
+    .then((response) => response.json())
+    .then((data) => succesfull_status(data));
+
+    // Вывод сообщения об успехе
+    function succesfull_status(data) {
+      if (data["status"] == true) {
+        hideModalWrapper();
+        alert(data["response"]);
+        console.log(data["response"]);
+        // location.reload()
+      }
+    }
+  });
+}
+
+function open_add_punct(clicked) {
+  showModalWrapper();
+  document.getElementById("form_add_punct").style.display = "block";
+
+}
+
+if (document.getElementById("form_add_punct") != null) {
+  document.getElementById("form_add_punct").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let formData = new FormData(document.getElementById("form_add_punct"));
+    formData.set("form_type", "add_product");
+    formData.set("stocks", arr_stocks);
+    // Запрос на отправку
+    fetch("/server/server.php", {
+      method: "POST",
+      body: formData
+    })
+    .then((response) => response.json())
+    .then((data) => succesfull_status(data));
+
+    // Вывод сообщения об успехе
+    function succesfull_status(data) {
+      if (data["status"] == true) {
+        hideModalWrapper();
+        alert(data["response"]);
+        console.log(data["response"]);
+        // location.reload()
+      }
+    }
+  });
+}
+
+function open_edit_name_company(clicked) {
+  showModalWrapper();
+  document.getElementById("form_edit_name_company").style.display = "block";
+
+}
+
+function open_edit_fio(clicked) {
+  showModalWrapper();
+  document.getElementById("form_edit_fio").style.display = "block";
+
 }
