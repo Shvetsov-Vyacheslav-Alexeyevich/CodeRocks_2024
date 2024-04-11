@@ -7,7 +7,7 @@
     </a>
     <h1 class="form_heading">Создать товар</h1>
     <div class="line"></div>
-    <input id="file" class="file_inputs" type="file" accept=".jpg,.jpeg,.png" name="file">
+    <input id="file" class="file_inputs" type="file" accept="image/png, image/jpeg" name="picture[]" multiple>
     <label for="file" class="style_file">
       <div .icon>
         <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -18,40 +18,60 @@
     </label>
     <div class="line"></div>
     <div class="inputs">
-      <input id="product_name" class="text_left" type="text" name="product_name" placeholder="Название" required>
+      <input id="product_name" class="text_left" type="text" maxlength="100" name="product_name" placeholder="Название" required>
       <div class="double">
-        <input id="price" class="text_left" type="number" min="1" name="price" placeholder="Стоимость" required>
-        <input id="weight" class="text_left" type="number" min="1" name="weight" placeholder="Масса (кг)" required>
+        <input id="price" class="text_left" type="number" min="1"  max="99999" name="product_price" placeholder="Стоимость" required>
+        <input id="weight" class="text_left" type="number" min="1" max="1000" step="0.01" name="product_weight" placeholder="Масса (кг)" required>
       </div>
       <div class="trible">
-        <input id="width" class="text_left" type="number" min="1" name="width" placeholder="Ширина" required>
-        <input id="lenght" class="text_left" type="number" min="1" name="lenght" placeholder="Длина" required>
-        <input id="height" class="text_left" type="number" min="1" name="height" placeholder="Высота" required>
+        <input id="width" class="text_left" type="number" min="1" name="product_length" placeholder="Ширина" required>
+        <input id="lenght" class="text_left" type="number" min="1" name="product_width" placeholder="Длина" required>
+        <input id="height" class="text_left" type="number" min="1" name="product_height" placeholder="Высота" required>
       </div>
-      <select id="category_input" class="select_input_style text_left" name="category" required>
+
+      <select id="category_input" class="select_input_style text_left" name="product_category" required>
         <option value="0" hidden>Категория</option>
-        <option value="1">1</option>
+        <?
+          $categories = [];
+          $db = new MysqlModel;
+
+          $categories = $db->goResult("SELECT * FROM PRODUCT_CATEGORIES");
+
+          foreach ($categories as $category):
+        ?>
+          <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+        <? endforeach ?>
       </select>
-      <textarea id="description" class="textarea" name="description" placeholder="Описание" required></textarea>
+
+      <textarea id="description" class="textarea" name="product_description" maxlength="1024" placeholder="Описание" required></textarea>
       <button class="submit" type="submit">Создать</button>
       <div class="line"></div>
       <div class="radio_zone">
         <div class="variant_1 active">Открыть доступ</div>
         <label class="switch">
-          <input id="visible" class="switch_input" type="checkbox" name="visible_type">
+          <input id="visible" class="switch_input" type="checkbox" name="open_access">
           <span class="switch_slider"></span>
         </label>
         <div class="variant_2">Скрыть доступ</div>
       </div>
       <div class="append_stock_save">
         <div class="double" style="margin: 14px 0px 0px;">
-          <select id="stock_input" class="select_input_style text_left" style="width: 208px;" name="stocks">
+
+          <select id="stock_input" class="select_input_style text_left" style="width: 208px;" name="storage_warehouse">
             <option value="0" hidden>Склад</option>
-            <option value="Город_1">1</option>
-            <option value="Город 22  23 21">2</option>
-            <option value="Кемерово лол">3</option>
+            <?
+              $warehouses = [];
+              $db = new MysqlModel;
+
+              $warehouses = $db->goResult("SELECT * FROM STORES");
+                    
+              foreach ($warehouses as $stock):
+            ?>
+              <option value="<?= $stock['name'] ?>"><?= $stock['name'] ?></option>
+            <? endforeach ?>
           </select>
-          <input id="count_pr" class="text_left" type="number" min="1" name="stocks" placeholder="Колличество" style="width: 130px;">
+          <input id="count_pr" class="text_left" type="number" min="1" name="product_quantity" placeholder="Колличество" style="width: 130px;">
+
         </div>
         <a class="button_link add">Добавить</a>
         <div class="line"></div>
