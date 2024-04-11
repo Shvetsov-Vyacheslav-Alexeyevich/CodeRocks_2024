@@ -25,34 +25,156 @@
             <input type="submit">
         </form>
         <pre>
+            Сессия:
+            <? var_dump($_SESSION) ?>
+            <hr>
             <?
-            var_dump($_SESSION);
             $db = new MysqlModel();
-            $products = $db->goResult("
-              SELECT
-                *
-              FROM
-                PRODUCTS
+            $result = $db->goResult("
+                SELECT
+                    lr.*,
+                    l1.name as first_point,
+                    l2.name as second_point
+                FROM
+                    LOCATION_ROADS lr,
+                    FIRST_POINT_ROADS fpr,
+                    SECOND_POINT_ROADS spr,
+                    LOCATIONS l1,
+                    LOCATIONS l2
+                WHERE
+                    l1.id = fpr.location_id
+                    AND l2.id = spr.location_id
+                    AND lr.id = fpr.road_id
+                    AND lr.id = spr.road_id
             ");
-          
-            $product_photos = $db->goResult("
-              SELECT
-                *
-              FROM
-                PRODUCT_PHOTOS
-            ");
-          
-            for ($i = 0; $i < count($products); $i++)
+
+            function findPaths($graph, $start, $end, $path = [])
             {
-              for ($j = 0; $j < count($product_photos); $j++)
-              {
-                if ($product_photos[$j]['product_id'] == $products[$i]['id'])
+                $path = array_merge($path, [$start]); // Добавляем текущую точку к пути
+            
+                if ($start == $end)
                 {
-                  $products[$i]['photos'][] = $product_photos[$j]['photo_path'];
+                    return [$path]; // Если достигли конечной точки, возвращаем найденный путь
                 }
-              }
+            
+                $paths = []; // Здесь будем хранить все найденные пути
+            
+                foreach ($graph[$start] as $key => $next)
+                {
+                    if (!in_array($next, $path))
+                    {
+                        $newPaths = findPaths($graph, $next, $end, $path); // Рекурсивно ищем пути из следующей точки
+                        foreach ($newPaths as $newPath)
+                        {
+                            $paths[] = $newPath; // Добавляем найденные пути к списку путей
+                        }
+                    }
+                }
+            
+                return $paths; // Возвращаем все найденные пути
             }
-            var_dump($products);
+            
+
+            $graph = [];
+
+            foreach ($result as $graph_elem)
+            {
+                $first_point = $graph_elem['first_point'];
+                $second_point = $graph_elem['second_point'];
+
+                if (!isset($graph[$first_point]))
+                {
+                    $graph[$first_point] = [];
+                }
+
+                if (!isset($graph[$second_point]))
+                {
+                    $graph[$second_point] = [];
+                }
+
+                foreach ($result as $temp)
+                {
+                    if
+                    (
+                        in_array($temp['first_point'], $graph[$first_point]) ||
+                        in_array($temp['first_point'], $graph[$second_point]) ||
+                        in_array($temp['second_point'], $graph[$first_point]) ||
+                        in_array($temp['second_point'], $graph[$second_point])
+                    )
+                        continue;
+
+                    if ($first_point == $temp['first_point'])
+                        $graph[$first_point][] = $temp['second_point'];
+                    if ($first_point == $temp['second_point'])
+                        $graph[$first_point][] = $temp['first_point'];
+                    if ($second_point == $temp['first_point'])
+                        $graph[$second_point][] = $temp['second_point'];
+                    if ($second_point == $temp['second_point'])
+                        $graph[$second_point][] = $temp['first_point'];
+                }
+            }
+
+            // Пример графа, представляющего маршруты между городами
+            // $graph = [
+            //     'Новосибирск' => ['Кемерово'],
+            //     'Кемерово' => ['Новосибирск', 'Мариинск', 'Ленинск-Кузнецкий'],
+            //     'Мариинск' => ['Кемерово', 'Ленинск-Кузнецкий'],
+            //     'Ленинск-Кузнецкий' => ['Кемерово', 'Мариинск', 'Полысаево'],
+            //     'Полысаево' => ['Ленинск-Кузнецкий', 'Белово'],
+            //     'Белово' => ['Полысаево', 'Киселёвск'],
+            //     'Киселёвск' => ['Белово', 'Прокопьевск'],
+            //     'Прокопьевск' => ['Киселёвск', 'Новокузнецк'],
+            //     'Новокузнецк' => ['Прокопьевск', 'Междуреченск'],
+            //     'Междуреченск' => ['Новокузнецк']
+            // ];
+            
+            echo "<hr>";
+            var_dump($graph);
+
+            $start = 'Кемерово'; // Начальная точка
+            $end = 'Белово'; // Конечная точка
+            
+            // Поиск всех путей между начальной и конечной точками
+            $paths = findPaths($graph, $start, $end);
+
+            $temp = [];
+
+            foreach ($paths as $key => $path)
+            {
+                for ($i = 1; $i < count($path); $i++)
+                {
+                    $last_loc = $path[$i - 1];
+                    $loc = $path[$i];
+
+                    foreach ($result as $string)
+                    {
+                        if (($string['first_point'] == $last_loc && $string['second_point'] == $loc) || ($string['first_point'] == $loc && $string['second_point'] == $last_loc))
+                            $temp[$key][] = $string;
+                    }
+                }
+            }
+
+            $routes = [];
+
+            foreach ($temp as $key => $route)
+            {
+                $routes[$key]['time'] = 0;
+                $routes[$key]['distance'] = 0;
+
+                foreach ($route as $road)
+                {
+                    $routes[$key]['time'] += $road['time'];
+                    $routes[$key]['distance'] += $road['distance'];
+                }
+            }
+
+            echo "<hr>";
+            var_dump($routes);
+            
+            // Вывод найденных путей
+            foreach ($paths as $path) {
+                echo implode(' -> ', $path) . "\n";
+            }
             ?>
         </pre>
     </body>
