@@ -112,7 +112,6 @@
                     )
                 ");
 
-<<<<<<< Updated upstream
                 $result = add_photos($_FILES['picture'], $product_id);
 
                 if ($result !== true)
@@ -125,10 +124,7 @@
                             id = $product_id
                     ");
                 }
-                
-                header("Refresh: 0");
-                exit;
-=======
+
                 echo 'Ваш товар был успешно добавлен в каталог товаров.';
 
                 // ----> Проверки склада
@@ -148,7 +144,6 @@
                     ");
                 }
                 // ---------------------------------
->>>>>>> Stashed changes
             }
         } else { $errors[] = 'Не все поля заполнены.'; }
     }
