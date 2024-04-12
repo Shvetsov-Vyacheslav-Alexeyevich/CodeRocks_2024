@@ -394,11 +394,11 @@ if (document.getElementById("product_order_form") != null) {
     });
   });
   
-  function open_add_product(clicked) {
-    showModalWrapper();
-    document.getElementById("form_add_product").style.display = "block";
-  
-  }
+}
+
+function open_add_product(clicked) {
+  showModalWrapper();
+  document.getElementById("form_add_product").style.display = "block";
 }
 
 if (document.getElementById("form_add_product") != null) {
