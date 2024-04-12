@@ -7,20 +7,16 @@
     </a>
     <h1 class="form_heading">Добавить склад</h1>
     <div class="inputs">
-      <input id="product_name" class="text_left" type="text" name="product_name" placeholder="Склад хранения" required>
-      <select id="category_input" class="select_input_style text_left" name="category" required>
+      <input id="stock_name" class="text_left" type="text" name="stock_name" placeholder="Склад хранения" required>
+      <!-- Тут значения в option захерачте с БД - список всех возможных городов -->
+      <select id="city" class="select_input_style text_left" name="city" required>
         <option value="0" hidden>Город</option>
         <option value="1">1</option>
       </select>
       <button class="submit" type="submit">Добавить</button>
       <div class="line"></div>
-
-      <div class="row" index="0" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
-          <div class="left">Название склада №1</div>
-          <div class="right" style="display: flex; align-items: center; gap: 10px;">
-            <div class="count_on_stocks">Хабаровск</div>
-            <div class="remove" onclick="remove_stock(this)" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
-          </div>
-        </div>
+      <div class="rows">
+        <!-- Не трогать, тут полностью оперирует JS -->
+      </div>
     </div>
 </form>
