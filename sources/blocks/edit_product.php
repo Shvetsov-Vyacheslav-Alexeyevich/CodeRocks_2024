@@ -23,6 +23,11 @@
         <input id="price" class="text_left" type="number" min="1" name="price" placeholder="Стоимость" value="111" required>
         <input id="weight" class="text_left" type="number" min="1" name="weight" placeholder="Масса (кг)" value="111" required>
       </div>
+      <div class="trible">
+        <input id="width" class="text_left" type="number" min="1" name="product_length" placeholder="Ширина" required>
+        <input id="lenght" class="text_left" type="number" min="1" name="product_width" placeholder="Длина" required>
+        <input id="height" class="text_left" type="number" min="1" name="product_height" placeholder="Высота" required>
+      </div>
       <select id="category_input" class="select_input_style text_left" name="category" required>
         <option value="0" hidden>Категория</option>
         <option value="1" selected>1</option>
