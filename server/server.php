@@ -46,9 +46,95 @@
     }
 
     else if ($_POST["form_type"] == "recovery_get")
-      echo json_encode(["status" => true]);
+    {
+      $email = $_POST['email'];
+
+      if (!empty($email))
+      {
+        $arr = [];
+        $db = new MysqlModel;
+
+        // Поиск почты в БД
+        $arr = $db->goResultOnce("SELECT * FROM USERS WHERE email='$email'");
+
+        // Если почта нашлась в БД
+        if (!empty($arr))
+        {
+          $token = md5(uniqid(rand(), true)); 
+
+          // Отправка письма с новым паролем пользователю
+          $token = md5(uniqid(rand(), true)); 
+
+          $arr = $db->query("
+            UPDATE
+              USERS
+            SET
+              reset_token = '$token'
+            WHERE
+              email='$email'
+          ");
+
+          // Отправка сообщения
+          $subject = "[BLITZ] Восстановление пароля";
+          $message = "Ваша ссылка на восстановление пароля: http://coderocks2024/pages/recovery.php?token=".$token;
+          $headers = 'From: BlitzCompany@mail.ru';
+          mail($email, $subject, $message, $headers);
+          echo "Ссылка на восстановление пароля была отправлена на ваш E-mail.";
+          echo json_encode(["status" => true]);
+        }
+        echo "Мы не нашли ни одного пользователя с такой почтой.";
+      }
+      echo "Почта пуста.";
+    }
+
     else if ($_POST["form_type"] == "recovery_change")
+    {
+      $token = $_POST['token'];
+
+      $arr = [];
+      $db = new MysqlModel;
+
+      // Поиск токена в БД
+      $arr = $db->goResultOnce("SELECT * FROM USERS WHERE reset_token='$token'");
+
+      // Если нужный токен нашёлся в БД
+      if (!empty($arr))
+      {
+        $errors = [];
+        $password = $_POST['password'];
+        $next_password = $_POST['next_password'];
+
+
+
+        // Проверки на соответствие
+        if (empty($password) || empty($next_password)) { $errors[] = 'Заполнены не все поля.'; }
+        if ($password != $next_password) { $errors[] = 'Введённые пароли не равны.'; }
+
+        if (empty($errors))
+        {
+          $password = password_hash($password, PASSWORD_BCRYPT);
+          // Редактирование пароля
+          $arr = $db->query("
+            UPDATE
+              USERS
+            SET
+              password_hash = '$password',
+              reset_token = NULL
+            WHERE
+              reset_token='$token'
+          ");
+
+          echo "Пароль успешно изменён!";
+        }
+      }
+      {
+        $_POST["form_type"] = "login";
+        echo json_encode(["status" => false]);
+      }
+
       echo json_encode(["status" => true, "body" => $_POST]);
+    }
+      
 
     else if ($_POST["form_type"] == "filter_request") {
       // echo json_encode(["status" => true, "response" => $_POST]);
