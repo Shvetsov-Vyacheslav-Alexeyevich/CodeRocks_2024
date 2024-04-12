@@ -430,6 +430,7 @@ function open_edit_product(clicked) {
   showModalWrapper();
   document.getElementById("form_edit_product").style.display = "block";
   let formData = new FormData();
+  console.log(((clicked.parentNode).parentNode).getAttribute("card_id"));
   formData.set("form_type", "give_id_card_edit");
   formData.set("card_id", ((clicked.parentNode).parentNode).getAttribute("card_id"));
   // Запрос на отправку

@@ -18,27 +18,46 @@
     </label>
     <div class="line"></div>
     <div class="inputs">
-      <input id="product_name" class="text_left" type="text" name="product_name" placeholder="Название" value="Name" required>
+      <input id="product_name" class="text_left" type="text" name="product_name" placeholder="Название" value="" required>
       <div class="double">
-        <input id="price" class="text_left" type="number" min="1" name="price" placeholder="Стоимость" value="111" required>
-        <input id="weight" class="text_left" type="number" min="1" name="weight" placeholder="Масса (кг)" value="111" required>
+        <input id="price" class="text_left" type="number" min="1" name="product_price" placeholder="Стоимость" value="" required>
+        <input id="weight" class="text_left" type="number" min="1" name="product_weight" placeholder="Масса (кг)" value="" required>
       </div>
       <div class="trible">
-        <input id="width" class="text_left" type="number" min="1" name="product_length" placeholder="Ширина" required>
-        <input id="lenght" class="text_left" type="number" min="1" name="product_width" placeholder="Длина" required>
-        <input id="height" class="text_left" type="number" min="1" name="product_height" placeholder="Высота" required>
+        <input id="width" class="text_left" type="number" min="1" name="product_length" placeholder="Ширина" value="" required>
+        <input id="lenght" class="text_left" type="number" min="1" name="product_width" placeholder="Длина" value="" required>
+        <input id="height" class="text_left" type="number" min="1" name="product_height" placeholder="Высота" value="" required>
       </div>
-      <select id="category_input" class="select_input_style text_left" name="category" required>
+
+      <!-- <select id="category_input" class="select_input_style text_left" name="category" required>
         <option value="0" hidden>Категория</option>
         <option value="1" selected>1</option>
+      </select> -->
+
+      <select id="category_input" class="select_input_style text_left" name="product_category" required>
+        <option value="0" hidden>Категория</option>
+        <?
+          $categories = [];
+          $db = new MysqlModel;
+
+          $categories = $db->goResult("SELECT * FROM PRODUCT_CATEGORIES");
+
+          foreach ($categories as $category):
+        ?>
+          <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+        <? endforeach ?>
       </select>
-      <textarea id="description" class="textarea" name="description" placeholder="Описание" required>абвгдеёжзийклмнопрстуфхцчшщъыьэюя</textarea>
+
+      <textarea id="description" class="textarea" name="product_description" placeholder="Описание" required>
+        абвгдеёжзийклмнопрстуфхцчшщъыьэюя
+      </textarea>
+
       <button class="submit" type="submit">Изменить</button>
       <div class="line"></div>
       <div class="radio_zone">
         <div class="variant_1 active">Открыть доступ</div>
         <label class="switch">
-          <input id="visible" class="switch_input" type="checkbox" name="visible_type">
+          <input id="visible" class="switch_input" type="checkbox" name="open_access">
           <span class="switch_slider"></span>
         </label>
         <div class="variant_2">Скрыть доступ</div>

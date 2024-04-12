@@ -54,6 +54,7 @@
         </label>
         <div class="variant_2">Скрыть доступ</div>
       </div>
+      
       <div class="append_stock_save">
         <div class="double" style="margin: 14px 0px 0px;">
 
