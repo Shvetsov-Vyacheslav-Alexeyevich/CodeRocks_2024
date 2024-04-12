@@ -16,7 +16,7 @@
 		<div class="cadr_name_company">
 			<div class="name_company">
 				<div class="text_name">
-					Tea town of Kazakhstan
+					<?= $user['company_name'] ?>
 				</div>
 				<div class="icon">
 					<!-- открывать форму изменения имени компании -->
@@ -30,7 +30,7 @@
 
 	<div class="container_dop_company">
 		<div class="cadrs_dop_company">
-			<div class="photo_company" style="background: url(/sources/images/photo.png) no-repeat center/cover;"></div>
+			<div class="photo_company" style="background: url(<?= (!empty($_SESSION['user']['photo_path'])) ? "/data/users/{$_SESSION['user']['id']}/{$_SESSION['user']['photo_path']}" : "/sources/images/avatar_no_img.png" ?>) no-repeat center/cover;"></div>
 			<!-- кнопки изменений -->
 			<button class="submit downolang_photo_company" type="submit">
 				<div class="icon">
