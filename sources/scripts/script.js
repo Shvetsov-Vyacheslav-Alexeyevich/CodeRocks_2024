@@ -501,11 +501,6 @@ if (document.getElementById("form_edit_product") != null) {
   });
 }
 
-function open_add_stock(clicked) {
-  showModalWrapper();
-  document.getElementById("form_add_stock").style.display = "block";
-}
-
 if (document.getElementById("form_add_stock") != null) {
   document.getElementById("form_add_stock").addEventListener("submit", (event) => {
     event.preventDefault();
@@ -823,8 +818,6 @@ function open_add_punct(clicked) {
   }
 }
 
-
-
 if (document.getElementById("form_add_punct") != null) {
   // Просто отправил запрос на добавление пункта
   document.getElementById("form_add_punct").addEventListener("submit", (event) => {
@@ -868,16 +861,11 @@ if (document.getElementById("form_add_punct") != null) {
       }
     }
   });
-  // Отправил запрос на удаление пункта
-  document.querySelectorAll(".remove_point").forEach(element => {
-    element.addEventListener("click", () => {
-
-    })
-  });
 }
 
+
+// Отправил запрос на удаление пункта
 function remove_point (element) {
-  console.log("Огонь");
   let formData = new FormData();
   formData.set("form_type", "remove_point");
   formData.set("id_point", ((element.parentNode).parentNode).getAttribute("index"));
@@ -890,7 +878,13 @@ function remove_point (element) {
   .then((data) => succesfull_status(data));
 
   function succesfull_status(data) {
-    if (data["status" == true]) {
+    fetch("/server/pleas_me.php?add_point=give", {
+      method: "GET"
+    })
+    .then((response) => response.json())
+    .then((data) => succesfull_status(data));
+
+    function succesfull_status(data) {
       let j = 0;
       document.querySelector("#form_add_punct .rows").innerHTML = "";
       for (let i of data) {
@@ -900,7 +894,66 @@ function remove_point (element) {
             <div class="left">${i[1]}</div>
             <div class="right" style="display: flex; align-items: center; gap: 10px;">
               <div class="count_on_stocks">${i[2]}</div>
-              <div class="remove remove_point" onclick(remove_point(this)) style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
+               <div class="remove remove_point" onclick(remove_point(this)) style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
+            </div>
+          </div>
+        `);
+      }
+    }
+  }
+}
+
+function open_add_stock(clicked) {
+  showModalWrapper();
+  document.getElementById("form_add_stock").style.display = "block";
+  fetch("/server/please_me.php?add_stock=give", {
+    method: "GET"
+  })
+  .then((response) => response.json())
+  .then((data) => succesfull_status(data));
+
+  function succesfull_status(data) {
+    let j = 0;
+    document.querySelector("#form_add_stock .rows").innerHTML = "";
+    for (let i of data) {
+      j++;
+      document.querySelector("#form_add_stock .rows").innerHTML += (`
+        <div class="row" index="${i[0]}" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
+          <div class="left">${i[1]}</div>
+          <div class="right" style="display: flex; align-items: center; gap: 10px;">
+            <div class="count_on_stocks">${i[2]}</div>
+            <div class="remove remove_point" onclick="remove_point2(this)" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
+          </div>
+        </div>
+      `);
+    }
+  }
+}
+
+function remove_point2(element) {
+  let formData = new FormData();
+  formData.set("form_type", "remove_stock");
+  formData.set("id_point", ((element.parentNode).parentNode).getAttribute("index"));
+  // Запрос на отправку
+  fetch("/server/server.php", {
+    method: "POST",
+    body: formData
+  })
+  .then((response) => response.json())
+  .then((data) => succesfull_status(data));
+
+  function succesfull_status(data) {
+    if (data["status" == true]) {
+      let j = 0;
+      document.querySelector("#form_add_stock .rows").innerHTML = "";
+      for (let i of data) {
+        j++;
+        document.querySelector("#form_add_stock .rows").innerHTML += (`
+          <div class="row" index="${i[0]}" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
+            <div class="left">${i[1]}</div>
+            <div class="right" style="display: flex; align-items: center; gap: 10px;">
+              <div class="count_on_stocks">${i[2]}</div>
+              <div class="remove remove_point" onclick(remove_point2(this)) style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
             </div>
           </div>
         `);
@@ -912,7 +965,6 @@ function remove_point (element) {
 function open_edit_name_company(clicked) {
   showModalWrapper();
   document.getElementById("form_edit_name_company").style.display = "block";
-
 }
 
 function open_edit_fio(clicked) {

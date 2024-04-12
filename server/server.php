@@ -158,7 +158,13 @@
     else if ($_POST["form_type"] == "give_id_card_edit") {
       echo json_encode(["status" => true, "response" => $_POST]);
     }
-    // ----------------------------------------------------------> Редактирование продукта (Доделать)
+    
+    // Удаление с БД склада пользователя (нажатие на минус) Приходит по факту уникальный id склада
+    else if ($_POST["form_type"] == "remove_stock") {
+      echo json_encode(["status" => true]);
+    }
+
+    // ----------------------------------------------------------> Редактирование продукта
     else if ($_POST["form_type"] == "edit_product") {
 
       $card_id = $_POST['card_id']; // id редактируемой карточки
