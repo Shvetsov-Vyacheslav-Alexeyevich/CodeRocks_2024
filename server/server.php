@@ -156,45 +156,32 @@
 
     // ----------------------------------------------------------> Редактирование продукта
     else if ($_POST["form_type"] == "edit_product") {
-      $card_id = $_POST['card_id'];
+
+      $card_id = $_POST['card_id']; // id редактируемой карточки
 
       $product = [];
       $db = new MysqlModel;
 
       // Получаем данные товара который редактируем
-      $product = $db->goResultOnce("
-        SELECT
-          *
-        FROM
-          PRODUCTS
-        WHERE
-          id = $card_id
-      ");
+      $product = $db->goResultOnce("SELECT * FROM PRODUCTS WHERE id = $card_id");
 
       // Получаем характеристики товара который редактируем
-      $product_characteristics = $db->goResultOnce("
-        SELECT
-          *
-        FROM
-          PRODUCT_CHARACTERISTICS
-        WHERE
-          product_id = $card_id
-      ");
+      $product_characteristics = $db->goResultOnce("SELECT * FROM PRODUCT_CHARACTERISTICS WHERE product_id = $card_id");
 
-      // Что-то со складом связанное ------------------------
-      if (isset($_GET['delete_id']) && isset($_GET['id']))
-      {
-        $arr = [];
-        $db = new MysqlModel;
+      // Что-то со складом связанное ------------------------ (УДАЛЕНИЕ СКЛАДА)
+      // if (isset($_GET['delete_id']) && isset($_GET['id']))
+      // {
+      //   $arr = [];
 
-        $arr = $db->query("
-        DELETE
-        FROM
-          PRODUCTS_COUNT
-        WHERE
-          id = $_GET[delete_id]
-        ");
-      }
+      //   $arr = $db->query("
+      //   DELETE
+      //   FROM
+      //     PRODUCTS_COUNT
+      //   WHERE
+      //     id = $_GET[delete_id]
+      //   ");
+      // }
+
       if (!empty($_POST))
       {
         $errors = [];
@@ -222,8 +209,6 @@
           if (!empty($product_name) && !empty($product_price) && !empty($product_weight) && !empty($product_length) && !empty($product_width) && !empty($product_height) && !empty($product_category) && !empty($product_description))
           {
               // ----> Проверки
-              // if (empty($product_photo)) { $errors[] = 'Вы не добавили ни одной фотографии товара.'; }
-
               if (mb_strlen($product_name) > 100) { $errors[] = 'Название должно быть менше или равно 100 символам.'; }
 
               if (!is_numeric($product_price)) { $errors[] = 'Цена указывается только в числовом формате.'; }
@@ -251,6 +236,7 @@
                   $arr = [];
                   $db = new MysqlModel;
 
+                  // Обновляем товар в БД
                   $arr = $db->query("
                     UPDATE
                       PRODUCTS
@@ -264,6 +250,7 @@
                       id = $card_id
                   ");
                   
+                  // Обновляем характеристики товара в БД
                   $arr = $db->query("
                     UPDATE
                       PRODUCT_CHARACTERISTICS
@@ -275,53 +262,51 @@
                     WHERE
                       product_id = $card_id
                   ");
-
-                  echo 'OK.';
                   
                   // ----> Проверки склада
-                  // if ($product_storage_warehouse != 'none' && $product_quantity > 0)
-                  // {
-                  //     $arr = $db->goResultOnce("
-                  //         SELECT
-                  //             id,
-                  //             count,
-                  //             store_id
-                  //         FROM
-                  //             PRODUCTS_COUNT
-                  //         WHERE
-                  //             product_id = $_GET[id] AND
-                  //             store_id = $product_storage_warehouse
-                  //     ");
+                  if ($product_storage_warehouse != 'none' && $product_quantity > 0)
+                  {
+                      $arr = $db->goResultOnce("
+                          SELECT
+                              id,
+                              count,
+                              store_id
+                          FROM
+                              PRODUCTS_COUNT
+                          WHERE
+                              product_id = $_GET[id] AND
+                              store_id = $product_storage_warehouse
+                      ");
 
-                  //     if (!empty($arr))
-                  //     {
-                  //         $product_quantity += $arr['count'];
-                  //         $arr = $db->query("
-                  //             UPDATE
-                  //                 PRODUCTS_COUNT
-                  //             SET
-                  //                 count = $product_quantity
-                  //             WHERE
-                  //                 id = $arr[id]
-                  //         ");
-                  //     }
-                  //     else
-                  //     {
-                  //         $arr = $db->query("
-                  //             INSERT INTO PRODUCTS_COUNT(
-                  //                 count,
-                  //                 product_id,
-                  //                 store_id
-                  //             )
-                  //             VALUES(
-                  //                 $product_quantity,
-                  //                 $product_id,
-                  //                 $product_storage_warehouse
-                  //             )
-                  //         ");
-                  //     }
-                  //     echo 'Вы изменили товар на складе.';
-                  // }
+                      if (!empty($arr))
+                      {
+                          $product_quantity += $arr['count'];
+                          $arr = $db->query("
+                              UPDATE
+                                  PRODUCTS_COUNT
+                              SET
+                                  count = $product_quantity
+                              WHERE
+                                  id = $arr[id]
+                          ");
+                      }
+                      else
+                      {
+                          $arr = $db->query("
+                              INSERT INTO PRODUCTS_COUNT(
+                                  count,
+                                  product_id,
+                                  store_id
+                              )
+                              VALUES(
+                                  $product_quantity,
+                                  $product_id,
+                                  $product_storage_warehouse
+                              )
+                          ");
+                      }
+                      echo 'Вы изменили товар на складе.';
+                  }
                   // ---------------------------------
                   echo json_encode(["status" => true]);
               }

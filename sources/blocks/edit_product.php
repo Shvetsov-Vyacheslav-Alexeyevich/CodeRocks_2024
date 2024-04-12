@@ -29,11 +29,6 @@
         <input id="height" class="text_left" type="number" min="1" name="product_height" placeholder="Высота" value="" required>
       </div>
 
-      <!-- <select id="category_input" class="select_input_style text_left" name="category" required>
-        <option value="0" hidden>Категория</option>
-        <option value="1" selected>1</option>
-      </select> -->
-
       <select id="category_input" class="select_input_style text_left" name="product_category" required>
         <option value="0" hidden>Категория</option>
         <?
@@ -48,10 +43,7 @@
         <? endforeach ?>
       </select>
 
-      <textarea id="description" class="textarea" name="product_description" placeholder="Описание" required>
-        абвгдеёжзийклмнопрстуфхцчшщъыьэюя
-      </textarea>
-
+      <textarea id="description" class="textarea" name="product_description" placeholder="Описание" required></textarea>
       <button class="submit" type="submit">Изменить</button>
       <div class="line"></div>
       <div class="radio_zone">
@@ -87,30 +79,11 @@
         <a class="button_link add">Добавить</a>
         <div class="line"></div>
         <div class="stocks">
-        
           <div class="row" index="г. Кемерово" style="display: flex; align-items: center; justify-content: space-between; color: #333333"> 
             <div class="left">г. Кемерово</div>
             <div class="right" style="display: flex; align-items: center; gap: 10px;">
               <!-- Именно в span добавь кол-во -->
               <div class="count_on_stocks"><span class="c">700</span> шт.</div>
-              <div class="remove" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer; margin-bottom: 6px;"></div>
-            </div>
-          </div>
-
-          <div class="row" index="г. Белово" style="display: flex; align-items: center; justify-content: space-between; color: #333333"> 
-            <div class="left">г. Белово</div>
-            <div class="right" style="display: flex; align-items: center; gap: 10px;">
-              <!-- Именно в span добавь кол-во -->
-              <div class="count_on_stocks"><span class="c">200</span> шт.</div>
-              <div class="remove" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer; margin-bottom: 6px;"></div>
-            </div>
-          </div>
-
-          <div class="row" index="г. Москва" style="display: flex; align-items: center; justify-content: space-between; color: #333333"> 
-            <div class="left">г. Кемерово</div>
-            <div class="right" style="display: flex; align-items: center; gap: 10px;">
-              <!-- Именно в span добавь кол-во -->
-              <div class="count_on_stocks"><span class="c">400</span> шт.</div>
               <div class="remove" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer; margin-bottom: 6px;"></div>
             </div>
           </div>
