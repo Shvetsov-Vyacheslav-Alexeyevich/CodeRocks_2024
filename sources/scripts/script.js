@@ -431,14 +431,14 @@ function open_edit_product(clicked) {
   document.getElementById("form_edit_product").style.display = "block";
   let formData = new FormData();
   formData.set("form_type", "give_id_card_edit");
-  formData.set((clicked.parentNode));
+  formData.set("card_id", ((clicked.parentNode).parentNode).getAttribute("card_id"));
   // Запрос на отправку
   fetch("/server/server.php", {
     method: "POST",
     body: formData
   })
   .then((response) => response.json())
-  .then((data) => succesfull_status(data));
+  .then((data) => console.log(data));
   click_elem = clicked;
 }
 
