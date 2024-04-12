@@ -56,6 +56,7 @@
   <div id="all_cards">
     <div class="inner">
       <? foreach ($products as $product): ?>
+        <? if ($product['is_hidden'] == 1) continue ?>
         <!-- Карточка -->
         <div class="card" card_id="<?= $product['id'] ?>">
           <a class="block" href="#">

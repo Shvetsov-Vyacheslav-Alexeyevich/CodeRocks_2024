@@ -79,12 +79,12 @@
           $message = "Ваша ссылка на восстановление пароля: http://coderocks2024/pages/recovery.php?token=".$token;
           $headers = 'From: BlitzCompany@mail.ru';
           mail($email, $subject, $message, $headers);
-          echo "Ссылка на восстановление пароля была отправлена на ваш E-mail.";
+          // echo "Ссылка на восстановление пароля была отправлена на ваш E-mail.";
           echo json_encode(["status" => true]);
         }
-        echo "Мы не нашли ни одного пользователя с такой почтой.";
+        // echo "Мы не нашли ни одного пользователя с такой почтой.";
       }
-      echo "Почта пуста.";
+      // echo "Почта пуста.";
     }
 
     else if ($_POST["form_type"] == "recovery_change")
@@ -124,13 +124,13 @@
               reset_token='$token'
           ");
 
-          echo "Пароль успешно изменён!";
+          // echo "Пароль успешно изменён!";
         }
       }
-      {
-        $_POST["form_type"] = "login";
-        echo json_encode(["status" => false]);
-      }
+      // {
+      //   $_POST["form_type"] = "login";
+      //   echo json_encode(["status" => false]);
+      // }
 
       echo json_encode(["status" => true, "body" => $_POST]);
     }
@@ -170,6 +170,11 @@
       $product_height = $_POST['product_height'];
 
       $product_stocks = json_decode($_POST['stocks']);
+      var_dump(json_decode($_POST['stocks']));
+
+      //----------------------
+      $product_storage_warehouse = $_POST['storage_warehouse'];
+      $product_quantity = $_POST['product_quantity'];
         
       if (!empty($product_name) && !empty($product_price) && !empty($product_weight) && !empty($product_length) && !empty($product_width) && !empty($product_height) && !empty($product_category) && !empty($product_description))
       {
@@ -306,8 +311,22 @@
             }
           }
 
-
           // Проверки добавления на склад в определённом кол-ве
+          if ($product_storage_warehouse != 0 && $product_quantity > 0)
+          {
+            $arr = $db->query("
+              INSERT INTO PRODUCTS_COUNT (
+                count,
+                product_id,
+                store_id
+              )
+              VALUES (
+                $product_quantity,
+                $product_id,
+                $product_storage_warehouse
+              )
+            ");
+          }
         }
       } else { $errors[] = 'Не все поля заполнены.'; }
 
