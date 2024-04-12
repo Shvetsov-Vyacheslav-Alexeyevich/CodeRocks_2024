@@ -721,12 +721,14 @@ input.text_left {
   bottom: 10px;
 }
 
-#form_add_product .trible {
+#form_add_product .trible,
+#form_edit_product .trible {
   display: flex;
   justify-content: space-between;
 }
 
-#form_add_product .trible input {
+#form_add_product .trible input,
+#form_edit_product .trible input {
   width: 108px;
 }
 
