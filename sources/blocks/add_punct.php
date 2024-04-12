@@ -7,20 +7,17 @@
     </a>
     <h1 class="form_heading">Добавить пункт</h1>
     <div class="inputs">
-      <input id="pick_pointer" class="text_left" type="text" name="pick_pointer" placeholder="Пункт выдачи" required>
-      <select id="category_input" class="select_input_style text_left" name="category" required>
+      <input id="name_point" class="text_left" type="text" name="name_point" placeholder="Пункт выдачи" required>
+      <select id="city" class="select_input_style text_left" name="city" required>
         <option value="0" hidden>Город</option>
         <option value="1">1</option>
+        <option value="1">2</option>
       </select>
       <button class="submit" type="submit">Добавить</button>
       <div class="line"></div>
+      <div class="rows">
+      <!-- Тут ебашит JS, Get запросом пиздит данные, не трогать :) -->
 
-      <div class="row" index="0" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
-          <div class="left">Название склада №1</div>
-          <div class="right" style="display: flex; align-items: center; gap: 10px;">
-            <div class="count_on_stocks">Хабаровск</div>
-            <div class="remove" onclick="remove_stock(this)" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
-          </div>
       </div>
     </div>
 </form>

@@ -352,31 +352,12 @@ if (document.getElementById("product_order_form") != null) {
       }
     }
   });
-}
 
-var arr_stocks = {};
-function remove_stock(el) {
-  let index = ((el.parentNode).parentNode).getAttribute("index");
-  delete arr_stocks[index];
-  document.querySelector(".stocks").innerHTML = "";
-  for(let i in arr_stocks) {
-    document.querySelector(".stocks").innerHTML += (`
-      <div class="row" index="${i}" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
-        <div class="left">${i}</div>
-        <div class="right" style="display: flex; align-items: center; gap: 10px;">
-          <div class="count_on_stocks">${arr_stocks[i]} шт.</div>
-          <div class="remove" onclick="remove_stock(this)" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer; margin-bottom: 6px;"></div>
-        </div>
-      </div>
-    `);
-  }
-}
-
-document.querySelectorAll(".add").forEach(element => {
-  element.addEventListener("click", () => {
-    const value_1 = document.querySelector("#stock_input").value;
-    const value_2 = document.querySelector("#count_pr").value;
-    arr_stocks[String(value_1)] = String(value_2);
+  // Тут если хуй +
+  var arr_stocks = {};
+  function remove_stock(el) {
+    let index = ((el.parentNode).parentNode).getAttribute("index");
+    delete arr_stocks[index];
     document.querySelector(".stocks").innerHTML = "";
     for(let i in arr_stocks) {
       document.querySelector(".stocks").innerHTML += (`
@@ -389,16 +370,37 @@ document.querySelectorAll(".add").forEach(element => {
         </div>
       `);
     }
-    document.querySelector("#stock_input").value = "0";
-    document.querySelector("#count_pr").value = "";
+  }
+  
+  document.querySelectorAll(".add").forEach(element => {
+    element.addEventListener("click", () => {
+      const value_1 = document.querySelector("#stock_input").value;
+      const value_2 = document.querySelector("#count_pr").value;
+      arr_stocks[String(value_1)] = String(value_2);
+      document.querySelector(".stocks").innerHTML = "";
+      for(let i in arr_stocks) {
+        document.querySelector(".stocks").innerHTML += (`
+          <div class="row" index="${i}" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
+            <div class="left">${i}</div>
+            <div class="right" style="display: flex; align-items: center; gap: 10px;">
+              <div class="count_on_stocks">${arr_stocks[i]} шт.</div>
+              <div class="remove" onclick="remove_stock(this)" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer; margin-bottom: 6px;"></div>
+            </div>
+          </div>
+        `);
+      }
+      document.querySelector("#stock_input").value = "0";
+      document.querySelector("#count_pr").value = "";
+    });
   });
-});
-
-function open_add_product(clicked) {
-  showModalWrapper();
-  document.getElementById("form_add_product").style.display = "block";
-
+  
+  function open_add_product(clicked) {
+    showModalWrapper();
+    document.getElementById("form_add_product").style.display = "block";
+  
+  }
 }
+
 if (document.getElementById("form_add_product") != null) {
   document.getElementById("form_add_product").addEventListener("submit", (event) => {
     event.preventDefault();
@@ -429,6 +431,17 @@ var click_elem;
 function open_edit_product(clicked) {
   showModalWrapper();
   document.getElementById("form_edit_product").style.display = "block";
+  let formData = new FormData();
+  console.log((((clicked.parentNode).parentNode).parentNode).getAttribute("card_id"));
+  formData.set("form_type", "give_id_card_edit");
+  formData.set("card_id", (((clicked.parentNode).parentNode).parentNode).getAttribute("card_id"));
+  // Запрос на отправку
+  fetch("/server/server.php", {
+    method: "POST",
+    body: formData
+  })
+  .then((response) => response.json())
+  .then((data) => console.log(data));
   click_elem = clicked;
 }
 
@@ -465,7 +478,8 @@ if (document.getElementById("form_edit_product") != null) {
   document.getElementById("form_edit_product").addEventListener("submit", (event) => {
     event.preventDefault();
     let formData = new FormData(document.getElementById("form_edit_product"));
-    formData.set("card_id", click_elem.getAttribute("card_id"));
+    console.log(click_elem);
+    formData.set("card_id", (((click_elem.parentNode).parentNode).parentNode).getAttribute("card_id"));
     formData.set("form_type", "edit_product");
     formData.set("stocks", JSON.stringify(arr_stocks));
     // Запрос на отправку
@@ -490,8 +504,8 @@ if (document.getElementById("form_edit_product") != null) {
 function open_add_stock(clicked) {
   showModalWrapper();
   document.getElementById("form_add_stock").style.display = "block";
-
 }
+
 if (document.getElementById("form_add_stock") != null) {
   document.getElementById("form_add_stock").addEventListener("submit", (event) => {
     event.preventDefault();
@@ -516,12 +530,6 @@ if (document.getElementById("form_add_stock") != null) {
       }
     }
   });
-}
-
-function open_add_pick_point(clicked) {
-  showModalWrapper();
-  document.getElementById("form_add_pick_point").style.display = "block";
-
 }
 
 if (document.getElementById("form_add_pick_point") != null) {
@@ -692,64 +700,67 @@ if (document.getElementById("add_path") != null) {
 }
 
 // Проверяем изменения всех полей и их отправка для добавления нового пути в БД
-document.querySelector("#add_path .submit").addEventListener("click", (event) => {
-  event.preventDefault();
-  if (document.getElementById("pointer").value != 0 && document.getElementById("stock").value != 0 && document.getElementById("paths").value != 0) {
-    // Отправляем данные при заполнении всей части для добавления нового элемента
-    let formData = new FormData(document.getElementById("add_path"));
-    formData.set("form_type", "add_paths");
-    // Запрос на отправку
-    fetch("/server/server.php", {
-      method: "POST",
-      body: formData
-    })
-    .then((response) => response.json())
-    .then((data) => succesfull_status(data));
-  }
+if (document.getElementById("add_path") != null) {
 
-  function succesfull_status(data) {
-    if (data["status"] == true) {
-      console.log("Новый элемент добавлен!")
+  document.querySelector("#add_path .submit").addEventListener("click", (event) => {
+    event.preventDefault();
+    if (document.getElementById("pointer").value != 0 && document.getElementById("stock").value != 0 && document.getElementById("paths").value != 0) {
+      // Отправляем данные при заполнении всей части для добавления нового элемента
       let formData = new FormData(document.getElementById("add_path"));
       formData.set("form_type", "add_paths");
       // Запрос на отправку
-      fetch("/server/please_me.php?add_path=give2", {
-        method: "GET"
+      fetch("/server/server.php", {
+        method: "POST",
+        body: formData
       })
       .then((response) => response.json())
       .then((data) => succesfull_status(data));
     }
-
+  
     function succesfull_status(data) {
-      let j = 0;
-      document.querySelector("#add_path .pick-up_point").innerHTML = "";
-      for (let i of data) {
-        j++;
-        document.querySelector("#add_path .pick-up_point").innerHTML += (`
-          <div index="${j}" class="pick_point">
-            <div class="double" style="color: var(--text_color);">
-              <div class="left">
-                ${i[0]}
+      if (data["status"] == true) {
+        console.log("Новый элемент добавлен!")
+        let formData = new FormData(document.getElementById("add_path"));
+        formData.set("form_type", "add_paths");
+        // Запрос на отправку
+        fetch("/server/please_me.php?add_path=give2", {
+          method: "GET"
+        })
+        .then((response) => response.json())
+        .then((data) => succesfull_status(data));
+      }
+  
+      function succesfull_status(data) {
+        let j = 0;
+        document.querySelector("#add_path .pick-up_point").innerHTML = "";
+        for (let i of data) {
+          j++;
+          document.querySelector("#add_path .pick-up_point").innerHTML += (`
+            <div index="${j}" class="pick_point">
+              <div class="double" style="color: var(--text_color);">
+                <div class="left">
+                  ${i[0]}
+                </div>
+                <div class="right">
+                  <div class="line remove_path"></div>
+                  ${i[2]}
+                </div>
               </div>
-              <div class="right">
-                <div class="line remove_path"></div>
-                ${i[2]}
+              <div class="double" style="">
+                <div class="left">
+                  ${i[1]}
+                </div>
+                <div class="right">
+                  ${i[3]}., ${i[4]}. ${i[5]}₽
+                </div>
               </div>
             </div>
-            <div class="double" style="">
-              <div class="left">
-                ${i[1]}
-              </div>
-              <div class="right">
-                ${i[3]}., ${i[4]}. ${i[5]}₽
-              </div>
-            </div>
-          </div>
-        `)
+          `)
+        }
       }
     }
-  }
-});
+  });
+}
 
 
 function open_del_product(clicked) {
@@ -783,42 +794,119 @@ if (document.getElementById("form_del_product") != null) {
   });
 }
 
-
-document.querySelector(".trash").addEventListener("click", () => {
-  console.log("qwertuiop")
-}) 
-
-
+// Функуионла формы добавить пункт
+// При открытии
 function open_add_punct(clicked) {
   showModalWrapper();
   document.getElementById("form_add_punct").style.display = "block";
+  fetch("/server/please_me.php?add_point=give", {
+    method: "GET",
+  })
+  .then((response) => response.json())
+  .then((data) => succesfull_status(data));
 
+  function succesfull_status(data) {
+    let j = 0;
+    document.querySelector("#form_add_punct .rows").innerHTML = "";
+    for (let i of data) {
+      j++;
+      document.querySelector("#form_add_punct .rows").innerHTML += (`
+        <div class="row" index="${i[0]}" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
+          <div class="left">${i[1]}</div>
+          <div class="right" style="display: flex; align-items: center; gap: 10px;">
+            <div class="count_on_stocks">${i[2]}</div>
+            <div class="remove remove_point" onclick="remove_point(this)" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
+          </div>
+        </div>
+      `);
+    }
+  }
 }
 
+
+
 if (document.getElementById("form_add_punct") != null) {
+  // Просто отправил запрос на добавление пункта
   document.getElementById("form_add_punct").addEventListener("submit", (event) => {
     event.preventDefault();
-    let formData = new FormData(document.getElementById("form_add_punct"));
-    formData.set("form_type", "add_product");
-    formData.set("stocks", arr_stocks);
-    // Запрос на отправку
-    fetch("/server/server.php", {
-      method: "POST",
-      body: formData
-    })
-    .then((response) => response.json())
-    .then((data) => succesfull_status(data));
+    if (document.getElementById("name_point").value != 0 && document.getElementById("city").value != 0) {
+      let formData = new FormData(document.getElementById("form_add_punct"));
+      formData.set("form_type", "add_point");
+      // Запрос на отправку
+      fetch("/server/server.php", {
+        method: "POST",
+        body: formData
+      })
+      .then((response) => response.json())
+      .then((data) => succesfull_status(data));
 
-    // Вывод сообщения об успехе
-    function succesfull_status(data) {
-      if (data["status"] == true) {
-        hideModalWrapper();
-        alert(data["response"]);
-        console.log(data["response"]);
-        // location.reload()
+      function succesfull_status(data) {
+        if (data["status"] == true) {
+          fetch("/server/please_me.php?add_point=give", {
+            method: "GET",
+          })
+          .then((response) => response.json())
+          .then((data) => succesfull_status(data));
+
+          function succesfull_status(data) {
+            let j = 0;
+            document.querySelector("#form_add_punct .rows").innerHTML = "";
+            for (let i of data) {
+              j++;
+              document.querySelector("#form_add_punct .rows").innerHTML += (`
+              <div class="row" index="${i[0]}" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
+              <div class="left">${i[1]}</div>
+              <div class="right" style="display: flex; align-items: center; gap: 10px;">
+              <div class="count_on_stocks">${i[2]}</div>
+              <div class="remove remove_point" onclick="remove_point(this)" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
+              </div>
+              </div>
+              `);
+            }
+          }
+        }
       }
     }
   });
+  // Отправил запрос на удаление пункта
+  document.querySelectorAll(".remove_point").forEach(element => {
+    element.addEventListener("click", () => {
+
+    })
+  });
+}
+
+function remove_point (element) {
+  console.log("Огонь");
+  let formData = new FormData();
+  formData.set("form_type", "remove_point");
+  formData.set("id_point", ((element.parentNode).parentNode).getAttribute("index"));
+  // Запрос на отправку
+  fetch("/server/server.php", {
+    method: "POST",
+    body: formData
+  })
+  .then((response) => response.json())
+  .then((data) => succesfull_status(data));
+
+  function succesfull_status(data) {
+    if (data["status" == true]) {
+      let j = 0;
+      document.querySelector("#form_add_punct .rows").innerHTML = "";
+      for (let i of data) {
+        j++;
+        document.querySelector("#form_add_punct .rows").innerHTML += (`
+          <div class="row" index="${i[0]}" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
+            <div class="left">${i[1]}</div>
+            <div class="right" style="display: flex; align-items: center; gap: 10px;">
+              <div class="count_on_stocks">${i[2]}</div>
+              <div class="remove remove_point" onclick(remove_point(this)) style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
+            </div>
+          </div>
+        `);
+      }
+    }
+  }
 }
 
 function open_edit_name_company(clicked) {

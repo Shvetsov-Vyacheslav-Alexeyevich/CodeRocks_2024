@@ -150,76 +150,65 @@
     else if ($_POST["form_type"] == "new_order") {
       echo json_encode(["status" => true]);
     }
+    else if ($_POST["form_type"] == "give_id_card_edit") {
+      echo json_encode(["status" => true, "response" => $_POST]);
+    }
 
     // ----------------------------------------------------------> Редактирование продукта
     else if ($_POST["form_type"] == "edit_product") {
 
-      $product_vendor = $_SESSION['user']['vendor_id'];
-      $omg = $_POST['card_id'];
+      $card_id = $_POST['card_id']; // id редактируемой карточки
 
       $product = [];
       $db = new MysqlModel;
 
-      // Добавить продавца который выкладывает товар заместо 1;
-      $product = $db->goResultOnce("
-        SELECT
-          *
-        FROM
-          PRODUCTS
-        WHERE
-          id = $_GET[id]
-      ");
+      // Получаем данные товара который редактируем
+      $product = $db->goResultOnce("SELECT * FROM PRODUCTS WHERE id = $card_id");
 
-      $product_characteristics = $db->goResultOnce("
-        SELECT
-          *
-        FROM
-          PRODUCT_CHARACTERISTICS
-        WHERE
-          product_id = $_GET[id]
-      ");
+      // Получаем характеристики товара который редактируем
+      $product_characteristics = $db->goResultOnce("SELECT * FROM PRODUCT_CHARACTERISTICS WHERE product_id = $card_id");
 
-      if (isset($_GET['delete_id']) && isset($_GET['id']))
-      {
-        $arr = [];
-        $db = new MysqlModel;
+      // Что-то со складом связанное ------------------------ (УДАЛЕНИЕ СКЛАДА)
+      // if (isset($_GET['delete_id']) && isset($_GET['id']))
+      // {
+      //   $arr = [];
 
-        $arr = $db->query("
-        DELETE
-        FROM
-          PRODUCTS_COUNT
-        WHERE
-          id = $_GET[delete_id]
-        ");
-      }
+      //   $arr = $db->query("
+      //   DELETE
+      //   FROM
+      //     PRODUCTS_COUNT
+      //   WHERE
+      //     id = $_GET[delete_id]
+      //   ");
+      // }
 
       if (!empty($_POST))
       {
-          $errors = [];
-          $product_id = $product['id'];
-          $product_photo = $product['photo_path'];
-          $product_name = $product['name'];
-          $product_price = $product['price'];
-          $product_category = $product['category_id'];
-          $product_description = $product['description'];
-          $product_access = $product['is_hidden'];
+        $errors = [];
 
-          ///----------------------------------------------
-          $product_weight = $product_characteristics['weight'];
-          $product_length = $product_characteristics['length'];
-          $product_width = $product_characteristics['width'];
-          $product_height = $product_characteristics['height'];
-          ///----------------------------------------------
+        // Таблица продукта
+        $product_name = $_POST['product_name'];
+        $product_price = $_POST['product_price'];
+        $product_category = $_POST['product_category'];
+        $product_description = $_POST['product_description'];
+        $product_vendor = $_SESSION['user']['vendor_id'];
+        // Товар скрыт или нет
+        $product_access = (isset($_POST['open_access'])) ? 1 : 0;
+        
+        // Характеристики продукта
+        $product_weight = $_POST['product_weight'];
+        $product_length = $_POST['product_length'];
+        $product_width = $_POST['product_width'];
+        $product_height = $_POST['product_height'];
 
-          ///----------------------------------------------
-          $product_storage_warehouse = $_POST['storage_warehouse'];
-          $product_quantity = $_POST['product_quantity'];
+        ///----------------------------------------------
+        // $product_storage_warehouse = $_POST['storage_warehouse'];
+        // $product_quantity = $_POST['product_quantity'];
+        ///----------------------------------------------
 
           if (!empty($product_name) && !empty($product_price) && !empty($product_weight) && !empty($product_length) && !empty($product_width) && !empty($product_height) && !empty($product_category) && !empty($product_description))
           {
               // ----> Проверки
-              if (empty($product_photo)) { $errors[] = 'Вы не добавили ни одной фотографии товара.'; }
-
               if (mb_strlen($product_name) > 100) { $errors[] = 'Название должно быть менше или равно 100 символам.'; }
 
               if (!is_numeric($product_price)) { $errors[] = 'Цена указывается только в числовом формате.'; }
@@ -244,54 +233,35 @@
 
               if (empty($errors))
               {
-                  //$product_id = $_POST['id'];
-                  $product_photo = $_POST['product_photo'];
-                  $product_name = $_POST['product_name'];
-                  $product_price = $_POST['product_price'];
-                  $product_category = $_POST['product_category'];
-                  $product_description = $_POST['product_description'];
-                  $product_access = $_POST['open_access'];
-
-                  ///----------------------------------------------
-                  $product_weight = $_POST['product_weight'];
-                  $product_length = $_POST['product_length'];
-                  $product_width = $_POST['product_width'];
-                  $product_height = $_POST['product_height'];
-                  ///----------------------------------------------
                   $arr = [];
                   $db = new MysqlModel;
 
-                  // Добавить продавца который выкладывает товар заместо 1;
-                  // Добавить продавца который выкладывает товар заместо 1;
-                  // Добавить продавца который выкладывает товар заместо 1;
+                  // Обновляем товар в БД
                   $arr = $db->query("
-                      UPDATE
-                          PRODUCTS
-                      SET
-                          name = '$product_name',
-                          description = '$product_description',
-                          price = $product_price,
-                          photo_path = '$product_photo',
-                          category_id = $product_category,
-                          vendor_id = 1,
-                          is_hidden = $product_access
-                      WHERE
-                          id = $product_id
+                    UPDATE
+                      PRODUCTS
+                    SET
+                      name = '$product_name',
+                      description = '$product_description',
+                      price = $product_price,
+                      category_id = $product_category,
+                      is_hidden = $product_access
+                    WHERE
+                      id = $card_id
                   ");
                   
+                  // Обновляем характеристики товара в БД
                   $arr = $db->query("
-                      UPDATE
-                          PRODUCT_CHARACTERISTICS
-                      SET
-                          weight =  $product_weight,
-                          length = $product_length,
-                          width = $product_width,
-                          height = $product_height
-                      WHERE
-                          product_id = $product_id
+                    UPDATE
+                      PRODUCT_CHARACTERISTICS
+                    SET
+                      weight =  $product_weight,
+                      length = $product_length,
+                      width = $product_width,
+                      height = $product_height
+                    WHERE
+                      product_id = $card_id
                   ");
-
-                  echo 'Ваш товар был успешно изменён.';
                   
                   // ----> Проверки склада
                   if ($product_storage_warehouse != 'none' && $product_quantity > 0)
@@ -338,14 +308,11 @@
                       echo 'Вы изменили товар на складе.';
                   }
                   // ---------------------------------
+                  echo json_encode(["status" => true]);
               }
           } else { $errors[] = 'Не все поля заполнены.'; }
       }
-
-
-
-
-      echo json_encode(["status" => true]);
+      // echo json_encode(["status" => true]);
     }
 
     else if ($_POST["form_type"] == "get_paths") {
@@ -364,6 +331,16 @@
       // Приходит $_POST ["index" => "id маршрута в БД", "form_type" => "название запроса (моё)"]
       echo json_encode(["status" => true, "test" => "Сука блять, вроде работает!"]);
     }
+
+    // Добавление пункта
+    else if ($_POST["form_type"] == "add_point") {
+      echo json_encode(["status" => true]);
+    } 
+
+    // Удаление пункта в форме добавить пункт
+    else if ($_POST["form_type"] == "add_point") {
+      echo json_encode(["status" => true]);
+    } 
 
     // Добавление продукта
     else if ($_POST["form_type"] == "add_product") {
