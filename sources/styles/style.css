@@ -158,7 +158,8 @@ ol.list li {
 
 .form_wrapper .line,
 #profile_company .line,
-#profile_user .line {
+#profile_user .line,
+#product_contaner .line {
   width: 100%;
   height: 1px;
   margin: 10px 0px;
@@ -571,7 +572,8 @@ a.button_link, a.button_link2 {
 }
 
 #products .card .description,
-#profile_company .card .description {
+#profile_company .card .description,
+#product_contaner .product_info_text .name {
   margin: 8px 0px 4px;
   word-break: break-all;
   text-overflow: ellipsis;
@@ -1169,7 +1171,8 @@ input.text_left {
 }
 
 #profile_company .container_sort .text_product,
-#profile_user .text_product {
+#profile_user .text_product,
+#product_contaner .text_reviews {
   font: 32px/1.2 "Rubik", sans-serif;;
 }
 
@@ -1218,7 +1221,8 @@ input.text_left {
   align-items: center;
 } 
 
-#profile_user .card .description_info {
+#profile_user .card .description_info,
+#product_contaner .product_info_text .description_info {
   display: flex;
   gap: 10px;
   margin-bottom: 8px;
@@ -1226,6 +1230,8 @@ input.text_left {
 
 #profile_user .card .description_info .price,
 #profile_user .card .description_info .rating,
+#product_contaner .product_info_text .price,
+#product_contaner .product_info_text .rating,
 #profile_user .card .status_text, 
 #profile_user .card .method_text, 
 #profile_user .card .cost_text, 
@@ -1236,7 +1242,10 @@ input.text_left {
 
 #profile_user .card .description_info .price,
 #profile_user .card .description_info .rating,
+#product_contaner .product_info_text .price,
+#product_contaner .product_info_text .rating,
 #profile_user .card .rating .icon,
+#product_contaner .product_info_text .rating .icon,
 #profile_user .card .status_text, 
 #profile_user .card .method_text, 
 #profile_user .card .cost_text, 
@@ -1264,7 +1273,119 @@ input.text_left {
   margin-bottom: 44px;
 }
 
-#profile_user .card .double .right .total {
+#profile_user .card .double .right .total,
+#product_contaner .product_info_text .price .text {
   color: var(--accent_color_1);
   font: 600 32px/1.2 "Rubik", sans-serif;
+}
+
+#product_contaner .full_product {
+  display: flex;
+  margin-top: 44px;
+  margin-bottom: 14px;
+}
+
+#product_contaner .product_image_info {
+  /* потом удлаить */
+  background-color: #333333;
+  width: 400px;
+  height: 486px;
+  /*  */
+}
+
+#product_contaner .product_info_text {
+  max-width: 755px;
+  margin-left: 18px;
+}
+
+#product_contaner .product_info_text .name {
+  font: 700 24px/1.2 "Rubik", sans-serif;
+}
+
+#product_contaner .product_info_text .rating .rating_count {
+  font: 400 24px/1.2 "Rubik", sans-serif;
+}
+
+#product_contaner .product_info_text .rating {
+  height: 28px;
+}
+
+#product_contaner .product_info_text .description_info {
+  height: 38px;
+  align-items: center;
+}
+
+#product_contaner .product_info_text .characteristics_product {
+  margin-bottom: 4px;
+  gap: 4px;
+}
+
+#product_contaner .product_info_text .gray {
+  color: var(--text_light_color);
+}
+
+#product_contaner .product_info_text .description_product {
+  max-height: 247px;
+}
+
+#product_contaner .wrapper_photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 58px;
+  height: 58px;
+  background-color: var(--accent_color_1);
+  border-radius: 4px;
+
+}
+
+#product_contaner .photo_user {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+}
+
+#product_contaner .double {
+  justify-content: space-between;
+  align-items:start;
+}
+
+#product_contaner .double,
+#product_contaner .double .right_rating,
+#product_contaner .reviews_dop_user {
+  display: flex;
+}
+
+#product_contaner .container_dop_user {
+  position: relative;
+}
+
+#product_contaner .reviews_dop_user {
+  position: absolute;
+  top: -25px;
+  left: 15px;
+}
+
+#product_contaner .right_rating {
+  position: absolute;
+  right: -895px;
+}
+
+#product_contaner .left_name {
+  margin-left: 6px;
+}
+
+#product_contaner .review_user {
+  width: 1173px;
+  min-height: 42px;
+  background-color: var(--additional_color);
+  margin-top: 52px;
+  padding-left: 86px;
+  display: flex;
+  align-items: center; 
+  margin-bottom: 52px; 
+}
+
+#product_contaner .container_for_reviews {
+  margin-bottom: -20px;
 }
