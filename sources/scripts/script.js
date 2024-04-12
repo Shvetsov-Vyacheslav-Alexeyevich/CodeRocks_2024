@@ -713,11 +713,40 @@ document.querySelector("#add_path .submit").addEventListener("click", (event) =>
       let formData = new FormData(document.getElementById("add_path"));
       formData.set("form_type", "add_paths");
       // Запрос на отправку
-      fetch("/server/server.php", {
-        method: "GET",
+      fetch("/server/please_me.php?add_path=give2", {
+        method: "GET"
       })
       .then((response) => response.json())
       .then((data) => succesfull_status(data));
+    }
+
+    function succesfull_status(data) {
+      let j = 0;
+      document.querySelector("#add_path .pick-up_point").innerHTML = "";
+      for (let i of data) {
+        j++;
+        document.querySelector("#add_path .pick-up_point").innerHTML += (`
+          <div index="${j}" class="pick_point">
+            <div class="double" style="color: var(--text_color);">
+              <div class="left">
+                ${i[0]}
+              </div>
+              <div class="right">
+                <div class="line remove_path"></div>
+                ${i[2]}
+              </div>
+            </div>
+            <div class="double" style="">
+              <div class="left">
+                ${i[1]}
+              </div>
+              <div class="right">
+                ${i[3]}., ${i[4]}. ${i[5]}₽
+              </div>
+            </div>
+          </div>
+        `)
+      }
     }
   }
 });
