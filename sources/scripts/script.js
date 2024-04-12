@@ -393,12 +393,11 @@ if (document.getElementById("product_order_form") != null) {
       document.querySelector("#count_pr").value = "";
     });
   });
-  
-  function open_add_product(clicked) {
-    showModalWrapper();
-    document.getElementById("form_add_product").style.display = "block";
-  
-  }
+}
+
+function open_add_product(clicked) {
+  showModalWrapper();
+  document.getElementById("form_add_product").style.display = "block";
 }
 
 if (document.getElementById("form_add_product") != null) {
@@ -495,32 +494,6 @@ if (document.getElementById("form_edit_product") != null) {
       if (data["status"] == true) {
         hideModalWrapper();
         alert("Вы успешно изменили карточку!");
-        location.reload()
-      }
-    }
-  });
-}
-
-if (document.getElementById("form_add_stock") != null) {
-  document.getElementById("form_add_stock").addEventListener("submit", (event) => {
-    event.preventDefault();
-    let formData = new FormData(document.getElementById("form_add_stock"));
-    formData.set("form_type", "add_product");
-    formData.set("stocks", arr_stocks);
-    // Запрос на отправку
-    fetch("/server/server.php", {
-      method: "POST",
-      body: formData
-    })
-    .then((response) => response.json())
-    .then((data) => succesfull_status(data));
-
-    // Вывод сообщения об успехе
-    function succesfull_status(data) {
-      if (data["status"] == true) {
-        hideModalWrapper();
-        alert(data["response"]);
-        console.log(data["response"]);
         location.reload()
       }
     }
@@ -930,7 +903,53 @@ function open_add_stock(clicked) {
   }
 }
 
-function remove_point2(element) {
+if (document.getElementById("form_add_stock") != null) {
+  // Просто отправил запрос на добавление пункта
+  document.getElementById("form_add_stock").addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (document.getElementById("name_stock").value != 0 && document.getElementById("city").value != 0) {
+      let formData = new FormData(document.getElementById("form_add_punct"));
+      formData.set("form_type", "add_stock");
+      // Запрос на отправку
+      fetch("/server/server.php", {
+        method: "POST",
+        body: formData
+      })
+      .then((response) => response.json())
+      .then((data) => succesfull_status(data));
+
+      function succesfull_status(data) {
+        if (data["status"] == true) {
+          fetch("/server/please_me.php?add_stock=give", {
+            method: "GET",
+          })
+          .then((response) => response.json())
+          .then((data) => succesfull_status(data));
+
+          function succesfull_status(data) {
+            let j = 0;
+            document.querySelector("#form_add_punct .rows").innerHTML = "";
+            for (let i of data) {
+              j++;
+              document.querySelector("#form_add_punct .rows").innerHTML += (`
+              <div class="row" index="${i[0]}" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
+              <div class="left">${i[1]}</div>
+              <div class="right" style="display: flex; align-items: center; gap: 10px;">
+              <div class="count_on_stocks">${i[2]}</div>
+              <div class="remove remove_point" onclick="remove_point(this)" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
+              </div>
+              </div>
+              `);
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// Отправил запрос на удаление склада
+function remove_point2 (element) {
   let formData = new FormData();
   formData.set("form_type", "remove_stock");
   formData.set("id_point", ((element.parentNode).parentNode).getAttribute("index"));
@@ -943,7 +962,13 @@ function remove_point2(element) {
   .then((data) => succesfull_status(data));
 
   function succesfull_status(data) {
-    if (data["status" == true]) {
+    fetch("/server/please_me.php?add_stock=give", {
+      method: "GET"
+    })
+    .then((response) => response.json())
+    .then((data) => succesfull_status(data));
+
+    function succesfull_status(data) {
       let j = 0;
       document.querySelector("#form_add_stock .rows").innerHTML = "";
       for (let i of data) {
@@ -953,7 +978,7 @@ function remove_point2(element) {
             <div class="left">${i[1]}</div>
             <div class="right" style="display: flex; align-items: center; gap: 10px;">
               <div class="count_on_stocks">${i[2]}</div>
-              <div class="remove remove_point" onclick(remove_point2(this)) style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
+               <div class="remove remove_point" onclick(remove_point2(this)) style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
             </div>
           </div>
         `);

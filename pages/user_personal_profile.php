@@ -1,6 +1,14 @@
 <?php
   session_start();
   require($_SERVER["DOCUMENT_ROOT"] . "/sources/blocks/header.php");
+
+  if (empty($_SESSION))
+	header('Location: /index.php');
+
+  $user = $_SESSION['user'];
+
+  if (array_key_exists('vendor_id', $user))
+	header('Location: vendor_personal_profile.php');
 ?>
 
 <div id="profile_user">
@@ -8,7 +16,7 @@
 		<div class="cadr_name_user">
 			<div class="name_user">
 				<div class="text_name">
-					Хромов Егор Михайлович
+					<?= "{$user['firstname']} {$user['name']} {$user['surname']}" ?>
 				</div>
 				<div class="icon">
 					<!-- открывать форму изменения имени компании -->
@@ -22,7 +30,7 @@
 
 	<div class="container_dop_user">
 		<div class="cadrs_dop_user">
-			<div class="photo_user" style="background: url(/sources/images/photo.png) no-repeat center/cover;"></div>
+			<div class="photo_user" style="background: url(<?= (!empty($_SESSION['user']['photo_path'])) ? "/data/users/{$_SESSION['user']['id']}/{$_SESSION['user']['photo_path']}" : "/sources/images/avatar_no_img.png" ?>) no-repeat center/cover;"></div>
 			<!-- кнопки изменений -->
 			<button class="submit downolang_photo_user" type="submit">
 				<div class="icon">
@@ -35,7 +43,7 @@
 				</div>
 			</button>
 			<!-- 111111111111111111111111111111111111111111111111111111111111111 -->
-			<button class="submit go_buy" type="submit">
+			<a href="/index.php" class="button_link go_buy" style="margin-left: 6px">
 				<div class="icon">
 					<svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M9.77778 3.09524H8.55556C8.55556 1.38667 7.18667 0 5.5 0C3.81333 0 2.44444 1.38667 2.44444 3.09524H1.22222C0.546944 3.09524 0.00611111 3.64929 0.00611111 4.33333L0 11.7619C0 12.446 0.546944 13 1.22222 13H9.77778C10.4531 13 11 12.446 11 11.7619V4.33333C11 3.64929 10.4531 3.09524 9.77778 3.09524ZM5.5 1.2381C6.51139 1.2381 7.33333 2.07071 7.33333 3.09524H3.66667C3.66667 2.07071 4.48861 1.2381 5.5 1.2381ZM5.5 7.42857C3.81333 7.42857 2.44444 6.0419 2.44444 4.33333H3.66667C3.66667 5.35786 4.48861 6.19048 5.5 6.19048C6.51139 6.19048 7.33333 5.35786 7.33333 4.33333H8.55556C8.55556 6.0419 7.18667 7.42857 5.5 7.42857Z" fill="white"/>
@@ -44,7 +52,7 @@
 				<div class="text">
 					Продолжить покупки
 				</div>
-			</button>
+			</a>
 		</div>
 	</div>
 	<div class="container_product_sort">

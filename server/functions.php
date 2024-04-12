@@ -181,7 +181,7 @@
                 {
                     $server_path = $_SERVER['DOCUMENT_ROOT'];
                     
-                    $path = "$server_path/data/$product_id/";
+                    $path = "$server_path/data/products/$product_id/";
                     $name = basename($files['name'][$i]);
 
                     if (!is_dir($path))
@@ -218,6 +218,62 @@
             }
 
             return true;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    function load_avatar($file, $user_id)
+    {
+        if (!empty($file['tmp_name']))
+        {
+            if ($file['type'] == 'image/png' || $file['type'] == 'image/jpeg')
+            {
+                $db = new MysqlModel();
+                $last_avatar = $db->goResultOnce("
+                    SELECT
+                        *
+                    FROM
+                        USERS
+                    WHERE
+                        id = $user_id
+                ");
+
+                $last_avatar = $last_avatar['photo_path'];
+
+                $server_path = $_SERVER['DOCUMENT_ROOT'];
+                    
+                $path = "$server_path/data/users/$user_id/";
+                $name = basename($file['name']);
+
+                if (!is_dir($path))
+                    mkdir($path);
+
+                if (!empty($last_avatar))
+                {
+                    if (file_exists($path . $last_avatar))
+                        $result = unlink($path . $last_avatar);
+                }
+
+                move_uploaded_file($file['tmp_name'], $path . $name);
+
+                $add = $db->query("
+                    UPDATE
+                        USERS
+                    SET
+                        photo_path = '$name'
+                    WHERE
+                        id = $user_id
+                ");
+                }
+                else
+                {
+                    return "wrong_extension";
+                }
+
+            return $name;
         }
         else
         {

@@ -1,4 +1,5 @@
-<form id="form_add_product" class="form_wrapper modal" action="/server/server/php></form" POST="POST" enctype="multipart/form-data">
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/server/db_model.php") ?>
+<form id="form_add_product" class="form_wrapper modal" action="/server/server/php>" POST="POST" enctype="multipart/form-data">
   <div class="inner">
     <a class="link_undo" onclick="hideModalWrapper()">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +34,7 @@
         <option value="0" hidden>Категория</option>
         <?
           $categories = [];
-          $db = new MysqlModel;
+          $db = new MysqlModel();
 
           $categories = $db->goResult("SELECT * FROM PRODUCT_CATEGORIES");
 
@@ -62,7 +63,7 @@
             <option value="0" hidden>Склад</option>
             <?
               $warehouses = [];
-              $db = new MysqlModel;
+              $db = new MysqlModel();
 
               $warehouses = $db->goResult("SELECT * FROM STORES");
                     
@@ -80,4 +81,5 @@
         </div>
       </div>
     </div>
+  </div>
 </form>
