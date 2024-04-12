@@ -4,6 +4,9 @@
     <p class="text">Измените свой пароль.</p>
     <div class="line"></div>
     <div class="inputs">
+      <? if (!empty($_GET['token'])): ?>
+        <input type="hidden" name="token" value="<?= $_GET['token'] ?>">
+      <? endif ?>
       <input id="password" type="password" name="password" placeholder="Новый пароль" required>
       <input id="next_password" type="password" name="next_password" placeholder="Повтор пароля" required>
     </div>
