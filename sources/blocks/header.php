@@ -35,7 +35,7 @@
           <!-- Для всех других страниц -->
           <div class="wrapper">
             <div class="left">
-              <a href="/index.php" class="logo">
+              <a href="/index.php" class="logo block">
                 <img src="/sources/images/logo.svg" alt="BLITZ">
               </a>
             </div>
@@ -63,7 +63,9 @@
                 </div>
                 <div class="link_profile">
                     <!-- !!! сделать переход к профолио + фото из бд !!! -->
-                    <a href="#"><img src="sources/images/photo.png" width="50px" height="50px" alt="такой карины нету"></a>
+                    <a href="#" class="block" style="box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25); border-radius: 4px; background: url(/sources/images/photo.png) no-repeat center/cover; width: 50px; height: 50px;">
+                      <!-- <img src="sources/images/photo.png" width="50px" height="50px" alt="такой карины нету"> -->
+                    </a>
                 </div>
               <? endif ?>
             </div>
