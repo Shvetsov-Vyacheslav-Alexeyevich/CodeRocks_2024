@@ -156,7 +156,6 @@
 
     // ----------------------------------------------------------> Редактирование продукта
     else if ($_POST["form_type"] == "edit_product") {
-
       $card_id = $_POST['card_id'];
 
       $product = [];
@@ -197,28 +196,28 @@
         ");
       }
 
-      var_dump($card_id);
-      var_dump($_POST);
       if (!empty($_POST))
       {
-          $errors = [];
+        $errors = [];
 
-          $product_name = $_POST['product_name'];
-          $product_price = $_POST['product_price'];
-          $product_category = $_POST['product_category'];
-          $product_description = $_POST['product_description'];
-          // Товар скрыт или нет
-          $product_access = (isset($_POST['open_access'])) ? 1 : 0;
+        // Таблица продукта
+        $product_name = $_POST['product_name'];
+        $product_price = $_POST['product_price'];
+        $product_category = $_POST['product_category'];
+        $product_description = $_POST['product_description'];
+        // Товар скрыт или нет
+        $product_access = (isset($_POST['open_access'])) ? 1 : 0;
+        
+        // Характеристики продукта
+        $product_weight = $_POST['product_weight'];
+        $product_length = $_POST['product_length'];
+        $product_width = $_POST['product_width'];
+        $product_height = $_POST['product_height'];
 
-          $product_weight = $_POST['product_weight'];
-          $product_length = $_POST['product_length'];
-          $product_width = $_POST['product_width'];
-          $product_height = $_POST['product_height'];
-
-          ///----------------------------------------------
-          // $product_storage_warehouse = $_POST['storage_warehouse'];
-          // $product_quantity = $_POST['product_quantity'];
-          ///----------------------------------------------
+        ///----------------------------------------------
+        // $product_storage_warehouse = $_POST['storage_warehouse'];
+        // $product_quantity = $_POST['product_quantity'];
+        ///----------------------------------------------
 
           if (!empty($product_name) && !empty($product_price) && !empty($product_weight) && !empty($product_length) && !empty($product_width) && !empty($product_height) && !empty($product_category) && !empty($product_description))
           {

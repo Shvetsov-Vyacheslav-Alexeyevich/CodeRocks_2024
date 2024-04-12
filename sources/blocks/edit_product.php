@@ -64,13 +64,25 @@
       </div>
       <div class="append_stock_save">
         <div class="double" style="margin: 14px 0px 0px;">
+
           <select id="stock_input" class="select_input_style text_left" style="width: 208px;" name="stocks">
             <option value="0" hidden>Склад</option>
-            <option value="Город_1">1</option>
-            <option value="Город 22  23 21">2</option>
-            <option value="Кемерово лол">3</option>
+            <?
+              $warehouses = [];
+              $db = new MysqlModel;
+
+              $product_vendor = $_SESSION['user']['vendor_id'];
+
+              $warehouses = $db->goResult("SELECT * FROM STORES WHERE vendor_id = $product_vendor");            
+                    
+              foreach ($warehouses as $stock):
+            ?>
+              <option value="<?= $stock['id'] ?>"><?= $stock['name'] ?></option>
+            <? endforeach ?>
           </select>
+
           <input id="count_pr" class="text_left" type="number" min="1" name="stocks" placeholder="Колличество" style="width: 130px;">
+
         </div>
         <a class="button_link add">Добавить</a>
         <div class="line"></div>
