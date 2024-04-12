@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 11 2024 г., 21:57
+-- Время создания: Апр 12 2024 г., 13:22
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `DELIVERY_TYPES` (
   `id` int NOT NULL COMMENT 'Айди.',
   `name` int NOT NULL COMMENT 'Название.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Типы доставки.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Типы доставки.';
 
 -- --------------------------------------------------------
 
@@ -42,23 +42,7 @@ CREATE TABLE `FIRST_POINT_ROADS` (
   `id` int NOT NULL COMMENT 'Айди.',
   `location_id` int NOT NULL COMMENT 'Какая точка.',
   `road_id` int NOT NULL COMMENT 'Какому маршруту принадлежит.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Начальная точка в маршруте.';
-
---
--- Дамп данных таблицы `FIRST_POINT_ROADS`
---
-
-INSERT INTO `FIRST_POINT_ROADS` (`id`, `location_id`, `road_id`) VALUES
-(1, 10, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 2, 4),
-(5, 8, 5),
-(6, 6, 6),
-(7, 7, 7),
-(8, 4, 8),
-(9, 3, 9),
-(10, 9, 10);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Начальная точка в маршруте.';
 
 -- --------------------------------------------------------
 
@@ -68,8 +52,8 @@ INSERT INTO `FIRST_POINT_ROADS` (`id`, `location_id`, `road_id`) VALUES
 
 CREATE TABLE `LOCATIONS` (
   `id` int NOT NULL COMMENT 'Айди.',
-  `name` varchar(50) NOT NULL COMMENT 'Название.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Города.';
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Название.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Города.';
 
 --
 -- Дамп данных таблицы `LOCATIONS`
@@ -95,26 +79,10 @@ INSERT INTO `LOCATIONS` (`id`, `name`) VALUES
 
 CREATE TABLE `LOCATION_ROADS` (
   `id` int NOT NULL COMMENT 'Айди.',
-  `time` int NOT NULL COMMENT 'Время маршрута в минутах.',
-  `distance` int NOT NULL COMMENT 'Километраж маршрута.',
-  `description` varchar(100) NOT NULL COMMENT 'Краткое описание маршрута.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Маршруты.';
-
---
--- Дамп данных таблицы `LOCATION_ROADS`
---
-
-INSERT INTO `LOCATION_ROADS` (`id`, `time`, `distance`, `description`) VALUES
-(1, 231, 265, 'Новосибирск - Кемерово'),
-(2, 156, 165, 'Кемерово - Мариинск'),
-(3, 74, 88, 'Кемерово - Ленинск-Кузнецкий'),
-(4, 16, 13, 'Ленинск-Кузнецкий - Полысаево'),
-(5, 24, 27, 'Полысаево - Белово'),
-(6, 59, 67, 'Белово - Киселёвск'),
-(7, 31, 19, 'Киселёвск - Прокопьевск'),
-(8, 55, 47, 'Прокопьевск - Новокузнецк'),
-(9, 78, 76, 'Новокузнецк - Междуреченск'),
-(10, 240, 187, 'Мариинск - Ленинск-Кузнецкий');
+  `cost` decimal(7,2) NOT NULL COMMENT 'Стоимость маршрута.',
+  `time` int NOT NULL COMMENT 'Время маршрута в секундах.',
+  `vendor_id` int NOT NULL COMMENT 'Кому принадлежит маршрут.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Маршруты.';
 
 -- --------------------------------------------------------
 
@@ -128,9 +96,8 @@ CREATE TABLE `ORDERS` (
   `point_id` int NOT NULL COMMENT 'Откуда будут забирать заказ.',
   `delivery_type_id` int NOT NULL COMMENT 'Тип доставки.',
   `status_id` int NOT NULL COMMENT 'Статус заказа.',
-  `store_id` int NOT NULL COMMENT 'Откуда заказ поедет.',
-  `delivery_cost` int NOT NULL COMMENT 'Стоимость доставки.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Заказы.';
+  `store_id` int NOT NULL COMMENT 'Откуда заказ поедет.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Заказы.';
 
 -- --------------------------------------------------------
 
@@ -143,7 +110,7 @@ CREATE TABLE `ORDER_PRODUCTS` (
   `order_id` int NOT NULL COMMENT 'К какому заказу привязан.',
   `product_id` int NOT NULL COMMENT 'Что за товар.',
   `count` int NOT NULL COMMENT 'Количество'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Заказанные товары.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Заказанные товары.';
 
 -- --------------------------------------------------------
 
@@ -153,16 +120,9 @@ CREATE TABLE `ORDER_PRODUCTS` (
 
 CREATE TABLE `ORDER_STATUSES` (
   `id` int NOT NULL COMMENT 'Айди.',
-  `name` varchar(50) NOT NULL COMMENT 'Название.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Статусы заказов.';
-
---
--- Дамп данных таблицы `ORDER_STATUSES`
---
-
-INSERT INTO `ORDER_STATUSES` (`id`, `name`) VALUES
-(1, 'В пути'),
-(2, 'Завершён');
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Название.',
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата назначения статуса.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Статусы заказов.';
 
 -- --------------------------------------------------------
 
@@ -172,10 +132,10 @@ INSERT INTO `ORDER_STATUSES` (`id`, `name`) VALUES
 
 CREATE TABLE `PICKUP_POINTS` (
   `id` int NOT NULL COMMENT 'Айди.',
-  `name` varchar(50) NOT NULL COMMENT 'Название ПВЗ.',
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Название ПВЗ.',
   `location_id` int NOT NULL COMMENT 'В каком городе.',
   `vendor_id` int NOT NULL COMMENT 'Кому принадлежит.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='ПВЗ.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='ПВЗ.';
 
 --
 -- Дамп данных таблицы `PICKUP_POINTS`
@@ -194,13 +154,13 @@ INSERT INTO `PICKUP_POINTS` (`id`, `name`, `location_id`, `vendor_id`) VALUES
 
 CREATE TABLE `PRODUCTS` (
   `id` int NOT NULL COMMENT 'Айди.',
-  `name` varchar(100) NOT NULL COMMENT 'Название.',
-  `description` varchar(1024) NOT NULL COMMENT 'Описание.',
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Название.',
+  `description` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Описание.',
   `price` decimal(9,2) NOT NULL COMMENT 'Цена.',
   `category_id` int NOT NULL COMMENT 'Категория.',
   `vendor_id` int NOT NULL COMMENT 'Кто продавец.',
   `is_hidden` tinyint(1) NOT NULL COMMENT 'Скрыто (1) или нет (0).'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Товары.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Товары.';
 
 --
 -- Дамп данных таблицы `PRODUCTS`
@@ -208,9 +168,29 @@ CREATE TABLE `PRODUCTS` (
 
 INSERT INTO `PRODUCTS` (`id`, `name`, `description`, `price`, `category_id`, `vendor_id`, `is_hidden`) VALUES
 (22, 'Жопаz', 'sususu', '3.00', 1, 1, 0),
-(30, 'Сухарики', '100', '100.00', 1, 1, 0),
-(32, 'Вафли Яшкино', '100', '150.00', 1, 1, 0),
-(34, 'Лапша', 'Лапша. Вкусный, сочный', '25.00', 12, 1, 1);
+(23, 'Марихуанна', 'Шикарная', '5.00', 12, 1, 1),
+(24, 'Помидоры', 'Шикарная', '5.00', 1, 1, 0),
+(25, '1', '1', '1.00', 2, 2, 1),
+(26, 'Гуань', '123456', '500.00', 11, 2, 1),
+(27, 'Говно с подливой Говно с подливой Говно с подливой Говно с подливой Говно с подливой Говно с подливо', '4к435к4к34к3к2е234к435к4к34к3к2е234к435к4к34к3к2е234к435к4к34к3к2е23', '10000.00', 5, 2, 0),
+(28, 'Kaka', '1234', '44531.00', 8, 2, 0),
+(29, 'Макароны', 'Вкусные макароны', '120.00', 12, 2, 0),
+(30, 'Динамит', 'аукпу4кпу43', '3000.00', 5, 2, 0),
+(31, 'Сусси пусси', 'Моя пусси на тусе', '666.00', 6, 2, 0),
+(32, 'Сусси пусси', 'Моя пусси на тусе', '666.00', 6, 2, 0),
+(33, 'Сусси пусси', 'Моя пусси на тусе', '666.00', 6, 2, 0),
+(34, 'Сусси пусси', 'Моя пусси на тусе', '666.00', 6, 2, 0),
+(35, 'Сусси пусси', 'Моя пусси на тусе', '666.00', 6, 2, 0),
+(36, 'Марихуанна', '23ку23', '23.00', 6, 2, 0),
+(37, 'Говно с подливой', '123', '123.00', 2, 2, 0),
+(38, 'Конфеты', 'Вкусные конфеты', '1000.00', 12, 2, 0),
+(43, 'Говно с подливой', '22', '22.00', 2, 2, 0),
+(44, 'Говно с подливой', '22', '22.00', 2, 2, 0),
+(45, 'Говно с подливой', '22', '22.00', 2, 2, 0),
+(46, 'Говно с подливой', '22', '22.00', 2, 2, 0),
+(47, 'sus', '55', '55.00', 5, 2, 0),
+(48, 'sus', '55', '55.00', 5, 2, 0),
+(49, 'sus', '55', '55.00', 5, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -223,7 +203,17 @@ CREATE TABLE `PRODUCTS_COUNT` (
   `count` int NOT NULL COMMENT 'Количество.',
   `product_id` int NOT NULL COMMENT 'Какого товара.',
   `store_id` int NOT NULL COMMENT 'На каком складе.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Количество товара на складе.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Количество товара на складе.';
+
+--
+-- Дамп данных таблицы `PRODUCTS_COUNT`
+--
+
+INSERT INTO `PRODUCTS_COUNT` (`id`, `count`, `product_id`, `store_id`) VALUES
+(1, 160, 24, 1),
+(8, 2, 47, 1),
+(9, 3, 47, 2),
+(10, 4, 47, 3);
 
 -- --------------------------------------------------------
 
@@ -233,8 +223,8 @@ CREATE TABLE `PRODUCTS_COUNT` (
 
 CREATE TABLE `PRODUCT_CATEGORIES` (
   `id` int NOT NULL COMMENT 'Айди.',
-  `name` varchar(100) NOT NULL COMMENT 'Название.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Категории товаров.';
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Название.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Категории товаров.';
 
 --
 -- Дамп данных таблицы `PRODUCT_CATEGORIES`
@@ -283,7 +273,7 @@ CREATE TABLE `PRODUCT_CHARACTERISTICS` (
   `length` int NOT NULL COMMENT 'Длина (мм)',
   `width` int NOT NULL COMMENT 'Ширина (мм)',
   `height` int NOT NULL COMMENT 'Высота (мм)'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Характеристики товара.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Характеристики товара.';
 
 --
 -- Дамп данных таблицы `PRODUCT_CHARACTERISTICS`
@@ -291,9 +281,29 @@ CREATE TABLE `PRODUCT_CHARACTERISTICS` (
 
 INSERT INTO `PRODUCT_CHARACTERISTICS` (`id`, `product_id`, `weight`, `length`, `width`, `height`) VALUES
 (2, 22, '0.001', 3, 1, 1),
-(10, 30, '100.000', 100, 100, 100),
-(12, 32, '1.000', 100, 100, 100),
-(14, 34, '0.400', 300, 50, 25);
+(3, 23, '0.001', 1, 1, 1),
+(4, 24, '0.001', 1, 1, 1),
+(5, 25, '1.000', 1, 1, 1),
+(6, 26, '1.000', 1, 1, 1),
+(7, 27, '23.000', 200, 200, 200),
+(8, 28, '123.000', 123, 1231, 123),
+(9, 29, '2.000', 200, 200, 200),
+(10, 30, '10.000', 100, 100, 100),
+(11, 31, '66.000', 6, 6, 6),
+(12, 31, '66.000', 6, 6, 6),
+(13, 31, '66.000', 6, 6, 6),
+(14, 31, '66.000', 6, 6, 6),
+(15, 31, '66.000', 6, 6, 6),
+(16, 36, '232.000', 2323, 2, 23),
+(17, 37, '123.000', 123, 132, 123),
+(18, 38, '10.000', 100, 100, 100),
+(23, 43, '22.000', 22, 22, 22),
+(24, 43, '22.000', 22, 22, 22),
+(25, 43, '22.000', 22, 22, 22),
+(26, 43, '22.000', 22, 22, 22),
+(27, 47, '55.000', 5, 5, 5),
+(28, 47, '55.000', 5, 5, 5),
+(29, 47, '55.000', 5, 5, 5);
 
 -- --------------------------------------------------------
 
@@ -312,12 +322,17 @@ CREATE TABLE `PRODUCT_PHOTOS` (
 --
 
 INSERT INTO `PRODUCT_PHOTOS` (`id`, `product_id`, `photo_path`) VALUES
-(1, 30, 'cursor_preview.png'),
-(2, 30, 'um_3COLka4M.jpg'),
-(3, 32, 'cursor_preview.png'),
-(4, 32, 'um_3COLka4M.jpg'),
-(5, 32, 'bliss_internet.png'),
-(6, 34, 'um_3COLka4M.jpg');
+(7, 37, 'Screenshot_1.png'),
+(8, 37, 'Screenshot_2.png'),
+(9, 37, 'Screenshot_3.png'),
+(10, 38, 'Screenshot_5.png'),
+(11, 43, 'Screenshot_2.png'),
+(12, 43, '1_Screenshot_2.png'),
+(13, 43, '2_1_Screenshot_2.png'),
+(14, 43, '3_2_1_Screenshot_2.png'),
+(15, 47, 'Screenshot_4.png'),
+(16, 47, '1_Screenshot_4.png'),
+(17, 47, '2_1_Screenshot_4.png');
 
 -- --------------------------------------------------------
 
@@ -331,7 +346,7 @@ CREATE TABLE `PRODUCT_ROUTES` (
   `order_id` int NOT NULL COMMENT 'По какому заказу.',
   `location_id` int NOT NULL COMMENT 'Куда направляется.',
   `status_id` int NOT NULL COMMENT 'Статус маршрута.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Маршруты товаров.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Маршруты товаров.';
 
 -- --------------------------------------------------------
 
@@ -341,33 +356,9 @@ CREATE TABLE `PRODUCT_ROUTES` (
 
 CREATE TABLE `PRODUCT_STATUSES` (
   `id` int NOT NULL COMMENT 'Айди.',
-  `name` varchar(50) NOT NULL COMMENT 'Название.',
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Название.',
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата назначения статуса.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Статусы маршрутов товара.';
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `REVIEWS`
---
-
-CREATE TABLE `REVIEWS` (
-  `id` int NOT NULL COMMENT 'Айди.',
-  `product_id` int NOT NULL COMMENT 'На чей товар.',
-  `client_id` int NOT NULL COMMENT 'От кого.',
-  `review` varchar(2048) DEFAULT NULL COMMENT 'Сам отзыв.',
-  `rate` tinyint NOT NULL COMMENT 'Оценка.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Отзывы.';
-
---
--- Дамп данных таблицы `REVIEWS`
---
-
-INSERT INTO `REVIEWS` (`id`, `product_id`, `client_id`, `review`, `rate`) VALUES
-(1, 32, 1, NULL, 5),
-(2, 32, 2, 'Хорошие вафли, вкусные.', 5),
-(3, 22, 2, 'плохая жопа!', 3),
-(4, 22, 1, 'Нормальная такая жолупенечка!', 5);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Статусы маршрутов товара.';
 
 -- --------------------------------------------------------
 
@@ -379,23 +370,7 @@ CREATE TABLE `SECOND_POINT_ROADS` (
   `id` int NOT NULL COMMENT 'Айди.',
   `location_id` int NOT NULL COMMENT 'Какая точка.',
   `road_id` int NOT NULL COMMENT 'Какому маршруту принадлежит.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Конечная точка в маршруте.';
-
---
--- Дамп данных таблицы `SECOND_POINT_ROADS`
---
-
-INSERT INTO `SECOND_POINT_ROADS` (`id`, `location_id`, `road_id`) VALUES
-(1, 1, 1),
-(2, 9, 2),
-(3, 2, 3),
-(4, 8, 4),
-(5, 6, 5),
-(6, 7, 6),
-(7, 4, 7),
-(8, 3, 8),
-(9, 5, 9),
-(10, 2, 10);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Конечная точка в маршруте.';
 
 -- --------------------------------------------------------
 
@@ -405,18 +380,19 @@ INSERT INTO `SECOND_POINT_ROADS` (`id`, `location_id`, `road_id`) VALUES
 
 CREATE TABLE `STORES` (
   `id` int NOT NULL COMMENT 'Айди.',
-  `name` varchar(50) NOT NULL COMMENT 'Название склада.',
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Название склада.',
   `location_id` int NOT NULL COMMENT 'В каком городе.',
   `vendor_id` int NOT NULL COMMENT 'Кому принадлежит.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Склады.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Склады.';
 
 --
 -- Дамп данных таблицы `STORES`
 --
 
 INSERT INTO `STORES` (`id`, `name`, `location_id`, `vendor_id`) VALUES
-(1, 'Новосибирский склад', 10, 1),
-(2, 'Беловский склад', 6, 1);
+(1, 'Кемеровский склад, ул. Ленина 45', 1, 2),
+(2, 'Южный склад, ул. Звёздная 99', 8, 2),
+(3, 'Пердаплюево склад, ул Какашкина 11', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -426,21 +402,21 @@ INSERT INTO `STORES` (`id`, `name`, `location_id`, `vendor_id`) VALUES
 
 CREATE TABLE `USERS` (
   `id` int NOT NULL COMMENT 'Айди.',
-  `email` varchar(50) NOT NULL COMMENT 'Эл. почта.',
-  `password_hash` varchar(60) NOT NULL COMMENT 'Пароль в виде хэша.',
-  `photo_path` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'Путь до аватара юзера.',
-  `is_vendor` tinyint(1) NOT NULL COMMENT 'Продавец (1) или нет (0).'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Общая таблица пользователей.';
+  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Эл. почта.',
+  `password_hash` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Пароль в виде хэша.',
+  `photo_path` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Путь до аватара юзера.',
+  `is_vendor` tinyint(1) NOT NULL COMMENT 'Продавец (1) или нет (0).',
+  `reset_token` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Токен для восстановления пароля'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Общая таблица пользователей.';
 
 --
 -- Дамп данных таблицы `USERS`
 --
 
-INSERT INTO `USERS` (`id`, `email`, `password_hash`, `photo_path`, `is_vendor`) VALUES
-(1, 'chernykhin45@gmail.com', '$2y$10$VYpQVT8.LxA1LoZlO8eXEun1DSAbpJTkfQAgp50WZixFSLWTVwBj2', NULL, 0),
-(2, 'molow@inbox.ru', '$2y$10$/bswI5F04zH3RFWaho7e0.d/kBAbTCNVzaFI9hYxC6CMYEgV3802.', NULL, 1),
-(3, 'omg@mail.ru', '$2y$10$stT6sJxqaFCNKklLtuEKU.Iug9RazSOduXn6QYp6YFEjSIwBNs.l2', NULL, 1),
-(4, 'chernykhin46@gmail.com', '$2y$10$8kByA3fRHxBa.bUjL3bvg.05ZhwxnXIbwCdzSPV.jAE0Kn9VGigN.', NULL, 0);
+INSERT INTO `USERS` (`id`, `email`, `password_hash`, `photo_path`, `is_vendor`, `reset_token`) VALUES
+(1, 'chernykhin45@gmail.com', '$2y$10$.9rjSPA4DtuL7mrGMR36TewSsBY19yYB6snjjklQQ88wjb.C0q9BG', NULL, 0, NULL),
+(2, 'molow@inbox.ru', '$2y$10$vFeHTnJ3Y.Xs/jazt91wvuCPHerE.Py1X2t7f/o/FfVeb7BYt0JcS', NULL, 1, NULL),
+(3, 'omg@mail.ru', '$2y$10$stT6sJxqaFCNKklLtuEKU.Iug9RazSOduXn6QYp6YFEjSIwBNs.l2', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -451,18 +427,17 @@ INSERT INTO `USERS` (`id`, `email`, `password_hash`, `photo_path`, `is_vendor`) 
 CREATE TABLE `USER_CLIENTS` (
   `id` int NOT NULL COMMENT 'Айди.',
   `user_id` int NOT NULL COMMENT 'К какому юзеру привязан.',
-  `firstname` varchar(50) NOT NULL COMMENT 'Фамилия.',
-  `name` varchar(50) NOT NULL COMMENT 'Имя.',
-  `surname` varchar(50) DEFAULT NULL COMMENT 'Отчество.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Покупатели.';
+  `firstname` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Фамилия.',
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Имя.',
+  `surname` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Отчество.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Покупатели.';
 
 --
 -- Дамп данных таблицы `USER_CLIENTS`
 --
 
 INSERT INTO `USER_CLIENTS` (`id`, `user_id`, `firstname`, `name`, `surname`) VALUES
-(1, 1, 'Жмышенко', 'Михаил', 'Альбертович'),
-(2, 4, 'Черных', 'Игорь', 'Олегович');
+(1, 1, 'Черных', 'Игорь', 'Олегович');
 
 -- --------------------------------------------------------
 
@@ -473,8 +448,8 @@ INSERT INTO `USER_CLIENTS` (`id`, `user_id`, `firstname`, `name`, `surname`) VAL
 CREATE TABLE `USER_VENDORS` (
   `id` int NOT NULL COMMENT 'Айди.',
   `user_id` int NOT NULL COMMENT 'К какому юзеру привязан.',
-  `company_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Название компании.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Продавцы.';
+  `company_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Название компании.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Продавцы.';
 
 --
 -- Дамп данных таблицы `USER_VENDORS`
@@ -492,10 +467,10 @@ INSERT INTO `USER_VENDORS` (`id`, `user_id`, `company_name`) VALUES
 
 CREATE TABLE `VENDOR_ROUTES` (
   `id` int NOT NULL COMMENT 'Айди.',
-  `route_id` int NOT NULL COMMENT 'Какой по счёту маршрут у продавца.',
-  `road_id` int NOT NULL COMMENT 'Какая дорога.',
+  `road_id` int NOT NULL COMMENT 'Какой из предопределённых маршрутов.',
+  `cost` int NOT NULL COMMENT 'Цена.',
   `vendor_id` int NOT NULL COMMENT 'Кому принадлежит.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Связь дорог в маршрутах.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Стоимость маршрутов у разных компаний.';
 
 --
 -- Индексы сохранённых таблиц
@@ -525,7 +500,8 @@ ALTER TABLE `LOCATIONS`
 -- Индексы таблицы `LOCATION_ROADS`
 --
 ALTER TABLE `LOCATION_ROADS`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vendor_id` (`vendor_id`);
 
 --
 -- Индексы таблицы `ORDERS`
@@ -593,7 +569,8 @@ ALTER TABLE `PRODUCT_CHARACTERISTICS`
 -- Индексы таблицы `PRODUCT_PHOTOS`
 --
 ALTER TABLE `PRODUCT_PHOTOS`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Индексы таблицы `PRODUCT_ROUTES`
@@ -610,14 +587,6 @@ ALTER TABLE `PRODUCT_ROUTES`
 --
 ALTER TABLE `PRODUCT_STATUSES`
   ADD PRIMARY KEY (`id`);
-
---
--- Индексы таблицы `REVIEWS`
---
-ALTER TABLE `REVIEWS`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`),
-  ADD KEY `client_id` (`client_id`);
 
 --
 -- Индексы таблицы `SECOND_POINT_ROADS`
@@ -656,14 +625,6 @@ ALTER TABLE `USER_VENDORS`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Индексы таблицы `VENDOR_ROUTES`
---
-ALTER TABLE `VENDOR_ROUTES`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `road_id` (`road_id`),
-  ADD KEY `vendor_id` (`vendor_id`);
-
---
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -677,7 +638,7 @@ ALTER TABLE `DELIVERY_TYPES`
 -- AUTO_INCREMENT для таблицы `FIRST_POINT_ROADS`
 --
 ALTER TABLE `FIRST_POINT_ROADS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `LOCATIONS`
@@ -689,7 +650,7 @@ ALTER TABLE `LOCATIONS`
 -- AUTO_INCREMENT для таблицы `LOCATION_ROADS`
 --
 ALTER TABLE `LOCATION_ROADS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
 
 --
 -- AUTO_INCREMENT для таблицы `ORDERS`
@@ -707,7 +668,7 @@ ALTER TABLE `ORDER_PRODUCTS`
 -- AUTO_INCREMENT для таблицы `ORDER_STATUSES`
 --
 ALTER TABLE `ORDER_STATUSES`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
 
 --
 -- AUTO_INCREMENT для таблицы `PICKUP_POINTS`
@@ -719,13 +680,13 @@ ALTER TABLE `PICKUP_POINTS`
 -- AUTO_INCREMENT для таблицы `PRODUCTS`
 --
 ALTER TABLE `PRODUCTS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=35;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT для таблицы `PRODUCTS_COUNT`
 --
 ALTER TABLE `PRODUCTS_COUNT`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `PRODUCT_CATEGORIES`
@@ -737,13 +698,13 @@ ALTER TABLE `PRODUCT_CATEGORIES`
 -- AUTO_INCREMENT для таблицы `PRODUCT_CHARACTERISTICS`
 --
 ALTER TABLE `PRODUCT_CHARACTERISTICS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=15;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT для таблицы `PRODUCT_PHOTOS`
 --
 ALTER TABLE `PRODUCT_PHOTOS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT для таблицы `PRODUCT_ROUTES`
@@ -758,46 +719,34 @@ ALTER TABLE `PRODUCT_STATUSES`
   MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
 
 --
--- AUTO_INCREMENT для таблицы `REVIEWS`
---
-ALTER TABLE `REVIEWS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT для таблицы `SECOND_POINT_ROADS`
 --
 ALTER TABLE `SECOND_POINT_ROADS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `STORES`
 --
 ALTER TABLE `STORES`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `USERS`
 --
 ALTER TABLE `USERS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `USER_CLIENTS`
 --
 ALTER TABLE `USER_CLIENTS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `USER_VENDORS`
 --
 ALTER TABLE `USER_VENDORS`
   MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.', AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT для таблицы `VENDOR_ROUTES`
---
-ALTER TABLE `VENDOR_ROUTES`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Айди.';
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -809,6 +758,12 @@ ALTER TABLE `VENDOR_ROUTES`
 ALTER TABLE `FIRST_POINT_ROADS`
   ADD CONSTRAINT `first_point_roads_ibfk_1` FOREIGN KEY (`location_id`) REFERENCES `LOCATIONS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `first_point_roads_ibfk_2` FOREIGN KEY (`road_id`) REFERENCES `LOCATION_ROADS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `LOCATION_ROADS`
+--
+ALTER TABLE `LOCATION_ROADS`
+  ADD CONSTRAINT `location_roads_ibfk_1` FOREIGN KEY (`vendor_id`) REFERENCES `USER_VENDORS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `ORDERS`
@@ -855,6 +810,12 @@ ALTER TABLE `PRODUCT_CHARACTERISTICS`
   ADD CONSTRAINT `product_characteristics_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Ограничения внешнего ключа таблицы `PRODUCT_PHOTOS`
+--
+ALTER TABLE `PRODUCT_PHOTOS`
+  ADD CONSTRAINT `product_photos_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Ограничения внешнего ключа таблицы `PRODUCT_ROUTES`
 --
 ALTER TABLE `PRODUCT_ROUTES`
@@ -862,13 +823,6 @@ ALTER TABLE `PRODUCT_ROUTES`
   ADD CONSTRAINT `product_routes_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `ORDERS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `product_routes_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `product_routes_ibfk_4` FOREIGN KEY (`status_id`) REFERENCES `PRODUCT_STATUSES` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `REVIEWS`
---
-ALTER TABLE `REVIEWS`
-  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `USER_CLIENTS` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `SECOND_POINT_ROADS`
@@ -895,13 +849,6 @@ ALTER TABLE `USER_CLIENTS`
 --
 ALTER TABLE `USER_VENDORS`
   ADD CONSTRAINT `user_vendors_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `VENDOR_ROUTES`
---
-ALTER TABLE `VENDOR_ROUTES`
-  ADD CONSTRAINT `vendor_routes_ibfk_1` FOREIGN KEY (`road_id`) REFERENCES `LOCATION_ROADS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `vendor_routes_ibfk_2` FOREIGN KEY (`vendor_id`) REFERENCES `USER_VENDORS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

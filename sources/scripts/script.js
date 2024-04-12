@@ -176,7 +176,7 @@ if (document.getElementById("form_recovery") != null) {
           <h1 class="form_heading">Откройте письмо</h1>
           <div class="line"></div>
           <p class="text">Перейтите по ссылке в письме, чтобы продолжить.</p>
-          <a class="button_link" href="#">Закрыть</a>
+          <a class="button_link" href="/index.php">Закрыть</a>
         `);
       }
     }
@@ -458,7 +458,6 @@ function get_arr_stocks() {
   document.querySelectorAll(".stocks .row").forEach(element => {
     arr_stocks[element.getAttribute("index")] = element.querySelector(".c").innerHTML; 
   });
-  console.log(arr_stocks);
   return arr_stocks;
 }
 
@@ -513,7 +512,7 @@ if (document.getElementById("form_add_stock") != null) {
         hideModalWrapper();
         alert(data["response"]);
         console.log(data["response"]);
-        // location.reload()
+        location.reload()
       }
     }
   });
@@ -552,23 +551,210 @@ if (document.getElementById("form_add_pick_point") != null) {
 }
 
 // ADD PATH
+function remove_path(element) {
+  console.log("start");
+  return (((element.parentNode).parentNode).parentNode).getAttribute("index");
+}
+
 // Открытие формы
 function open_add_path(element) {
   showModalWrapper();
   document.getElementById("add_path").style.display = "block";
 }
 
-(async function() {
-  const getScore = await get_request("/server/please_me.php?add_path=give"); 
-  console.log(getScore);
-})();
-console.log(getScore);
+// Проверяем изменения первых полей и их отправка
+if (document.getElementById("add_path") != null) {
+  
+  document.querySelectorAll("#add_path .nado").forEach(element => {
+    element.addEventListener("change", () => {
+      if (document.getElementById("pointer").value != 0 && document.getElementById("stock").value != 0) {
+        // Отправляем данные при заполнении первой части
+        document.querySelector("#add_path .hideBlock").style.display = "none";
+        let formData = new FormData(document.getElementById("add_path"));
+        formData.set("form_type", "get_paths");
+        // Запрос на отправку
+        fetch("/server/server.php", {
+          method: "POST",
+          body: formData
+        })
+        .then((response) => response.json())
+        .then((data) => succesfull_status(data));
+      }
+  
+      function succesfull_status(data) {
+        if (data["status"] == true) {
+          // Показываем другую часть формы
+          document.querySelector("#add_path .hideBlock").style.display = "block";
+          (async function() {
+            //Запись на выбор всех возможных маршрутов
+            console.log(data["response"])
+            document.querySelector("#add_path #paths").innerHTML = "";
+            for (let i in data["response"]) {
+              document.querySelector("#add_path #paths").innerHTML += (`
+                <option value="${i}">${data["response"][i]}</option>
+              `)
+            }
+
+            // Запись всех маршрутов пользователя в html
+            let response = await get_request("/server/please_me.php?add_path=give"); 
+            let j = 0;
+            document.querySelector("#add_path .pick-up_point").innerHTML = "";
+            for (let i of response) {
+              j++;
+              document.querySelector("#add_path .pick-up_point").innerHTML += (`
+                <div index="${j}" class="pick_point">
+                  <div class="double" style="color: var(--text_color);">
+                    <div class="left">
+                      ${i[0]}
+                    </div>
+                    <div class="right">
+                      <div class="line remove_path"></div>
+                      ${i[2]}
+                    </div>
+                  </div>
+                  <div class="double" style="">
+                    <div class="left">
+                      ${i[1]}
+                    </div>
+                    <div class="right">
+                      ${i[3]}., ${i[4]}. ${i[5]}₽
+                    </div>
+                  </div>
+                </div>
+              `)
+            }
+
+            // Добавление путей
+
+
+            // Удаление путей
+            remove_path(document.querySelector(".remove_path"));
+              // Проверяем событие - нажатие на кнопку удалить
+            document.querySelectorAll(".remove_path").forEach(element => {
+              element.addEventListener("click", () => {
+                let formData = new FormData();
+                formData.set("index", remove_path(element));
+                formData.set("form_type", "remove_path");
+                // Запрос на отправку
+                fetch("/server/server.php", {
+                  method: "POST",
+                  body: formData
+                })
+                .then((response) => response.json())
+                .then((data) => succesfull_status(data));
+
+                function succesfull_status(data) {
+                  console.log(data["test"])
+                  if (data["status"] == true) {
+                    fetch("/server/please_me.php?add_path=give2", {
+                      method: "GET",
+                    })
+                    .then((response) => response.json())
+                    .then((data) => succesfull_status(data));
+
+                    function succesfull_status(data) {
+                      console.log(data);
+                      document.querySelector("#add_path .pick-up_point").innerHTML = "";
+                      for (let i of data) {
+                        j++;
+                        document.querySelector("#add_path .pick-up_point").innerHTML += (`
+                          <div index="${j}" class="pick_point">
+                            <div class="double" style="color: var(--text_color);">
+                              <div class="left">
+                                ${i[0]}
+                              </div>
+                              <div class="right">
+                                <div class="line remove_path"></div>
+                                ${i[2]}
+                              </div>
+                            </div>
+                            <div class="double" style="">
+                              <div class="left">
+                                ${i[1]}
+                              </div>
+                              <div class="right">
+                                ${i[3]}., ${i[4]}. ${i[5]}₽
+                              </div>
+                            </div>
+                          </div>
+                        `)
+                      }
+                    }
+                  }
+                }
+              });
+            });
+          })();
+        }
+      }
+    });
+  });
+}
+
+// Проверяем изменения всех полей и их отправка для добавления нового пути в БД
+document.querySelector("#add_path .submit").addEventListener("click", (event) => {
+  event.preventDefault();
+  if (document.getElementById("pointer").value != 0 && document.getElementById("stock").value != 0 && document.getElementById("paths").value != 0) {
+    // Отправляем данные при заполнении всей части для добавления нового элемента
+    let formData = new FormData(document.getElementById("add_path"));
+    formData.set("form_type", "add_paths");
+    // Запрос на отправку
+    fetch("/server/server.php", {
+      method: "POST",
+      body: formData
+    })
+    .then((response) => response.json())
+    .then((data) => succesfull_status(data));
+  }
+
+  function succesfull_status(data) {
+    if (data["status"] == true) {
+      console.log("Новый элемент добавлен!")
+      let formData = new FormData(document.getElementById("add_path"));
+      formData.set("form_type", "add_paths");
+      // Запрос на отправку
+      fetch("/server/please_me.php?add_path=give2", {
+        method: "GET"
+      })
+      .then((response) => response.json())
+      .then((data) => succesfull_status(data));
+    }
+
+    function succesfull_status(data) {
+      let j = 0;
+      document.querySelector("#add_path .pick-up_point").innerHTML = "";
+      for (let i of data) {
+        j++;
+        document.querySelector("#add_path .pick-up_point").innerHTML += (`
+          <div index="${j}" class="pick_point">
+            <div class="double" style="color: var(--text_color);">
+              <div class="left">
+                ${i[0]}
+              </div>
+              <div class="right">
+                <div class="line remove_path"></div>
+                ${i[2]}
+              </div>
+            </div>
+            <div class="double" style="">
+              <div class="left">
+                ${i[1]}
+              </div>
+              <div class="right">
+                ${i[3]}., ${i[4]}. ${i[5]}₽
+              </div>
+            </div>
+          </div>
+        `)
+      }
+    }
+  }
+});
 
 
 function open_del_product(clicked) {
   showModalWrapper();
   document.getElementById("form_del_product").style.display = "block";
-
 }
 
 if (document.getElementById("form_del_product") != null) {
@@ -644,5 +830,6 @@ function open_edit_name_company(clicked) {
 function open_edit_fio(clicked) {
   showModalWrapper();
   document.getElementById("form_edit_fio").style.display = "block";
-
 }
+
+
