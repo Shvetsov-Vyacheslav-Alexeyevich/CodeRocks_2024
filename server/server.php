@@ -195,7 +195,6 @@
           id = $_GET[delete_id]
         ");
       }
-
       if (!empty($_POST))
       {
         $errors = [];

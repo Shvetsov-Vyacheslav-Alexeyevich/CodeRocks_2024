@@ -430,9 +430,9 @@ function open_edit_product(clicked) {
   showModalWrapper();
   document.getElementById("form_edit_product").style.display = "block";
   let formData = new FormData();
-  console.log(((clicked.parentNode).parentNode).getAttribute("card_id"));
+  console.log((((clicked.parentNode).parentNode).parentNode).getAttribute("card_id"));
   formData.set("form_type", "give_id_card_edit");
-  formData.set("card_id", ((clicked.parentNode).parentNode).getAttribute("card_id"));
+  formData.set("card_id", (((clicked.parentNode).parentNode).parentNode).getAttribute("card_id"));
   // Запрос на отправку
   fetch("/server/server.php", {
     method: "POST",
@@ -476,7 +476,8 @@ if (document.getElementById("form_edit_product") != null) {
   document.getElementById("form_edit_product").addEventListener("submit", (event) => {
     event.preventDefault();
     let formData = new FormData(document.getElementById("form_edit_product"));
-    formData.set("card_id", click_elem.getAttribute("card_id"));
+    console.log(click_elem);
+    formData.set("card_id", (((click_elem.parentNode).parentNode).parentNode).getAttribute("card_id"));
     formData.set("form_type", "edit_product");
     formData.set("stocks", JSON.stringify(arr_stocks));
     // Запрос на отправку
@@ -703,64 +704,67 @@ if (document.getElementById("add_path") != null) {
 }
 
 // Проверяем изменения всех полей и их отправка для добавления нового пути в БД
-document.querySelector("#add_path .submit").addEventListener("click", (event) => {
-  event.preventDefault();
-  if (document.getElementById("pointer").value != 0 && document.getElementById("stock").value != 0 && document.getElementById("paths").value != 0) {
-    // Отправляем данные при заполнении всей части для добавления нового элемента
-    let formData = new FormData(document.getElementById("add_path"));
-    formData.set("form_type", "add_paths");
-    // Запрос на отправку
-    fetch("/server/server.php", {
-      method: "POST",
-      body: formData
-    })
-    .then((response) => response.json())
-    .then((data) => succesfull_status(data));
-  }
+if (document.getElementById("add_path") != null) {
 
-  function succesfull_status(data) {
-    if (data["status"] == true) {
-      console.log("Новый элемент добавлен!")
+  document.querySelector("#add_path .submit").addEventListener("click", (event) => {
+    event.preventDefault();
+    if (document.getElementById("pointer").value != 0 && document.getElementById("stock").value != 0 && document.getElementById("paths").value != 0) {
+      // Отправляем данные при заполнении всей части для добавления нового элемента
       let formData = new FormData(document.getElementById("add_path"));
       formData.set("form_type", "add_paths");
       // Запрос на отправку
-      fetch("/server/please_me.php?add_path=give2", {
-        method: "GET"
+      fetch("/server/server.php", {
+        method: "POST",
+        body: formData
       })
       .then((response) => response.json())
       .then((data) => succesfull_status(data));
     }
-
+  
     function succesfull_status(data) {
-      let j = 0;
-      document.querySelector("#add_path .pick-up_point").innerHTML = "";
-      for (let i of data) {
-        j++;
-        document.querySelector("#add_path .pick-up_point").innerHTML += (`
-          <div index="${j}" class="pick_point">
-            <div class="double" style="color: var(--text_color);">
-              <div class="left">
-                ${i[0]}
+      if (data["status"] == true) {
+        console.log("Новый элемент добавлен!")
+        let formData = new FormData(document.getElementById("add_path"));
+        formData.set("form_type", "add_paths");
+        // Запрос на отправку
+        fetch("/server/please_me.php?add_path=give2", {
+          method: "GET"
+        })
+        .then((response) => response.json())
+        .then((data) => succesfull_status(data));
+      }
+  
+      function succesfull_status(data) {
+        let j = 0;
+        document.querySelector("#add_path .pick-up_point").innerHTML = "";
+        for (let i of data) {
+          j++;
+          document.querySelector("#add_path .pick-up_point").innerHTML += (`
+            <div index="${j}" class="pick_point">
+              <div class="double" style="color: var(--text_color);">
+                <div class="left">
+                  ${i[0]}
+                </div>
+                <div class="right">
+                  <div class="line remove_path"></div>
+                  ${i[2]}
+                </div>
               </div>
-              <div class="right">
-                <div class="line remove_path"></div>
-                ${i[2]}
+              <div class="double" style="">
+                <div class="left">
+                  ${i[1]}
+                </div>
+                <div class="right">
+                  ${i[3]}., ${i[4]}. ${i[5]}₽
+                </div>
               </div>
             </div>
-            <div class="double" style="">
-              <div class="left">
-                ${i[1]}
-              </div>
-              <div class="right">
-                ${i[3]}., ${i[4]}. ${i[5]}₽
-              </div>
-            </div>
-          </div>
-        `)
+          `)
+        }
       }
     }
-  }
-});
+  });
+}
 
 
 function open_del_product(clicked) {
@@ -794,16 +798,10 @@ if (document.getElementById("form_del_product") != null) {
   });
 }
 
-
-document.querySelector(".trash").addEventListener("click", () => {
-  console.log("qwertuiop")
-}) 
-
-
+// Функуионла формы добавить пункт
 function open_add_punct(clicked) {
   showModalWrapper();
   document.getElementById("form_add_punct").style.display = "block";
-
 }
 
 if (document.getElementById("form_add_punct") != null) {
