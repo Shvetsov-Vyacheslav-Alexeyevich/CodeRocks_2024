@@ -7,133 +7,41 @@
     </a>
     <h1 class="form_heading">Добавить путь</h1>
     <div class="inputs">
-      <select id="pointer" class="select_input_style text_left nodo" name="pointer">
+      <select id="pointer" class="select_input_style text_left nado" name="pointer">
         <option value="0" hidden>Пункт выдачи</option>
         <!-- Сюда через цикл вводишь все пункты -->
-        <option value="1">1</option>
+        <div>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </div>
       </select>
-      <select id="stock" class="select_input_style text_left nado" name="stoke">
+      <select id="stock" class="select_input_style text_left nado" name="stock">
         <option value="0" hidden>Склад</option>
         <!-- Сюда через цикл вводишь все склады -->
-        <option value="1">1</option>
+        <div>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </div>
       </select>
+      <div class="hideBlock">
       <div class="line"></div>
-
       <div class="description_text">
         Склад (город) - Пункт выдачи (город)
       </div>
 
       <select id="paths" class="select_input_style text_left" name="paths">
         <option value="0" hidden>Маршрут</option>
-        <!-- Сюда через цикл вводишь все маршруты -->
-        <option value="1">1</option>
+        <!-- Сюда через цикл вводятся все маршруты, через JS и ответ с сервера, не тронь -->
+        <div class="div_container"></div>
       </select>
       <button class="submit" type="submit">Добавить</button>
       <div class="line"></div>
       <div class="pick-up_point_contaner">
         <div class="pick-up_point">
-
-          <div class="pick_point">
-            <div class="double" style="color: var(--text_color);">
-              <div class="left">
-                Пункт выдачи №1
-              </div>
-              <div class="right">
-                <div class="line"></div>
-                Хабаровск
-              </div>
-            </div>
-            <div class="double" style="">
-              <div class="left">
-                Город №1 - Город №2
-              </div>
-              <div class="right">
-                240км., 6ч. 3000₽
-              </div>
-            </div>
-          </div>
-
-          <div class="pick_point">
-            <div class="double" style="color: var(--text_color);">
-              <div class="left">
-                Пункт выдачи №1
-              </div>
-              <div class="right">
-                <div class="line"></div>
-                Хабаровск
-              </div>
-            </div>
-            <div class="double" style="">
-              <div class="left">
-                Город №1 - Город №2
-              </div>
-              <div class="right">
-                240км., 6ч. 3000₽
-              </div>
-            </div>
-          </div>
-
-          <div class="pick_point">
-            <div class="double" style="color: var(--text_color);">
-              <div class="left">
-                Пункт выдачи №1
-              </div>
-              <div class="right">
-                <div class="line"></div>
-                Хабаровск
-              </div>
-            </div>
-            <div class="double" style="">
-              <div class="left">
-                Город №1 - Город №2
-              </div>
-              <div class="right">
-                240км., 6ч. 3000₽
-              </div>
-            </div>
-          </div>
-
-          <div class="pick_point">
-            <div class="double" style="color: var(--text_color);">
-              <div class="left">
-                Пункт выдачи №1
-              </div>
-              <div class="right">
-                <div class="line"></div>
-                Хабаровск
-              </div>
-            </div>
-            <div class="double" style="">
-              <div class="left">
-                Город №1 - Город №2
-              </div>
-              <div class="right">
-                240км., 6ч. 3000₽
-              </div>
-            </div>
-          </div>
-
-          <div class="pick_point">
-            <div class="double" style="color: var(--text_color);">
-              <div class="left">
-                Пункт выдачи №1
-              </div>
-              <div class="right">
-                <div class="line"></div>
-                Хабаровск
-              </div>
-            </div>
-            <div class="double" style="">
-              <div class="left">
-                Город №1 - Город №2
-              </div>
-              <div class="right">
-                240км., 6ч. 3000₽
-              </div>
-            </div>
-          </div>
-
+          <!-- Сюда всё подгружается с JS, можно не париться -->
         </div>
+      </div>
+
       </div>
     </div>
 </form>

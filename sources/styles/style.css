@@ -942,6 +942,7 @@ input.text_left {
   top: -5px;
   right: 0px;
   margin: 0px;
+  cursor: pointer;
 }
 
 #add_path .inputs .description_text {
@@ -1011,4 +1012,8 @@ input.text_left {
 #form_edit_fio .inputs,
 #form_edit_name_company {
   margin-top: 0px;
+}
+
+.hideBlock {
+  display: none;
 }
