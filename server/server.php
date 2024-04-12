@@ -350,6 +350,16 @@
       echo json_encode(["status" => true, "test" => "Сука блять, вроде работает!"]);
     }
 
+    // Добавление пункта
+    else if ($_POST["form_type"] == "add_point") {
+      echo json_encode(["status" => true]);
+    } 
+
+    // Удаление пункта в форме добавить пункт
+    else if ($_POST["form_type"] == "add_point") {
+      echo json_encode(["status" => true]);
+    } 
+
     // Добавление продукта
     else if ($_POST["form_type"] == "add_product") {
       $errors = [];
