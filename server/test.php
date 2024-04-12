@@ -167,7 +167,7 @@
         <div style="display: flex; gap: 10px">
             <? if (!empty($product_photos)): ?>
                 <? foreach ($product_photos as $photo): ?>
-                    <div class="image" style="height: 250px; width: 250px; background: url(<?= "/data/{$product_id}/{$photo['photo_path']}" ?>) no-repeat center; background-size: cover"></div>
+                    <div class="image" style="height: 250px; width: 250px; background: url(<?= "/data/products/{$product_id}/{$photo['photo_path']}" ?>) no-repeat center; background-size: cover"></div>
                 <? endforeach ?>
             <? else: ?>
                 <div class="image" style="height: 250px; width: 250px; background: url(/sources/images/photo.png) no-repeat center;"></div>
