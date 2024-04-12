@@ -35,7 +35,7 @@
           <!-- Для всех других страниц -->
           <div class="wrapper">
             <div class="left">
-              <a href="/index.php" class="logo">
+              <a href="/index.php" class="logo block">
                 <img src="/sources/images/logo.svg" alt="BLITZ">
               </a>
             </div>
@@ -63,8 +63,8 @@
                 </div>
                 <div class="link_profile">
                     <!-- !!! сделать переход к профолио + фото из бд !!! -->
-                    <a href="/pages/<?= (array_key_exists('client_id', $_SESSION['user'])) ? "user_personal_profile" : "vendor_personal_profile" ?>.php">
-                      <img src="<?= (!empty($_SESSION['user']['photo_path'])) ? "/data/users/{$_SESSION['user']['id']}/{$_SESSION['user']['photo_path']}" : "/sources/images/avatar_no_img.png" ?>" width="50px" height="50px" alt="">
+                    <a href="#" class="block" style="box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25); border-radius: 4px; background: url(/sources/images/photo.png) no-repeat center/cover; width: 50px; height: 50px;">
+                      <!-- <img src="sources/images/photo.png" width="50px" height="50px" alt="такой карины нету"> -->
                     </a>
                 </div>
               <? endif ?>
