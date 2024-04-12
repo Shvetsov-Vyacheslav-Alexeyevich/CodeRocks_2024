@@ -429,6 +429,16 @@ var click_elem;
 function open_edit_product(clicked) {
   showModalWrapper();
   document.getElementById("form_edit_product").style.display = "block";
+  let formData = new FormData();
+  formData.set("form_type", "give_id_card_edit");
+  formData.set((clicked.parentNode));
+  // Запрос на отправку
+  fetch("/server/server.php", {
+    method: "POST",
+    body: formData
+  })
+  .then((response) => response.json())
+  .then((data) => succesfull_status(data));
   click_elem = clicked;
 }
 
