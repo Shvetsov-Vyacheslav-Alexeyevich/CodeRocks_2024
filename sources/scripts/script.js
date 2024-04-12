@@ -710,6 +710,14 @@ document.querySelector("#add_path .submit").addEventListener("click", (event) =>
   function succesfull_status(data) {
     if (data["status"] == true) {
       console.log("Новый элемент добавлен!")
+      let formData = new FormData(document.getElementById("add_path"));
+      formData.set("form_type", "add_paths");
+      // Запрос на отправку
+      fetch("/server/server.php", {
+        method: "GET",
+      })
+      .then((response) => response.json())
+      .then((data) => succesfull_status(data));
     }
   }
 });
