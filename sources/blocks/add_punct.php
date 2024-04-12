@@ -14,13 +14,15 @@
       </select>
       <button class="submit" type="submit">Добавить</button>
       <div class="line"></div>
+      <div class="rows">
       <!-- Тут ебашит JS, Get запросом пиздит данные, не трогать :) -->
-      <div class="row" index="0" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
-          <div class="left">Название склада №1</div>
-          <div class="right" style="display: flex; align-items: center; gap: 10px;">
-            <div class="count_on_stocks">Хабаровск</div>
-            <div class="remove" onclick="remove_stock(this)" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
-          </div>
+        <div class="row" index="0" style="display: flex; align-items: center; justify-content: space-between; color: #333333">
+            <div class="left">Название склада №1</div>
+            <div class="right" style="display: flex; align-items: center; gap: 10px;">
+              <div class="count_on_stocks">Хабаровск</div>
+              <div class="remove" onclick="remove_stock(this)" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer;"></div>
+            </div>
+        </div>
       </div>
     </div>
 </form>

@@ -793,17 +793,13 @@ if (document.getElementById("form_del_product") != null) {
   });
 }
 
-
-document.querySelector(".trash").addEventListener("click", () => {
-  console.log("qwertuiop")
-}) 
-
-
+// Функуионла формы добавить пункт
 function open_add_punct(clicked) {
   showModalWrapper();
   document.getElementById("form_add_punct").style.display = "block";
-
 }
+
+element.querySelectorAll("")
 
 if (document.getElementById("form_add_punct") != null) {
   document.getElementById("form_add_punct").addEventListener("submit", (event) => {
