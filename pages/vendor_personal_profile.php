@@ -1,7 +1,7 @@
 <?php
   session_start();
   require($_SERVER["DOCUMENT_ROOT"] . "/sources/blocks/header.php");
-//   require($_SERVER["DOCUMENT_ROOT"] . "/sources/blocks/add_product.php");
+  require($_SERVER["DOCUMENT_ROOT"] . "/sources/blocks/add_product.php");
   require_once($_SERVER["DOCUMENT_ROOT"] . "/server/db_model.php");
   
 
@@ -31,10 +31,6 @@
 			</div>
 		</div>
 	</div>
-
-<?php
-	require($_SERVER["DOCUMENT_ROOT"] . "/sources/blocks/add_product.php");
-?>
 
 	<div class="container_dop_company">
 		<div class="cadrs_dop_company">

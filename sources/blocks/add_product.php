@@ -1,3 +1,4 @@
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/server/db_model.php") ?>
 <form id="form_add_product" class="form_wrapper modal" action="/server/server/php>" POST="POST" enctype="multipart/form-data">
   <div class="inner">
     <a class="link_undo" onclick="hideModalWrapper()">
@@ -80,4 +81,5 @@
         </div>
       </div>
     </div>
+  </div>
 </form>
