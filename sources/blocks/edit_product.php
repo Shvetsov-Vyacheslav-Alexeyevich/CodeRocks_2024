@@ -51,6 +51,34 @@
         <a class="button_link add">Добавить</a>
         <div class="line"></div>
         <div class="stocks">
+        
+          <div class="row" index="г. Кемерово" style="display: flex; align-items: center; justify-content: space-between; color: #333333"> 
+            <div class="left">г. Кемерово</div>
+            <div class="right" style="display: flex; align-items: center; gap: 10px;">
+              <!-- Именно в span добавь кол-во -->
+              <div class="count_on_stocks"><span class="c">700</span> шт.</div>
+              <div class="remove" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer; margin-bottom: 6px;"></div>
+            </div>
+          </div>
+
+          <div class="row" index="г. Белово" style="display: flex; align-items: center; justify-content: space-between; color: #333333"> 
+            <div class="left">г. Белово</div>
+            <div class="right" style="display: flex; align-items: center; gap: 10px;">
+              <!-- Именно в span добавь кол-во -->
+              <div class="count_on_stocks"><span class="c">200</span> шт.</div>
+              <div class="remove" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer; margin-bottom: 6px;"></div>
+            </div>
+          </div>
+
+          <div class="row" index="г. Москва" style="display: flex; align-items: center; justify-content: space-between; color: #333333"> 
+            <div class="left">г. Кемерово</div>
+            <div class="right" style="display: flex; align-items: center; gap: 10px;">
+              <!-- Именно в span добавь кол-во -->
+              <div class="count_on_stocks"><span class="c">400</span> шт.</div>
+              <div class="remove" style="width: 16px; height: 2px; background: #669EF2; cursor: pointer; margin-bottom: 6px;"></div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

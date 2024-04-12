@@ -150,6 +150,25 @@
     else if ($_POST["form_type"] == "new_order") {
       echo json_encode(["status" => true]);
     }
+    else if ($_POST["form_type"] == "edit_product") {
+      echo json_encode(["status" => true]);
+    }
+    else if ($_POST["form_type"] == "get_paths") {
+      // Нужен ответ в виде: ["status" => true, "response" => [id => маршрут_1, id => маршрут_2, ...]]
+      // Приходит $_POST ["pointer" => "id города - пункта", "stock" => "id города - склада", "form_type" => "название запроса (моё)"]
+      echo json_encode(["status" => true, "response" => ["11" => "Кемерово - Орлов", "12" => "Белово - Орлов"]]); //Не ебу как строку сделаешь, это будет в option на выбор пользователя, а id в значении option, которое будет отправлено затем на сервер, при выборе именно этого option
+    }
+    else if ($_POST["form_type"] == "add_paths") {
+      // Нужен ответ в виде: ["status" => true]
+      // Приходит $_POST ["pointer" => "id города - пункта", "stock" => "id города - склада", "path" => "id маршрута", "form_type" => "название запроса (моё)"]
+      echo json_encode(["status" => true]);
+    }
+
+    else if ($_POST["form_type"] == "remove_path") {
+      // Нужен ответ в виде: ["status" => true]
+      // Приходит $_POST ["index" => "id маршрута в БД", "form_type" => "название запроса (моё)"]
+      echo json_encode(["status" => true, "test" => "Сука блять, вроде работает!"]);
+    }
     else if ($_POST["form_type"] == "add_product") {
       $errors = [];
       
