@@ -62,7 +62,7 @@
             <option value="0" hidden>Склад</option>
             <?
               $warehouses = [];
-              $db = new MysqlModel;
+              $db = new MysqlModel();
 
               $warehouses = $db->goResult("SELECT * FROM STORES");
                     
