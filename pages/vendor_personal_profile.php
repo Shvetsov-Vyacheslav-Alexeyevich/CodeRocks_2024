@@ -11,6 +11,7 @@
 	header('Location: user_personal_profile.php');
 ?>
 
+
 <div id="profile_company">
 	<div class="container_name_company">
 		<div class="cadr_name_company">
@@ -28,11 +29,15 @@
 		</div>
 	</div>
 
+<?php
+	require($_SERVER["DOCUMENT_ROOT"] . "/sources/blocks/add_product.php");
+?>
+
 	<div class="container_dop_company">
 		<div class="cadrs_dop_company">
 			<div class="photo_company" style="background: url(/sources/images/photo.png) no-repeat center/cover;"></div>
 			<!-- кнопки изменений -->
-			<button class="submit downolang_photo_company" type="submit">
+			<button class="submit downolang_photo_company" type="submit" oneclick="open_add_product(this)">
 				<div class="icon">
 					<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M2.34783 2.28571V0H3.91304V2.28571H6.26087V3.80952H3.91304V6.09524H2.34783V3.80952H0V2.28571H2.34783ZM4.69565 6.85714V4.57143H7.04348V2.28571H12.5217L13.9539 3.80952H16.4348C17.2957 3.80952 18 4.49524 18 5.33333V14.4762C18 15.3143 17.2957 16 16.4348 16H3.91304C3.05217 16 2.34783 15.3143 2.34783 14.4762V6.85714H4.69565ZM10.1739 13.7143C12.3339 13.7143 14.087 12.0076 14.087 9.90476C14.087 7.8019 12.3339 6.09524 10.1739 6.09524C8.01391 6.09524 6.26087 7.8019 6.26087 9.90476C6.26087 12.0076 8.01391 13.7143 10.1739 13.7143ZM7.66957 9.90476C7.66957 11.2533 8.7887 12.3429 10.1739 12.3429C11.5591 12.3429 12.6783 11.2533 12.6783 9.90476C12.6783 8.55619 11.5591 7.46667 10.1739 7.46667C8.7887 7.46667 7.66957 8.55619 7.66957 9.90476Z" fill="white"/>

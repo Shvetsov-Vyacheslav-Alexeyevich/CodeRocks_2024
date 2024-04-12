@@ -158,7 +158,17 @@
     else if ($_POST["form_type"] == "give_id_card_edit") {
       echo json_encode(["status" => true, "response" => $_POST]);
     }
-    
+
+    // Удаление с БД склада пользователя (нажатие на минус) Приходит по факту уникальный id склада
+    else if ($_POST["form_type"] == "remove_point") {
+      echo json_encode(["status" => true]);
+    }
+
+      // Удаление пункта в форме добавить пункт
+      else if ($_POST["form_type"] == "add_stock") {
+        echo json_encode(["status" => true]);
+      } 
+
     // Удаление с БД склада пользователя (нажатие на минус) Приходит по факту уникальный id склада
     else if ($_POST["form_type"] == "remove_stock") {
       echo json_encode(["status" => true]);
@@ -348,6 +358,8 @@
     else if ($_POST["form_type"] == "add_point") {
       echo json_encode(["status" => true]);
     } 
+
+
 
     // Добавление продукта
     else if ($_POST["form_type"] == "add_product") {
