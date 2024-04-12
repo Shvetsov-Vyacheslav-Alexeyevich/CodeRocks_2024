@@ -432,7 +432,7 @@ function open_edit_product(clicked) {
   let formData = new FormData();
   console.log((((clicked.parentNode).parentNode).parentNode).getAttribute("card_id"));
   formData.set("form_type", "give_id_card_edit");
-  formData.set("card_id", ((clicked.parentNode).parentNode).getAttribute("card_id"));
+  formData.set("card_id", (((clicked.parentNode).parentNode).parentNode).getAttribute("card_id"));
   // Запрос на отправку
   fetch("/server/server.php", {
     method: "POST",
@@ -476,7 +476,8 @@ if (document.getElementById("form_edit_product") != null) {
   document.getElementById("form_edit_product").addEventListener("submit", (event) => {
     event.preventDefault();
     let formData = new FormData(document.getElementById("form_edit_product"));
-    formData.set("card_id", click_elem.getAttribute("card_id"));
+    console.log(click_elem);
+    formData.set("card_id", (((click_elem.parentNode).parentNode).parentNode).getAttribute("card_id"));
     formData.set("form_type", "edit_product");
     formData.set("stocks", JSON.stringify(arr_stocks));
     // Запрос на отправку
