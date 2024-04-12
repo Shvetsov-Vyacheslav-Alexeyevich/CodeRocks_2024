@@ -338,11 +338,6 @@
     }
     // ----------------------------------------------------------> Добавление продукта (Доделать)
 
-    // Добавление пункта
-    else if ($_POST["form_type"] == "add_point") {
-      echo json_encode(["status" => true]);
-    } 
-
     // Удаление пункта в форме добавить пункт
     else if ($_POST["form_type"] == "add_point") {
       echo json_encode(["status" => true]);
