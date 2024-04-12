@@ -60,7 +60,7 @@
         <!-- Карточка -->
         <div class="card" card_id="<?= $product['id'] ?>">
           <a class="block" href="#">
-            <div class="image" style="background: url(<?= (array_key_exists("photos", $product)) ? "/data/{$product['id']}/{$product['photos'][0]}" : "/sources/images/photo.png" ?>) no-repeat center;"></div>
+            <div class="image" style="background: url(<?= (array_key_exists("photos", $product)) ? "/data/products/{$product['id']}/{$product['photos'][0]}" : "/sources/images/photo.png" ?>) no-repeat center;"></div>
             <p class="description">
             <?= $product['name'] ?>
             </p>

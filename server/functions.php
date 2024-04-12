@@ -181,7 +181,7 @@
                 {
                     $server_path = $_SERVER['DOCUMENT_ROOT'];
                     
-                    $path = "$server_path/data/$product_id/";
+                    $path = "$server_path/data/products/$product_id/";
                     $name = basename($files['name'][$i]);
 
                     if (!is_dir($path))

@@ -1,25 +1,51 @@
 <?php
   session_start();
   require($_SERVER["DOCUMENT_ROOT"] . "/sources/blocks/header.php");
-
-  if (empty($_SESSION))
-	header('Location: /index.php');
-
-  $user = $_SESSION['user'];
-
-  if (array_key_exists('vendor_id', $user))
-	header('Location: vendor_personal_profile.php');
 ?>
 
-<div id="profile_user">
-	<div class="container_name_user">
+<div id="product_contaner">
+    <div class="full_product">
+        <div class="product_image_info">
+
+            <!-- <div class="container">
+                <div class="itc-slider"><!-- Слайдер (начало) ->
+                    <div class="itc-slider-wrapper">
+                        <div class="itc-slider-items">
+                            <div class="itc-slider-item">
+                            <!-- Контент 1 слайда->
+                            </div>
+                            <div class="itc-slider-item">
+                            <!-- Контент 2 слайда ->
+                            </div>
+                            <div class="itc-slider-item">
+                            <!-- Контент 3 слайда ->
+                            </div>
+                            <div class="itc-slider-item">
+                            <!-- Контент 4 слайда ->
+                            </div>
+                            <div class="itc-slider-item">
+                            <!-- Контент 5 слайда ->
+                            </div>
+                        </div>
+                    </div>
+                    <button class="itc-slider-btn itc-slider-btn-prev"></button>
+                    <button class="itc-slider-btn itc-slider-btn-next"></button>
+                </div><!-- Слайдер (конец) ->
+            </div> -->
+
+        </div>
+        <div class="product_info_text"></div>
+    </div>
+</div>
+
+
+<!-- <div class="container_name_user">
 		<div class="cadr_name_user">
 			<div class="name_user">
 				<div class="text_name">
-					<?= "{$user['firstname']} {$user['name']} {$user['surname']}" ?>
+					Хромов Егор Михайлович
 				</div>
 				<div class="icon">
-					<!-- открывать форму изменения имени компании -->
 					<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M0 15.8328V20H4.16725L16.4634 7.70385L12.2962 3.5366L0 15.8328ZM19.675 4.49229C20.1083 4.0589 20.1083 3.35324 19.675 2.91985L17.0802 0.325045C16.6468 -0.108348 15.9411 -0.108348 15.5077 0.325045L13.4741 2.35866L17.6413 6.52591L19.675 4.49229Z" fill="#333333"/>
 					</svg>
@@ -28,10 +54,10 @@
 		</div>
 	</div>
 
-	<div class="container_dop_user">
+	 <div class="container_dop_user">
 		<div class="cadrs_dop_user">
-			<div class="photo_user" style="background: url(<?= (!empty($_SESSION['user']['photo_path'])) ? "/data/users/{$_SESSION['user']['id']}/{$_SESSION['user']['photo_path']}" : "/sources/images/avatar_no_img.png" ?>) no-repeat center/cover;"></div>
-			<!-- кнопки изменений -->
+			<div class="photo_user" style="background: url(/sources/images/photo.png) no-repeat center/cover;"></div>
+			
 			<button class="submit downolang_photo_user" type="submit">
 				<div class="icon">
 					<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,8 +68,8 @@
 					Загрузить фото
 				</div>
 			</button>
-			<!-- 111111111111111111111111111111111111111111111111111111111111111 -->
-			<a href="/index.php" class="button_link go_buy" style="margin-left: 6px">
+			
+			<button class="submit go_buy" type="submit">
 				<div class="icon">
 					<svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M9.77778 3.09524H8.55556C8.55556 1.38667 7.18667 0 5.5 0C3.81333 0 2.44444 1.38667 2.44444 3.09524H1.22222C0.546944 3.09524 0.00611111 3.64929 0.00611111 4.33333L0 11.7619C0 12.446 0.546944 13 1.22222 13H9.77778C10.4531 13 11 12.446 11 11.7619V4.33333C11 3.64929 10.4531 3.09524 9.77778 3.09524ZM5.5 1.2381C6.51139 1.2381 7.33333 2.07071 7.33333 3.09524H3.66667C3.66667 2.07071 4.48861 1.2381 5.5 1.2381ZM5.5 7.42857C3.81333 7.42857 2.44444 6.0419 2.44444 4.33333H3.66667C3.66667 5.35786 4.48861 6.19048 5.5 6.19048C6.51139 6.19048 7.33333 5.35786 7.33333 4.33333H8.55556C8.55556 6.0419 7.18667 7.42857 5.5 7.42857Z" fill="white"/>
@@ -52,7 +78,7 @@
 				<div class="text">
 					Продолжить покупки
 				</div>
-			</a>
+			</button>
 		</div>
 	</div>
 	<div class="container_product_sort">
@@ -61,10 +87,10 @@
 		</div>
 		<div class="line"></div>
 	</div>
-	<!-- карты -->
+	
 	<div id="cards_vendors">
 		<div class="inner">
-			<!-- начало цикла -->
+			
 			<div class="card" card_id="1">
 				<div class="image" style="background: url(/sources/images/photo.png) no-repeat center/cover;"></div>
 				<div class="double">
@@ -136,10 +162,10 @@
 					</div>
 				</div>
 			</div>
-			<!-- конец -->
+		
 		</div>
-	</div>
-</div>
+	</div> -->
+
 
 <?
   require($_SERVER["DOCUMENT_ROOT"] . "/sources/blocks/footer.php");
