@@ -1,6 +1,14 @@
 <?php
   session_start();
   require($_SERVER["DOCUMENT_ROOT"] . "/sources/blocks/header.php");
+
+  if (empty($_SESSION))
+  	header('Location: /index.php');
+
+  $user = $_SESSION['user'];
+
+  if (array_key_exists('client_id', $user))
+	header('Location: user_personal_profile.php');
 ?>
 
 <div id="profile_company">

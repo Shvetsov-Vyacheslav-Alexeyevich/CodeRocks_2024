@@ -64,7 +64,7 @@
                 <div class="link_profile">
                     <!-- !!! сделать переход к профолио + фото из бд !!! -->
                     <a href="/pages/<?= (array_key_exists('client_id', $_SESSION['user'])) ? "user_personal_profile" : "vendor_personal_profile" ?>.php">
-                      <img src="<?= (!empty($_SESSION['user']['photo_path'])) ? "/data/users/{$_SESSION['user']['id']}/{$_SESSION['user']['photo_path']}" : "/sources/images/photo.png" ?>" width="50px" height="50px" alt="">
+                      <img src="<?= (!empty($_SESSION['user']['photo_path'])) ? "/data/users/{$_SESSION['user']['id']}/{$_SESSION['user']['photo_path']}" : "/sources/images/avatar_no_img.png" ?>" width="50px" height="50px" alt="">
                     </a>
                 </div>
               <? endif ?>
