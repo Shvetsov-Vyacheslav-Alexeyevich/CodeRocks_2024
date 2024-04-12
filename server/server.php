@@ -205,6 +205,7 @@
         $product_price = $_POST['product_price'];
         $product_category = $_POST['product_category'];
         $product_description = $_POST['product_description'];
+        $product_vendor = $_SESSION['user']['vendor_id'];
         // Товар скрыт или нет
         $product_access = (isset($_POST['open_access'])) ? 1 : 0;
         
