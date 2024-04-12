@@ -793,6 +793,12 @@ if (document.getElementById("form_del_product") != null) {
   });
 }
 
+
+document.querySelector(".trash").addEventListener("click", () => {
+  console.log("qwertuiop")
+}) 
+
+
 function open_add_punct(clicked) {
   showModalWrapper();
   document.getElementById("form_add_punct").style.display = "block";
