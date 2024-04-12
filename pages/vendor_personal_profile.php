@@ -1,7 +1,9 @@
 <?php
   session_start();
   require($_SERVER["DOCUMENT_ROOT"] . "/sources/blocks/header.php");
+//   require($_SERVER["DOCUMENT_ROOT"] . "/sources/blocks/add_product.php");
   require_once($_SERVER["DOCUMENT_ROOT"] . "/server/db_model.php");
+  
 
   if (empty($_SESSION))
   	header('Location: /index.php');
@@ -59,7 +61,7 @@
 						<path d="M14.2222 0H1.77778C0.795556 0 0.00888888 0.795556 0.00888888 1.77778L0 14.2222C0 15.2044 0.795556 16 1.77778 16H14.2222C15.2044 16 16 15.2044 16 14.2222V1.77778C16 0.795556 15.2044 0 14.2222 0ZM13.3333 9.77778H9.77778V13.3333H6.22222V9.77778H2.66667V6.22222H6.22222V2.66667H9.77778V6.22222H13.3333V9.77778Z" fill="white"/>
 					</svg>
 				</div>
-				<div class="text">
+				<div class="text" onclick="open_add_product(this)">
 					Добавить товар
 				</div>
 			</button>
